@@ -1,0 +1,10 @@
+.DS_Store
+*.log
+.env
+.env.*
+node_modules/
+dist/
+build/
+
+# Source-of-truth itinerary notes: private travel context, kept local only
+大阪京都五日行程.txt

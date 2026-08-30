@@ -1,0 +1,564 @@
+/* ==================================================================
+   css/style.css — UI Design System
+   Osaka/Kyoto 5-Day Itinerary
+   Mobile-first. No external fonts / frameworks / CDN dependencies.
+   ================================================================== */
+
+/* -------------------- Design Tokens -------------------- */
+:root {
+  /* Color: warm off-white / deep gray / muted earth accent */
+  --color-bg: #FAF7F1;
+  --color-surface: #FFFFFF;
+  --color-surface-muted: #F2EDE4;
+  --color-border: #E6DFD2;
+  --color-text: #2B2925;
+  --color-text-muted: #6B6559;
+  --color-text-faint: #9A9384;
+
+  --color-accent: #A8582F;       /* muted terracotta */
+  --color-accent-soft: #F0E1D3;  /* accent tint for backgrounds */
+  --color-accent-contrast: #FFFFFF;
+
+  --color-warning-bg: #FBF1E7;
+  --color-warning-border: #D98B3F;
+  --color-warning-text: #6B4118;
+
+  /* Badge palette — muted, low-contrast fills with readable text */
+  --badge-reservation-bg: #F0E1D3;
+  --badge-reservation-text: #8A4B22;
+  --badge-food-bg: #EAF0DE;
+  --badge-food-text: #4B6A2E;
+  --badge-shopping-bg: #EDE6F4;
+  --badge-shopping-text: #5E4A87;
+  --badge-photo-bg: #E4EEF2;
+  --badge-photo-text: #2E6478;
+  --badge-transport-bg: #F0EEE9;
+  --badge-transport-text: #55524A;
+  --badge-rest-bg: #F5EDE9;
+  --badge-rest-text: #8A6656;
+
+  /* Typography */
+  --font-base: -apple-system, BlinkMacSystemFont, "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN", "Noto Sans TC", "Noto Sans CJK TC",
+    "PingFang TC", "Microsoft JhengHei", "Segoe UI", sans-serif;
+
+  --fs-hero-eyebrow: 0.8rem;
+  --fs-hero-title: 2rem;
+  --fs-hero-dates: 1rem;
+  --fs-hero-local: 1.05rem;
+  --fs-section-heading: 0.78rem;
+  --fs-day-number: 0.78rem;
+  --fs-day-title: 1.5rem;
+  --fs-item-time: 0.95rem;
+  --fs-item-title: 1.05rem;
+  --fs-body: 0.95rem;
+  --fs-small: 0.82rem;
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  /* Layout */
+  --content-max: 720px;
+  --day-nav-height: 52px;
+
+  --shadow-soft: 0 1px 2px rgba(43, 41, 37, 0.06), 0 2px 8px rgba(43, 41, 37, 0.04);
+}
+
+/* -------------------- Reset -------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-base);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, p, ul { margin: 0; }
+ul { padding: 0; list-style: none; }
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  padding: var(--space-2) var(--space-4);
+  z-index: 100;
+  border-radius: 0 0 var(--radius-sm) 0;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* -------------------- Hero -------------------- */
+.hero {
+  padding: var(--space-8) var(--space-4) var(--space-6);
+  text-align: center;
+  background: linear-gradient(180deg, var(--color-surface-muted), var(--color-bg));
+  border-bottom: 1px solid var(--color-border);
+}
+
+.hero__inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+}
+
+.hero__eyebrow {
+  font-size: var(--fs-hero-eyebrow);
+  letter-spacing: 0.18em;
+  color: var(--color-accent);
+  font-weight: 600;
+  margin-bottom: var(--space-3);
+}
+
+.hero__title {
+  font-size: var(--fs-hero-title);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+
+.hero__dates {
+  font-size: var(--fs-hero-dates);
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+  margin-bottom: var(--space-5);
+}
+
+.hero__local {
+  font-size: var(--fs-hero-local);
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: var(--space-6);
+}
+
+.hero__stats {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.hero__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.hero__stat-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.hero__stat-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+/* -------------------- Section heading (shared) -------------------- */
+.section-heading {
+  font-size: var(--fs-section-heading);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  font-weight: 700;
+  margin-bottom: var(--space-4);
+}
+
+/* -------------------- Trip Overview -------------------- */
+.overview {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-4) var(--space-6);
+}
+
+.overview__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+
+@media (min-width: 560px) {
+  .overview__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.overview__card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.overview__card-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  margin-bottom: var(--space-1);
+}
+
+.overview__card-value {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.overview__card-detail {
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+/* -------------------- Day Navigation (sticky) -------------------- */
+.day-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(250, 247, 241, 0.92);
+  backdrop-filter: saturate(180%) blur(8px);
+  -webkit-backdrop-filter: saturate(180%) blur(8px);
+  border-bottom: 1px solid var(--color-border);
+  height: var(--day-nav-height);
+}
+
+.day-nav__scroll {
+  display: flex;
+  gap: var(--space-2);
+  height: 100%;
+  align-items: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0 var(--space-4);
+  max-width: var(--content-max);
+  margin: 0 auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.day-nav__scroll::-webkit-scrollbar { display: none; }
+
+.day-nav__item {
+  flex: 0 0 auto;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  font-family: inherit;
+  min-height: 36px;
+}
+
+.day-nav__item:hover {
+  border-color: var(--color-accent);
+}
+
+.day-nav__item.is-active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-accent-contrast);
+}
+
+/* -------------------- Days -------------------- */
+.days {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+.day {
+  padding-top: var(--space-8);
+  scroll-margin-top: calc(var(--day-nav-height) + var(--space-3));
+}
+
+.day:first-child {
+  padding-top: var(--space-6);
+}
+
+.day__header {
+  margin-bottom: var(--space-5);
+}
+
+.day__eyebrow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  font-size: var(--fs-day-number);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--color-accent);
+  margin-bottom: var(--space-2);
+}
+
+.day__eyebrow .day__city {
+  color: var(--color-text-faint);
+  font-weight: 600;
+}
+
+.day__eyebrow .day__date {
+  color: var(--color-text-faint);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.day__title {
+  font-size: var(--fs-day-title);
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.01em;
+}
+
+.day__subtitle {
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+/* -------------------- Warning Callout (Day 3) -------------------- */
+.warning-callout {
+  display: flex;
+  gap: var(--space-3);
+  background: var(--color-warning-bg);
+  border: 1px solid var(--color-warning-border);
+  border-left: 4px solid var(--color-warning-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.warning-callout__icon {
+  flex: 0 0 auto;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--color-warning-border);
+}
+
+.warning-callout__label {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-warning-border);
+  margin-bottom: var(--space-2);
+}
+
+.warning-callout__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-warning-text);
+  margin-bottom: var(--space-1);
+}
+
+.warning-callout__body {
+  font-size: var(--fs-small);
+  color: var(--color-warning-text);
+  line-height: 1.55;
+}
+
+/* -------------------- Timeline -------------------- */
+.timeline {
+  position: relative;
+  padding-left: var(--space-5);
+  border-left: 2px solid var(--color-border);
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: var(--space-6);
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--space-5) * -1 - 5px);
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: 2px solid var(--color-accent);
+}
+
+.timeline-item__time {
+  font-size: var(--fs-item-time);
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: var(--space-1);
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.timeline-item__title {
+  font-size: var(--fs-item-title);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+}
+
+.timeline-item__description {
+  font-size: var(--fs-body);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.timeline-item__notes {
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.timeline-item__note {
+  position: relative;
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+  padding-left: var(--space-4);
+  margin-bottom: var(--space-1);
+  line-height: 1.5;
+}
+
+.timeline-item__note::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--color-text-faint);
+}
+
+.timeline-item__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+/* -------------------- Badge System -------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 3px var(--space-2);
+  border-radius: var(--radius-sm);
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.badge--reservation { background: var(--badge-reservation-bg); color: var(--badge-reservation-text); }
+.badge--food        { background: var(--badge-food-bg); color: var(--badge-food-text); }
+.badge--shopping    { background: var(--badge-shopping-bg); color: var(--badge-shopping-text); }
+.badge--photo       { background: var(--badge-photo-bg); color: var(--badge-photo-text); }
+.badge--transport   { background: var(--badge-transport-bg); color: var(--badge-transport-text); }
+.badge--rest        { background: var(--badge-rest-bg); color: var(--badge-rest-text); }
+
+/* -------------------- Travel Notes -------------------- */
+.travel-notes {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-4) var(--space-7);
+}
+
+.travel-notes__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+
+@media (min-width: 560px) {
+  .travel-notes__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.travel-note {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.travel-note__title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: var(--space-2);
+}
+
+.travel-note__body {
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* -------------------- Footer -------------------- */
+.site-footer {
+  text-align: center;
+  padding: var(--space-6) var(--space-4) var(--space-8);
+  border-top: 1px solid var(--color-border);
+}
+
+.site-footer p {
+  font-size: 0.75rem;
+  color: var(--color-text-faint);
+  letter-spacing: 0.04em;
+}
+
+/* -------------------- Desktop refinements -------------------- */
+@media (min-width: 768px) {
+  :root {
+    --fs-hero-title: 2.6rem;
+    --fs-hero-local: 1.2rem;
+    --fs-day-title: 1.85rem;
+    --content-max: 760px;
+  }
+
+  .hero {
+    padding: var(--space-8) var(--space-5) var(--space-7);
+  }
+
+  .day-nav__item {
+    padding: var(--space-2) var(--space-5);
+  }
+}
