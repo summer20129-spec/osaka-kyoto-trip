@@ -13,7 +13,7 @@
   --color-border: #E6DFD2;
   --color-text: #2B2925;
   --color-text-muted: #6B6559;
-  --color-text-faint: #9A9384;
+  --color-text-faint: #756E5D;
 
   --color-accent: #A8582F;       /* muted terracotta */
   --color-accent-soft: #F0E1D3;  /* accent tint for backgrounds */
@@ -35,7 +35,9 @@
   --badge-transport-bg: #F0EEE9;
   --badge-transport-text: #55524A;
   --badge-rest-bg: #F5EDE9;
-  --badge-rest-text: #8A6656;
+  --badge-rest-text: #836050;
+  --badge-pending-bg: #FBEFD6;
+  --badge-pending-text: #785B12;
 
   /* Typography */
   --font-base: -apple-system, BlinkMacSystemFont, "Hiragino Sans",
@@ -279,12 +281,14 @@ ul { padding: 0; list-style: none; }
   background: transparent;
   border: 1px solid var(--color-border);
   border-radius: 999px;
-  padding: var(--space-2) var(--space-4);
+  padding: var(--space-3) var(--space-4);
   cursor: pointer;
   white-space: nowrap;
   transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
   font-family: inherit;
-  min-height: 36px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .day-nav__item:hover {
@@ -401,6 +405,21 @@ ul { padding: 0; list-style: none; }
   border-left: 2px solid var(--color-border);
 }
 
+.timeline-group {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: var(--space-6) 0 var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px dashed var(--color-border);
+}
+
+.timeline > .timeline-group:first-child {
+  margin-top: 0;
+}
+
 .timeline-item {
   position: relative;
   padding-bottom: var(--space-6);
@@ -476,11 +495,11 @@ ul { padding: 0; list-style: none; }
 .badge {
   display: inline-flex;
   align-items: center;
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  padding: 3px var(--space-2);
+  padding: 4px var(--space-3);
   border-radius: var(--radius-sm);
   line-height: 1.4;
   white-space: nowrap;
@@ -492,6 +511,7 @@ ul { padding: 0; list-style: none; }
 .badge--photo       { background: var(--badge-photo-bg); color: var(--badge-photo-text); }
 .badge--transport   { background: var(--badge-transport-bg); color: var(--badge-transport-text); }
 .badge--rest        { background: var(--badge-rest-bg); color: var(--badge-rest-text); }
+.badge--pending     { background: var(--badge-pending-bg); color: var(--badge-pending-text); }
 
 /* -------------------- Travel Notes -------------------- */
 .travel-notes {

@@ -19,7 +19,8 @@
     SHOPPING: "Shopping",
     PHOTO: "Photo",
     TRANSPORT: "Transport",
-    REST: "Rest"
+    REST: "Rest",
+    PENDING: "Pending"
   };
 
   function el(tag, className, text) {
@@ -177,6 +178,9 @@
 
     var timeline = el("ul", "timeline");
     day.items.forEach(function (item) {
+      if (item.group) {
+        timeline.appendChild(el("li", "timeline-group", item.group));
+      }
       timeline.appendChild(renderTimelineItem(item));
     });
     section.appendChild(timeline);

@@ -145,7 +145,7 @@ var ITINERARY_DATA = {
           title: "晚間活動：空庭溫泉",
           description: "或替代方案，待最終確認",
           notes: ["待確認：最終方案尚未定案"],
-          badges: ["REST"]
+          badges: ["REST", "PENDING"]
         }
       ]
     },
@@ -171,7 +171,8 @@ var ITINERARY_DATA = {
           title: "難波出發",
           description: "首班車往大阪駅",
           notes: [],
-          badges: ["TRANSPORT"]
+          badges: ["TRANSPORT"],
+          group: "清晨"
         },
         {
           time: "05:20",
@@ -228,7 +229,8 @@ var ITINERARY_DATA = {
           title: "抵達和服店，報到候位",
           description: "祇園區店家",
           notes: [],
-          badges: ["RESERVATION"]
+          badges: ["RESERVATION"],
+          group: "上午"
         },
         {
           time: "09:00〜10:00",
@@ -261,7 +263,8 @@ var ITINERARY_DATA = {
           title: "移動至白川なみ里",
           description: "步行約5分",
           notes: [],
-          badges: ["TRANSPORT"]
+          badges: ["TRANSPORT"],
+          group: "下午"
         },
         {
           time: "12:30〜14:00",
@@ -303,7 +306,8 @@ var ITINERARY_DATA = {
           title: "teamLab Biovortex Kyoto",
           description: "京都駅八條東口步行7分，¥3,800起（浮動定價）",
           notes: [],
-          badges: ["RESERVATION"]
+          badges: ["RESERVATION"],
+          group: "傍晚／晚間"
         },
         {
           time: "18:45",
@@ -343,7 +347,7 @@ var ITINERARY_DATA = {
             "順路：中村屋総本店可樂餅",
             "建議先電話確認營業狀態：075-861-1888"
           ],
-          badges: ["PHOTO", "FOOD"]
+          badges: ["PHOTO", "FOOD", "PENDING"]
         },
         {
           time: "11:00〜12:30",
