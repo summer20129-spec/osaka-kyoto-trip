@@ -59,21 +59,24 @@ var ITINERARY_DATA = {
           title: "抵達關西機場",
           description: "南海Rapi:t直達難波",
           notes: [],
-          badges: ["TRANSPORT"]
+          badges: ["TRANSPORT"],
+          locationQuery: "關西國際機場 大阪"
         },
         {
           time: "13:40〜14:00",
           title: "入住日本橋近鐵站套房",
           description: "稍作休息",
           notes: [],
-          badges: ["REST"]
+          badges: ["REST"],
+          locationQuery: "日本橋近鐵站套房 大阪"
         },
         {
           time: "15:30〜16:30",
           title: "黑門市場",
           description: "純逛街拍照，不在此用餐",
           notes: [],
-          badges: ["PHOTO"]
+          badges: ["PHOTO"],
+          locationQuery: "黑門市場 大阪"
         },
         {
           time: "17:30〜21:00",
@@ -83,7 +86,8 @@ var ITINERARY_DATA = {
             "晚餐建議：美津の（大阪燒，道頓堀本店）或福太郎本店（大阪燒，難波）",
             "固力果跑跑人拍照、逛街"
           ],
-          badges: ["FOOD", "PHOTO", "SHOPPING"]
+          badges: ["FOOD", "PHOTO", "SHOPPING"],
+          locationQuery: "道頓堀 心齋橋 大阪"
         }
       ]
     },
@@ -105,14 +109,16 @@ var ITINERARY_DATA = {
           title: "海遊館",
           description: "鯨鯊、企鵝、水獺，室內動線平緩",
           notes: [],
-          badges: ["PHOTO"]
+          badges: ["PHOTO"],
+          locationQuery: "海遊館 大阪"
         },
         {
           time: "12:00〜13:00",
           title: "天保山市場街午餐",
           description: "",
           notes: [],
-          badges: ["FOOD"]
+          badges: ["FOOD"],
+          locationQuery: "天保山市場街 大阪"
         },
         {
           time: "13:00〜13:40",
@@ -126,7 +132,8 @@ var ITINERARY_DATA = {
           title: "大阪城公園・天守閣",
           description: "天守閣有電梯，免爬樓梯",
           notes: [],
-          badges: ["PHOTO"]
+          badges: ["PHOTO"],
+          locationQuery: "大阪城 大阪"
         },
         {
           time: "15:30〜16:10",
@@ -147,7 +154,8 @@ var ITINERARY_DATA = {
           title: "晚間活動：空庭溫泉",
           description: "或替代方案，待最終確認",
           notes: ["待確認：最終方案尚未定案"],
-          badges: ["REST", "PENDING"]
+          badges: ["REST", "PENDING"],
+          locationQuery: "空庭溫泉 大阪"
         }
       ]
     },
@@ -191,7 +199,8 @@ var ITINERARY_DATA = {
           notes: [
             "已查證：京阪電車淀屋橋首班車05:48發車，抵達祇園四条最早06:57，太晚會錯過清水寺清晨黃金時段，JR+計程車仍是最佳方案"
           ],
-          badges: ["TRANSPORT"]
+          badges: ["TRANSPORT"],
+          locationQuery: "京都駅 京都"
         },
         {
           time: "06:00〜07:00",
@@ -201,21 +210,24 @@ var ITINERARY_DATA = {
             "拍照重點：仁王門、三重塔（晨光）、奧之院",
             "備註：出來前先上廁所"
           ],
-          badges: ["PHOTO"]
+          badges: ["PHOTO"],
+          locationQuery: "清水寺 京都"
         },
         {
           time: "07:00〜07:30",
           title: "二年坂・三年坂",
           description: "",
           notes: [],
-          badges: ["PHOTO"]
+          badges: ["PHOTO"],
+          locationQuery: "二年坂 三年坂 京都"
         },
         {
           time: "07:30〜07:40",
           title: "八坂神社",
           description: "新增，順路零額外時間成本",
           notes: [],
-          badges: ["PHOTO"]
+          badges: ["PHOTO"],
+          locationQuery: "八坂神社 京都"
         },
         {
           time: "07:40〜08:15",
@@ -225,7 +237,8 @@ var ITINERARY_DATA = {
             "附設KYOTO COFFEE咖啡站，招牌咖啡牛奶",
             "必買：京都みるくサンドクッキー（クローバー牧場特別牛乳，6個入約993円／12個入約1,695円）"
           ],
-          badges: ["FOOD", "SHOPPING", "PHOTO"]
+          badges: ["FOOD", "SHOPPING", "PHOTO"],
+          locationQuery: "日東堂 京都"
         },
         {
           time: "08:15〜09:00",
@@ -250,7 +263,8 @@ var ITINERARY_DATA = {
             "必買：OSMANTHUS 19金木犀（京都限定城市香）",
             "15mL約¥22,110／50mL約¥48,730／100mL約¥70,180"
           ],
-          badges: ["SHOPPING"]
+          badges: ["SHOPPING"],
+          locationQuery: "LE LABO 京都町家 京都"
         },
         {
           time: "11:15〜12:15",
@@ -259,7 +273,8 @@ var ITINERARY_DATA = {
           notes: [
             "可順手購買：生八ッ橋、茶の菓（MALEBRANCHE）－沿路店家皆有販售"
           ],
-          badges: ["PHOTO", "SHOPPING"]
+          badges: ["PHOTO", "SHOPPING"],
+          locationQuery: "祇園 花見小路 京都"
         },
         {
           time: "12:15〜12:30",
@@ -274,7 +289,8 @@ var ITINERARY_DATA = {
           title: "午餐：祇園白川 なみ里",
           description: "白川沿岸京料理，輕鬆用餐氣氛",
           notes: [],
-          badges: ["FOOD"]
+          badges: ["FOOD"],
+          locationQuery: "祇園白川 なみ里 京都"
         },
         {
           time: "14:00〜14:15",
@@ -288,21 +304,24 @@ var ITINERARY_DATA = {
           title: "移動至伏見稻荷",
           description: "",
           notes: [],
-          badges: ["TRANSPORT"]
+          badges: ["TRANSPORT"],
+          locationQuery: "伏見稻荷大社 京都"
         },
         {
           time: "15:00〜16:00",
           title: "伏見稻荷大社、千本鳥居",
           description: "已換回一般服裝",
           notes: [],
-          badges: ["PHOTO"]
+          badges: ["PHOTO"],
+          locationQuery: "伏見稻荷大社 京都"
         },
         {
           time: "16:00〜16:20",
           title: "移動至京都駅",
           description: "稻荷駅→京都駅，JR約5分",
           notes: [],
-          badges: ["TRANSPORT"]
+          badges: ["TRANSPORT"],
+          locationQuery: "京都駅 京都"
         },
         {
           time: "16:30〜18:30",
@@ -310,7 +329,8 @@ var ITINERARY_DATA = {
           description: "京都駅八條東口步行7分，¥3,800起（浮動定價）",
           notes: [],
           badges: ["RESERVATION"],
-          group: "傍晚／晚間"
+          group: "傍晚／晚間",
+          locationQuery: "teamLab Biovortex Kyoto 京都"
         },
         {
           time: "18:45",
@@ -351,14 +371,16 @@ var ITINERARY_DATA = {
             "順路：中村屋総本店可樂餅",
             "建議先電話確認營業狀態：075-861-1888"
           ],
-          badges: ["PHOTO", "FOOD", "PENDING"]
+          badges: ["PHOTO", "FOOD", "PENDING"],
+          locationQuery: "渡月橋 京都"
         },
         {
           time: "11:00〜12:30",
           title: "嵯峨野觀光小火車",
           description: "坐著賞景，全程輕鬆",
           notes: [],
-          badges: ["PHOTO"]
+          badges: ["PHOTO"],
+          locationQuery: "嵯峨野觀光小火車 京都"
         },
         {
           time: "12:30〜14:00",
@@ -372,7 +394,8 @@ var ITINERARY_DATA = {
           title: "金閣寺",
           description: "",
           notes: [],
-          badges: ["PHOTO"]
+          badges: ["PHOTO"],
+          locationQuery: "金閣寺 京都"
         },
         {
           time: "17:00",
@@ -401,7 +424,8 @@ var ITINERARY_DATA = {
           title: "阿倍野HARUKAS展望台",
           description: "早上人少視野佳",
           notes: [],
-          badges: ["PHOTO"]
+          badges: ["PHOTO"],
+          locationQuery: "阿倍野HARUKAS 大阪"
         },
         {
           time: "11:30〜12:00",
@@ -411,21 +435,24 @@ var ITINERARY_DATA = {
             "可加購：りくろーおじさんの店（起司蛋糕，難波店）",
             "551蓬莱（豬肉包，難波／心齋橋均有分店）"
           ],
-          badges: ["SHOPPING", "FOOD"]
+          badges: ["SHOPPING", "FOOD"],
+          locationQuery: "難波 心齋橋 大阪"
         },
         {
           time: "12:00〜12:45",
           title: "EDION難波本店 Neverland",
           description: "電玩、公仔、模型樓層，4樓設有寄物櫃可空手逛街",
           notes: [],
-          badges: ["SHOPPING"]
+          badges: ["SHOPPING"],
+          locationQuery: "EDION難波本店 大阪"
         },
         {
           time: "13:00後",
           title: "前往關西機場",
           description: "",
           notes: [],
-          badges: ["TRANSPORT"]
+          badges: ["TRANSPORT"],
+          locationQuery: "關西國際機場 大阪"
         }
       ]
     }

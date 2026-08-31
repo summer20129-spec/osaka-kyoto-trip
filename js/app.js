@@ -186,6 +186,24 @@
     };
   }
 
+  /**
+   * MAP — external map search links.
+   * ------------------------------------------------------------------
+   * The host/scheme/path are a fixed literal, never derived from data.
+   * itinerary.js may only supply a short place-name search string
+   * (locationQuery); it is percent-encoded into the query parameter
+   * and can never redefine the destination domain or scheme. This is
+   * the only mechanism in the app that produces an external URL, and
+   * it is only ever attached to a plain <a> the user must click —
+   * nothing here fetches, prefetches, or opens anything automatically.
+   * ------------------------------------------------------------------
+   */
+  var MAP_URL_TEMPLATE = "https://www.google.com/maps/search/?api=1&query=";
+
+  function buildMapUrl(query) {
+    return MAP_URL_TEMPLATE + encodeURIComponent(query);
+  }
+
   function el(tag, className, text) {
     var node = document.createElement(tag);
     if (className) node.className = className;
@@ -270,6 +288,24 @@
     return wrap;
   }
 
+  /**
+   * Renders the optional "MAP" external-search link. Only appears when
+   * the item supplies a locationQuery — a plain <a> so it stays
+   * semantic and keyboard-accessible with no JS click handler needed.
+   * The href is built exclusively by buildMapUrl(); locationQuery is
+   * never used as a URL/href itself.
+   */
+  function renderMapLink(item) {
+    var wrap = el("div", "timeline-item__map");
+    var link = el("a", "map-link", "MAP");
+    link.href = buildMapUrl(item.locationQuery);
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.setAttribute("aria-label", "在 Google Maps 開啟" + item.title);
+    wrap.appendChild(link);
+    return wrap;
+  }
+
   function renderTimelineItem(item, travelState) {
     var li = el("li", "timeline-item");
 
@@ -307,6 +343,10 @@
 
     if (item.badges && item.badges.length) {
       li.appendChild(renderBadges(item.badges));
+    }
+
+    if (item.locationQuery) {
+      li.appendChild(renderMapLink(item));
     }
 
     return li;
