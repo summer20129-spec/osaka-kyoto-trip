@@ -596,6 +596,99 @@ ul { padding: 0; list-style: none; }
   color: var(--color-accent);
 }
 
+/* -------------------- Guide (attraction / food / shopping) -------------------- */
+/* Same outlined "secondary action" language as MAP, kept as a fully
+   separate element so MAP's own markup and styling are untouched. */
+.timeline-item__guide {
+  margin-top: var(--space-3);
+}
+
+.guide-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  min-height: 44px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.guide-toggle:hover,
+.guide-toggle:focus-visible {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.guide-toggle::after {
+  content: "▸";
+  display: inline-block;
+  font-size: 0.65em;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+
+.guide-toggle[aria-expanded="true"]::after {
+  transform: rotate(90deg);
+}
+
+.guide-panel {
+  margin-top: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  display: grid;
+  gap: var(--space-3);
+  max-width: 100%;
+}
+
+/* [hidden] has the same specificity as a bare class selector, and an
+   author-stylesheet rule always wins that tie over the UA stylesheet's
+   `[hidden] { display: none }` — so without this, .guide-panel's own
+   `display: grid` above silently overrides the hidden state and the
+   panel stays visible regardless of aria-expanded. This selector adds
+   one extra attribute for higher specificity so hidden always wins. */
+.guide-panel[hidden] {
+  display: none;
+}
+
+.guide-panel__field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.guide-panel__label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.guide-panel__value {
+  font-size: var(--fs-body);
+  color: var(--color-text);
+  line-height: 1.6;
+  overflow-wrap: break-word;
+}
+
+.guide-panel__verified {
+  font-size: 0.7rem;
+  color: var(--color-text-faint);
+  font-style: italic;
+}
+
 /* -------------------- Travel Notes -------------------- */
 .travel-notes {
   max-width: var(--content-max);

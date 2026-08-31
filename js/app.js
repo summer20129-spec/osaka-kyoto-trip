@@ -204,6 +204,40 @@
     return MAP_URL_TEMPLATE + encodeURIComponent(query);
   }
 
+  /**
+   * GUIDE — optional place/food/shopping guide content.
+   * ------------------------------------------------------------------
+   * item.guide is entirely optional and additive; itinerary items with
+   * no guide render exactly as before. All guide text is plain,
+   * human-written content rendered via textContent only (see el()) —
+   * never innerHTML — and never contains URLs, coordinates, or any
+   * live/fetched data. Fields marked with a *VerifiedAt companion are
+   * semi-dynamic (price, limited-stock info) and are always rendered
+   * with an explicit "reference only, not live" note.
+   * ------------------------------------------------------------------
+   */
+  var GUIDE_FIELD_CONFIG = {
+    attraction: [
+      { key: "summary", label: "特色摘要" },
+      { key: "highlights", label: "推薦看點" },
+      { key: "photoTips", label: "拍照重點" },
+      { key: "tips", label: "注意事項" }
+    ],
+    food: [
+      { key: "specialty", label: "店家特色" },
+      { key: "mustTry", label: "招牌必點" },
+      { key: "budget", label: "價格帶", verifiedAtKey: "budgetVerifiedAt" },
+      { key: "reservationTip", label: "預約建議" },
+      { key: "elderFriendly", label: "長輩友善提示" }
+    ],
+    shopping: [
+      { key: "highlights", label: "店家特色" },
+      { key: "recommendedItems", label: "必買" },
+      { key: "limitedItems", label: "限定商品", verifiedAtKey: "limitedItemsVerifiedAt" },
+      { key: "tips", label: "購買提醒" }
+    ]
+  };
+
   function el(tag, className, text) {
     var node = document.createElement(tag);
     if (className) node.className = className;
@@ -306,6 +340,83 @@
     return wrap;
   }
 
+  var guideIdCounter = 0;
+
+  /**
+   * Renders one guide field as label + plain-text value. Semi-dynamic
+   * fields (budget, limited-stock info) carry a companion *VerifiedAt
+   * key and always render a low-weight "reference only" note next to
+   * the value — never presented as live data.
+   */
+  function renderGuideField(field, guide) {
+    var value = guide[field.key];
+    if (!value) return null;
+
+    var wrap = el("div", "guide-panel__field");
+    wrap.appendChild(el("p", "guide-panel__label", field.label));
+    wrap.appendChild(el("p", "guide-panel__value", value));
+
+    if (field.verifiedAtKey && guide[field.verifiedAtKey]) {
+      wrap.appendChild(
+        el(
+          "p",
+          "guide-panel__verified",
+          "查證於 " + guide[field.verifiedAtKey] + "．僅供參考，非即時資訊"
+        )
+      );
+    }
+
+    return wrap;
+  }
+
+  function renderGuidePanel(item, panelId) {
+    var panel = el("div", "guide-panel");
+    panel.id = panelId;
+    panel.hidden = true;
+
+    var fields = GUIDE_FIELD_CONFIG[item.guide.type] || [];
+    fields.forEach(function (field) {
+      var fieldEl = renderGuideField(field, item.guide);
+      if (fieldEl) panel.appendChild(fieldEl);
+    });
+
+    return panel;
+  }
+
+  /**
+   * Renders the "攻略" disclosure toggle. Pure DOM state (aria-expanded
+   * + the panel's hidden attribute) — no global registry of open
+   * panels, so any number of guides can be open at once and each is
+   * fully independent of every other item's state.
+   */
+  function renderGuideButton(panelId) {
+    var btn = el("button", "guide-toggle", "攻略");
+    btn.type = "button";
+    btn.setAttribute("aria-expanded", "false");
+    btn.setAttribute("aria-controls", panelId);
+
+    btn.addEventListener("click", function () {
+      var panel = document.getElementById(panelId);
+      var isOpen = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", String(!isOpen));
+      if (panel) {
+        panel.hidden = isOpen;
+      }
+    });
+
+    return btn;
+  }
+
+  function renderGuide(item) {
+    guideIdCounter += 1;
+    var panelId = "guide-panel-" + guideIdCounter;
+
+    var wrap = el("div", "timeline-item__guide");
+    wrap.appendChild(renderGuideButton(panelId));
+    wrap.appendChild(renderGuidePanel(item, panelId));
+    return wrap;
+  }
+
   function renderTimelineItem(item, travelState) {
     var li = el("li", "timeline-item");
 
@@ -347,6 +458,10 @@
 
     if (item.locationQuery) {
       li.appendChild(renderMapLink(item));
+    }
+
+    if (item.guide) {
+      li.appendChild(renderGuide(item));
     }
 
     return li;

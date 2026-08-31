@@ -211,7 +211,14 @@ var ITINERARY_DATA = {
             "備註：出來前先上廁所"
           ],
           badges: ["PHOTO"],
-          locationQuery: "清水寺 京都"
+          locationQuery: "清水寺 京都",
+          guide: {
+            type: "attraction",
+            summary: "京都最具代表性的世界文化遺產，以懸空木造舞台聞名",
+            highlights: "仁王門、三重塔、清水舞台、音羽の滝",
+            photoTips: "清晨06:00前後人潮最少，逆光角度可拍出舞台剪影",
+            tips: "石階濕滑，建議穿防滑鞋"
+          }
         },
         {
           time: "07:00〜07:30",
@@ -264,7 +271,15 @@ var ITINERARY_DATA = {
             "15mL約¥22,110／50mL約¥48,730／100mL約¥70,180"
           ],
           badges: ["SHOPPING"],
-          locationQuery: "LE LABO 京都町家 京都"
+          locationQuery: "LE LABO 京都町家 京都",
+          guide: {
+            type: "shopping",
+            highlights: "改裝自京都傳統町家建築，香氛品牌LE LABO日本限定店",
+            recommendedItems: "OSMANTHUS 19金木犀（京都限定城市香）",
+            limitedItems: "京都限定香氛僅此門市販售",
+            limitedItemsVerifiedAt: "2026-08",
+            tips: "開店後15分鐘內抵達可避開排隊人潮"
+          }
         },
         {
           time: "11:15〜12:15",
@@ -290,7 +305,16 @@ var ITINERARY_DATA = {
           description: "白川沿岸京料理，輕鬆用餐氣氛",
           notes: [],
           badges: ["FOOD"],
-          locationQuery: "祇園白川 なみ里 京都"
+          locationQuery: "祇園白川 なみ里 京都",
+          guide: {
+            type: "food",
+            specialty: "白川沿岸京料理，環境優雅、步調輕鬆",
+            mustTry: "季節御膳、京都野菜料理",
+            budget: "約¥4,000〜6,000／人",
+            budgetVerifiedAt: "2026-08",
+            reservationTip: "用餐時段建議提前預約，假日尤其熱門",
+            elderFriendly: "座位需脫鞋入座，行動不便者建議事先詢問是否有椅子座位"
+          }
         },
         {
           time: "14:00〜14:15",
