@@ -301,6 +301,28 @@ ul { padding: 0; list-style: none; }
   color: var(--color-accent-contrast);
 }
 
+/* TODAY — the trip day matching the device's Japan-time date. This is
+   independent of is-active (the day currently scrolled into view). */
+.day-nav__item.is-today {
+  position: relative;
+}
+
+.day-nav__item.is-today::after {
+  content: "";
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+.day-nav__item.is-active.is-today::after {
+  background: var(--color-accent-contrast);
+}
+
 /* -------------------- Days -------------------- */
 .days {
   max-width: var(--content-max);
@@ -450,6 +472,34 @@ ul { padding: 0; list-style: none; }
   font-variant-numeric: tabular-nums;
 }
 
+/* NOW / NEXT — Travel Mode status, distinct from category badges. */
+.timeline-item.is-now::before {
+  background: var(--color-accent);
+}
+
+.travel-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  margin-left: var(--space-2);
+  vertical-align: middle;
+}
+
+.travel-tag--now {
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+}
+
+.travel-tag--next {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
 .timeline-item__title {
   font-size: var(--fs-item-title);
   font-weight: 600;
@@ -565,6 +615,34 @@ ul { padding: 0; list-style: none; }
   letter-spacing: 0.04em;
 }
 
+/* -------------------- Travel Mode: jump-to-current action -------------------- */
+.travel-jump {
+  position: fixed;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  font-family: inherit;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--color-accent-contrast);
+  background: var(--color-accent);
+  border: none;
+  border-radius: 999px;
+  padding: var(--space-3) var(--space-5);
+  min-height: 44px;
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+}
+
+.travel-jump.is-complete {
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
 /* -------------------- Desktop refinements -------------------- */
 @media (min-width: 768px) {
   :root {
@@ -579,6 +657,13 @@ ul { padding: 0; list-style: none; }
   }
 
   .day-nav__item {
+    padding: var(--space-2) var(--space-5);
+  }
+
+  .travel-jump {
+    right: var(--space-6);
+    bottom: var(--space-6);
+    font-size: 0.8rem;
     padding: var(--space-2) var(--space-5);
   }
 }
