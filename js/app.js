@@ -269,7 +269,8 @@
       {
         label: "住宿",
         value: overview.accommodation.name,
-        detail: overview.accommodation.detail + " · " + overview.accommodation.location
+        detail: overview.accommodation.detail + " · " + overview.accommodation.location,
+        locationQuery: overview.accommodation.locationQuery
       }
     ];
 
@@ -279,6 +280,9 @@
       wrap.appendChild(el("p", "overview__card-value", card.value));
       if (card.detail) {
         wrap.appendChild(el("p", "overview__card-detail", card.detail));
+      }
+      if (card.locationQuery) {
+        wrap.appendChild(renderMapLink({ title: card.value, locationQuery: card.locationQuery }));
       }
       container.appendChild(wrap);
     });

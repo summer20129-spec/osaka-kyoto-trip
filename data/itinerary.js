@@ -35,9 +35,10 @@ var ITINERARY_DATA = {
     travelers: "三人同行",
     cities: "大阪・京都",
     accommodation: {
-      name: "日本橋近鐵站套房",
+      name: "日本橋近鐵站附近套房",
       detail: "4晚・3人",
-      location: "中央區日本橋站步行5分・近難波／心齋橋／道頓堀／黑門市場"
+      location: "大阪市中央區，近鐵日本橋站步行約5分鐘，鄰近黑門市場／難波／道頓堀",
+      locationQuery: "近鐵日本橋站 大阪"
     }
   },
 
@@ -58,9 +59,13 @@ var ITINERARY_DATA = {
           time: "12:50",
           title: "抵達關西機場",
           description: "南海Rapi:t直達難波",
-          notes: [],
-          badges: ["TRANSPORT"],
-          locationQuery: "關西國際機場 大阪"
+          notes: [
+            "入境提領行李後，依「南海電鐵／NANKAI」指標前往關西機場站（南海電鐵車站位於第1航廈2F，經聯絡空橋可達）",
+            "搭乘南海特急Rapi:t前往「難波」站，為指定席，搭車前請確認車次、座位與月台",
+            "抵達南海難波站後，再依當日住宿位置前往近鐵日本橋站附近",
+            "提醒：不要誤搭JR關空快速；本行程使用南海Rapi:t前往難波"
+          ],
+          badges: ["TRANSPORT"]
         },
         {
           time: "13:40〜14:00",
@@ -68,7 +73,7 @@ var ITINERARY_DATA = {
           description: "稍作休息",
           notes: [],
           badges: ["REST"],
-          locationQuery: "日本橋近鐵站套房 大阪"
+          locationQuery: "近鐵日本橋站 大阪"
         },
         {
           time: "15:30〜16:30",
@@ -193,7 +198,7 @@ var ITINERARY_DATA = {
       warning: {
         label: "HIGH ACTIVITY",
         title: "04:45 出發，全天近 14 小時",
-        body: "本次旅程體力消耗最大的一天，凌晨出發、深夜返回，建議先與女友母親確認能否配合。"
+        body: "本次旅程體力消耗最大的一天，凌晨出發、深夜返回"
       },
       items: [
         {
