@@ -87,7 +87,13 @@ var ITINERARY_DATA = {
             "固力果跑跑人拍照、逛街"
           ],
           badges: ["FOOD", "PHOTO", "SHOPPING"],
-          locationQuery: "道頓堀 心齋橋 大阪"
+          locationQuery: "道頓堀 心齋橋 大阪",
+          guide: {
+            type: "attraction",
+            summary: "大阪最具代表性的夜間街景，運河沿岸霓虹招牌林立，是大阪的象徵畫面。",
+            photoTips: "戎橋（固力果橋）為最佳制高點，可一次收錄多個經典招牌入鏡。",
+            tips: "晚間人潮壅擠，建議沿單側河岸步行；貴重物品隨身留意。"
+          }
         }
       ]
     },
@@ -110,7 +116,13 @@ var ITINERARY_DATA = {
           description: "鯨鯊、企鵝、水獺，室內動線平緩",
           notes: [],
           badges: ["PHOTO"],
-          locationQuery: "海遊館 大阪"
+          locationQuery: "海遊館 大阪",
+          guide: {
+            type: "attraction",
+            summary: "以太平洋為主題的大型水族館，中央大水槽貫穿多樓層，是全館焦點。",
+            highlights: "搭手扶梯上到最高樓層後沿螺旋動線向下參觀，可從不同高度眺望中央大水槽。",
+            tips: "動線為單向設計，全程不需走回頭路。"
+          }
         },
         {
           time: "12:00〜13:00",
@@ -133,7 +145,13 @@ var ITINERARY_DATA = {
           description: "天守閣有電梯，免爬樓梯",
           notes: [],
           badges: ["PHOTO"],
-          locationQuery: "大阪城 大阪"
+          locationQuery: "大阪城 大阪",
+          guide: {
+            type: "attraction",
+            summary: "大阪代表性城郭地標，天守閣為園區核心焦點。",
+            highlights: "天守閣最上層展望台可360度俯瞰大阪市區。",
+            tips: "園區範圍廣大，建議把體力留給天守閣核心區，外圍庭園可視時間彈性取捨。"
+          }
         },
         {
           time: "15:30〜16:10",
@@ -337,7 +355,13 @@ var ITINERARY_DATA = {
           description: "已換回一般服裝",
           notes: [],
           badges: ["PHOTO"],
-          locationQuery: "伏見稻荷大社 京都"
+          locationQuery: "伏見稻荷大社 京都",
+          guide: {
+            type: "attraction",
+            summary: "京都地標級神社，以綿延山徑的橘紅千本鳥居聞名。",
+            highlights: "鳥居隧道從山腳延伸至山頂，前段密集排列的鳥居最具代表性。",
+            tips: "全程往返山頂需2小時以上；一般遊客不必走完整座稻荷山，走前段千本鳥居即可獲得主要體驗。"
+          }
         },
         {
           time: "16:00〜16:20",
@@ -419,7 +443,13 @@ var ITINERARY_DATA = {
           description: "",
           notes: [],
           badges: ["PHOTO"],
-          locationQuery: "金閣寺 京都"
+          locationQuery: "金閣寺 京都",
+          guide: {
+            type: "attraction",
+            summary: "京都最具代表性景點之一，金箔外牆倒映鏡湖池，是經典畫面。",
+            photoTips: "鏡湖池對岸為最佳合影角度，可將金閣寺與倒影一同入鏡。",
+            tips: "順時針單向參觀動線，沿途皆為戶外步道，全程約30〜40分鐘。"
+          }
         },
         {
           time: "17:00",
@@ -449,7 +479,13 @@ var ITINERARY_DATA = {
           description: "早上人少視野佳",
           notes: [],
           badges: ["PHOTO"],
-          locationQuery: "阿倍野HARUKAS 大阪"
+          locationQuery: "阿倍野HARUKAS 大阪",
+          guide: {
+            type: "attraction",
+            summary: "日本最高建築的展望台，可360度俯瞰大阪全景。",
+            highlights: "天氣晴朗時可遠眺六甲山、明石海峽大橋方向。",
+            tips: "設有室外露天甲板，可實際吹風眺望，建議留意保暖防風。"
+          }
         },
         {
           time: "11:30〜12:00",
