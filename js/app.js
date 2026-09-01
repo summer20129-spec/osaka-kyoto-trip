@@ -218,6 +218,7 @@
    */
   var GUIDE_FIELD_CONFIG = {
     attraction: [
+      { key: "historyBrief", label: "歷史小知識" },
       { key: "summary", label: "特色摘要" },
       { key: "highlights", label: "推薦看點" },
       { key: "photoTips", label: "拍照重點" },
