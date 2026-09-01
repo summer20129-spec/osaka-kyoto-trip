@@ -246,7 +246,13 @@ var ITINERARY_DATA = {
           description: "",
           notes: [],
           badges: ["PHOTO"],
-          locationQuery: "二年坂 三年坂 京都"
+          locationQuery: "二年坂 三年坂 京都",
+          guide: {
+            type: "attraction",
+            historyBrief: "二年坂・三年坂是京都東山地區通往清水寺的傳統參道，隨著周邊寺社興盛而發展為門前町。石板路與傳統町家至今保存完整，已被列為重要傳統建造物群保存地區。",
+            summary: "京都東山最具代表性的石板老街，是清水寺周邊人氣最高的散策路段之一。",
+            highlights: "石階兩側傳統京町家與老舖林立，保留京都舊時街景風貌。"
+          }
         },
         {
           time: "07:30〜07:40",
@@ -315,7 +321,14 @@ var ITINERARY_DATA = {
             "可順手購買：生八ッ橋、茶の菓（MALEBRANCHE）－沿路店家皆有販售"
           ],
           badges: ["PHOTO", "SHOPPING"],
-          locationQuery: "祇園 花見小路 京都"
+          locationQuery: "祇園 花見小路 京都",
+          guide: {
+            type: "attraction",
+            historyBrief: "花見小路是祇園的核心街道，江戶時代因鄰近八坂神社香客往來而發展為茶屋聚集的花街。傳統町家茶屋至今仍是藝妓、舞妓活動與傳統京都茶屋文化的重要據點。",
+            summary: "京都最具代表性的傳統街景之一，石板路兩側洋溢濃厚古都氛圍。",
+            highlights: "花見小路沿路町家建築完整，是祇園地區保存最完整的歷史街景之一。",
+            tips: "部分巷弄為私人生活道路，請勿隨意進入或近距離拍攝藝妓、舞妓及店家，尊重在地居民與傳統文化從業者隱私。"
+          }
         },
         {
           time: "12:15〜12:30",
