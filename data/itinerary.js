@@ -572,6 +572,41 @@ var ITINERARY_DATA = {
     }
   ],
 
+  checklist: [
+    {
+      title: "需提前預約／購票",
+      items: [
+        { id: "tkt-rapit", day: "Day 1", label: "南海 Rapi:t 指定席（關西機場→難波）", detail: "確認車次、座位與月台；不要誤搭 JR 關空快速" },
+        { id: "tkt-teamlab", day: "Day 3", label: "teamLab Biovortex Kyoto 時段票", detail: "16:30〜18:30 入場，於官網或 KLOOK 預約；¥3,800 起（浮動定價）" },
+        { id: "rsv-kimono", day: "Day 3", label: "和服店預約確認", detail: "08:15 抵達報到，09:00 換裝" },
+        { id: "rsv-namiri", day: "Day 3", label: "午餐：祇園白川 なみ里 預約", detail: "12:30 用餐時段，假日尤其熱門" },
+        { id: "tkt-sagano", day: "Day 4", label: "嵯峨野觀光小火車", detail: "11:00〜12:30 搭乘；確認購票方式與日期，旺季建議提早購買" }
+      ]
+    },
+    {
+      title: "當天購票（出發前確認票價與購買方式）",
+      items: [
+        { id: "buy-kaiyukan", day: "Day 2", label: "海遊館" },
+        { id: "buy-osakajo", day: "Day 2", label: "大阪城天守閣" },
+        { id: "buy-kiyomizu", day: "Day 3", label: "清水寺（拜觀費）" },
+        { id: "buy-kinkakuji", day: "Day 4", label: "金閣寺（拜觀費）" },
+        { id: "buy-harukas", day: "Day 5", label: "阿倍野HARUKAS展望台" }
+      ]
+    },
+    {
+      title: "行前準備",
+      items: [
+        { id: "prep-passport", label: "護照效期與入境所需文件確認" },
+        { id: "prep-lodging", label: "確認住宿入住方式與抵達時間" },
+        { id: "prep-ic", label: "準備交通 IC 卡", detail: "建議使用 ICOCA（關西最通用）" },
+        { id: "prep-cash", label: "準備日幣現鈔", detail: "寺廟門票、交通儲值、街邊小吃需現金，其餘以信用卡為主" },
+        { id: "prep-weather", label: "洋蔥式穿搭與輕便雨具", detail: "白天約20〜23°C，晚上約13°C" },
+        { id: "prep-network", label: "手機網路與行動電源" },
+        { id: "prep-day3", day: "Day 3", label: "前一晚早點休息", detail: "04:45 出發，全天近 14 小時" }
+      ]
+    }
+  ],
+
   travelNotes: [
     {
       title: "用餐原則",

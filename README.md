@@ -105,6 +105,10 @@ warning: {
 
 `highActivity: false` 或省略 `warning` 則不會顯示警示卡。
 
+### 修改行前準備清單
+
+編輯最外層的 `checklist` 陣列，每組為 `{ title, items }`，每個項目為 `{ id, label, detail?, day? }`。`id` 必須唯一且不要隨意更改（勾選狀態以 `id` 儲存在使用者自己瀏覽器的 localStorage，不會上傳到任何地方）。
+
 ### 修改 Travel Notes
 
 編輯最外層的 `travelNotes` 陣列，每個項目為 `{ title, body }`。

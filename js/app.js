@@ -552,6 +552,82 @@
     });
   }
 
+  var CHECKLIST_STORAGE_KEY = "osaka-kyoto-trip:checklist";
+
+  // Check state lives only in this browser's localStorage (never sent
+  // anywhere). Every access is guarded: storage can be blocked or empty.
+  function loadChecklistState() {
+    try {
+      var parsed = JSON.parse(window.localStorage.getItem(CHECKLIST_STORAGE_KEY) || "[]");
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveChecklistState(ids) {
+    try {
+      window.localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(ids));
+    } catch (e) {
+      /* storage unavailable: checklist still works for this visit */
+    }
+  }
+
+  function renderChecklist(data) {
+    var body = document.getElementById("checklist-body");
+    var progress = document.getElementById("checklist-progress");
+    if (!body || !progress || !Array.isArray(data.checklist)) return;
+
+    var saved = loadChecklistState();
+    var total = 0;
+
+    function sync() {
+      var checked = body.querySelectorAll("input[type=checkbox]:checked");
+      var ids = [];
+      checked.forEach(function (box) {
+        ids.push(box.getAttribute("data-id"));
+      });
+      progress.textContent = ids.length + " / " + total;
+      return ids;
+    }
+
+    data.checklist.forEach(function (group) {
+      var section = el("div", "checklist__group");
+      section.appendChild(el("h3", "checklist__group-title", group.title));
+      var list = el("ul", "checklist__list");
+
+      group.items.forEach(function (item) {
+        total += 1;
+        var li = el("li", "checklist__li");
+        var label = el("label", "checklist__item");
+
+        var box = document.createElement("input");
+        box.type = "checkbox";
+        box.className = "checklist__box";
+        box.setAttribute("data-id", item.id);
+        box.checked = saved.indexOf(item.id) !== -1;
+        box.addEventListener("change", function () {
+          saveChecklistState(sync());
+        });
+        label.appendChild(box);
+
+        var text = el("span", "checklist__text");
+        if (item.day) text.appendChild(el("span", "checklist__day", item.day));
+        text.appendChild(el("span", "checklist__label", item.label));
+        if (item.detail) text.appendChild(el("span", "checklist__detail", item.detail));
+        label.appendChild(text);
+
+        li.appendChild(label);
+        list.appendChild(li);
+      });
+
+      section.appendChild(list);
+      body.appendChild(section);
+    });
+
+    sync();
+  }
+
   /**
    * Renders the floating "back to current itinerary" action. Only
    * appears when today falls within the trip dates. Prefers jumping to
@@ -652,6 +728,7 @@
 
     renderHeroStats(ITINERARY_DATA);
     renderOverview(ITINERARY_DATA);
+    renderChecklist(ITINERARY_DATA);
     renderDayNav(ITINERARY_DATA, travelState);
     renderDays(ITINERARY_DATA, travelState);
     renderTravelNotes(ITINERARY_DATA);
