@@ -346,6 +346,48 @@
   }
 
   var guideIdCounter = 0;
+  var noteImageIdCounter = 0;
+
+  /**
+   * Optional image attached to a note ({ src, alt, label }), shown in
+   * the same collapsed-by-default disclosure pattern as the guide.
+   * src must be a project-relative path under images/ (never a URL).
+   */
+  function renderNoteImage(image) {
+    if (!image || typeof image.src !== "string") return null;
+    if (!/^images\/[A-Za-z0-9_\-\/.]+$/.test(image.src) || image.src.indexOf("..") !== -1) return null;
+
+    noteImageIdCounter += 1;
+    var panelId = "note-image-" + noteImageIdCounter;
+
+    var wrap = el("div", "timeline-item__note-image");
+    wrap.appendChild(renderGuideButton(panelId, image.label || "圖片"));
+
+    var panel = el("div", "note-image-panel");
+    panel.id = panelId;
+    panel.hidden = true;
+
+    var link = el("a", "note-image-panel__link");
+    link.href = image.src;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.setAttribute("aria-label", "開啟原圖：" + (image.alt || ""));
+
+    var img = document.createElement("img");
+    img.className = "note-image-panel__img";
+    img.src = image.src;
+    img.alt = image.alt || "";
+    img.loading = "lazy";
+    // Start fetching as soon as the user opens the panel, instead of
+    // waiting on the browser's lazy-load heuristics.
+    wrap.querySelector(".guide-toggle").addEventListener("click", function () {
+      img.loading = "eager";
+    });
+    link.appendChild(img);
+    panel.appendChild(link);
+    wrap.appendChild(panel);
+    return wrap;
+  }
 
   /**
    * Renders one guide field as label + plain-text value. Semi-dynamic
@@ -394,8 +436,8 @@
    * panels, so any number of guides can be open at once and each is
    * fully independent of every other item's state.
    */
-  function renderGuideButton(panelId) {
-    var btn = el("button", "guide-toggle", "攻略");
+  function renderGuideButton(panelId, label) {
+    var btn = el("button", "guide-toggle", label || "攻略");
     btn.type = "button";
     btn.setAttribute("aria-expanded", "false");
     btn.setAttribute("aria-controls", panelId);
@@ -454,8 +496,9 @@
       item.notes.forEach(function (note) {
         // A note is a plain string, or { text, locationQuery } to also
         // show a MAP link for a place mentioned in that note.
-        var hasMap = !!(note && typeof note === "object" && note.locationQuery);
-        var noteEl = el("p", "timeline-item__note", hasMap ? note.text : note);
+        var isObject = !!(note && typeof note === "object");
+        var hasMap = isObject && !!note.locationQuery;
+        var noteEl = el("p", "timeline-item__note", isObject ? note.text : note);
         if (hasMap) {
           var mapLink = el("a", "map-link timeline-item__note-map", "MAP");
           mapLink.href = buildMapUrl(note.locationQuery);
@@ -465,6 +508,11 @@
           noteEl.appendChild(mapLink);
         }
         notesWrap.appendChild(noteEl);
+
+        if (note && typeof note === "object" && note.image) {
+          var imageEl = renderNoteImage(note.image);
+          if (imageEl) notesWrap.appendChild(imageEl);
+        }
       });
       li.appendChild(notesWrap);
     }

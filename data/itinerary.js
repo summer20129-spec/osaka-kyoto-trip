@@ -98,6 +98,16 @@ var ITINERARY_DATA = {
             {
               text: "甜點：浪漫烤地瓜 芋之巢 美國村店（烤地瓜外帶，離心齋橋站約400公尺；僅收現金，營業時間請先確認）",
               locationQuery: "浪漫焼き芋 芋の巢 アメリカ村店 大阪"
+            },
+            {
+              text: "藥妝：Sundrug 道頓堀店（宗右衛門町，營業至深夜）；優惠券單筆未稅滿¥10,000起適用，最高約17% OFF（含免稅），有效至2026/12/31",
+              locationQuery: "サンドラッグ 道頓堀店 大阪",
+              image: { src: "images/coupons/sundrug.jpg", alt: "Sundrug 優惠券", label: "優惠券" }
+            },
+            {
+              text: "百貨：大丸心齋橋店（10:00〜20:00，需先逛再用餐）；優惠券需出示護照，單筆含稅滿¥3,000，食品與餐廳不適用，有效至2027/8/31",
+              locationQuery: "大丸心斎橋店 大阪",
+              image: { src: "images/coupons/daimaru.jpg", alt: "大丸／松坂屋 優惠券", label: "優惠券" }
             }
           ],
           badges: ["FOOD", "PHOTO", "SHOPPING"],
@@ -210,7 +220,7 @@ var ITINERARY_DATA = {
           title: "MEGA驚安殿堂 新世界店",
           description: "走路約1分鐘即達，藥妝零食一次逛",
           notes: [
-            "有免稅服務，請隨身攜帶護照",
+            "有免稅服務，請隨身攜帶護照（2026/11/1起免稅改為出境後退稅，結帳方式請向店員確認）",
             "購物袋較多時，可搭堺筋線回日本橋放置後再散步（出發前請用Google Maps確認路線）"
           ],
           badges: ["SHOPPING"],
@@ -578,7 +588,12 @@ var ITINERARY_DATA = {
           description: "",
           notes: [
             "可加購：りくろーおじさんの店（起司蛋糕，難波店）",
-            "551蓬莱（豬肉包，難波／心齋橋均有分店）"
+            "551蓬莱（豬肉包，難波／心齋橋均有分店）",
+            {
+              text: "運動用品（選擇性）：難波Parks 4樓 SPORTS DEPO／Alpen Outdoors（11:00起營業）；優惠券5% OFF，有效至2027/6/30",
+              locationQuery: "スポーツデポ なんばパークス店 大阪",
+              image: { src: "images/coupons/alpen.jpg", alt: "Alpen 優惠券", label: "優惠券" }
+            }
           ],
           badges: ["SHOPPING", "FOOD"],
           locationQuery: "難波 心齋橋 大阪",
@@ -592,7 +607,12 @@ var ITINERARY_DATA = {
           time: "12:00〜12:45",
           title: "EDION難波本店 Neverland",
           description: "電玩、公仔、模型樓層，4樓設有寄物櫃可空手逛街",
-          notes: [],
+          notes: [
+            {
+              text: "優惠券：免稅10%，另有家電類7%或食品藥妝類5%（兩個條碼都要掃）；玩具、遊戲、影音軟體、書籍、酒類等不適用優惠券，僅可免稅，有效至2027/12/31",
+              image: { src: "images/coupons/edion.jpg", alt: "EDION 優惠券", label: "優惠券" }
+            }
+          ],
           badges: ["SHOPPING"],
           locationQuery: "EDION難波本店 大阪"
         },
@@ -635,6 +655,7 @@ var ITINERARY_DATA = {
         { id: "prep-passport", label: "護照效期與入境所需文件確認" },
         { id: "prep-lodging", label: "確認住宿入住方式與抵達時間" },
         { id: "prep-ic", label: "準備交通 IC 卡", detail: "建議使用 ICOCA（關西最通用）" },
+        { id: "prep-coupons", label: "優惠券與護照", detail: "優惠券已附在行程備註；2026/11/1起免稅改為出境後退稅，結帳方式請向店員確認" },
         { id: "prep-cash", label: "準備日幣現鈔", detail: "寺廟門票、交通儲值、街邊小吃需現金，其餘以信用卡為主" },
         { id: "prep-weather", label: "洋蔥式穿搭與輕便雨具", detail: "白天約20〜23°C，晚上約13°C" },
         { id: "prep-network", label: "手機網路與行動電源" },

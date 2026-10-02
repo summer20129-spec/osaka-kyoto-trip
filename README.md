@@ -59,6 +59,8 @@ osaka-kyoto-trip/
 
 `notes` 的每一項通常是純文字；若該則備註提到的地點想附上地圖連結，可改寫成 `{ text: "...", locationQuery: "搜尋字串" }`。
 
+備註物件也可加上 `image: { src: "images/...", alt: "...", label: "優惠券" }`，會顯示成可展開的圖片（`src` 限專案內 `images/` 路徑）。
+
 直接修改對應欄位的文字即可，例如把 `time` 改成新的時段，或把 `title` 換成新地點。
 
 ### 新增景點
