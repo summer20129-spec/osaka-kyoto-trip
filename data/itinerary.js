@@ -81,7 +81,12 @@ var ITINERARY_DATA = {
           description: "純逛街拍照，不在此用餐",
           notes: [],
           badges: ["PHOTO"],
-          locationQuery: "黑門市場 大阪"
+          locationQuery: "黑門市場 大阪",
+          guide: {
+            type: "attraction",
+            summary: "難波周邊的傳統市場，海鮮、熟食與街邊小吃聚集，適合感受大阪庶民市場氛圍。",
+            tips: "本行程定位為純逛街拍照，用餐安排請參考頁尾「用餐原則」。"
+          }
         },
         {
           time: "17:30〜21:00",
@@ -96,6 +101,7 @@ var ITINERARY_DATA = {
           guide: {
             type: "attraction",
             summary: "大阪最具代表性的夜間街景，運河沿岸霓虹招牌林立，是大阪的象徵畫面。",
+            highlights: "沿道頓堀川夜間散步看霓虹倒影；心齋橋筋商店街可順路逛街；固力果跑跑人是經典合照點。",
             photoTips: "戎橋（固力果橋）為最佳制高點，可一次收錄多個經典招牌入鏡。",
             tips: "晚間人潮壅擠，建議沿單側河岸步行；貴重物品隨身留意。"
           }
@@ -135,7 +141,12 @@ var ITINERARY_DATA = {
           description: "",
           notes: [],
           badges: ["FOOD"],
-          locationQuery: "天保山市場街 大阪"
+          locationQuery: "天保山市場街 大阪",
+          guide: {
+            type: "attraction",
+            summary: "位於海遊館旁的商場，集中餐飲與伴手禮店，午餐動線順路。",
+            highlights: "同區另有天保山大摩天輪與港灣遊船，行程未排入，若時間有餘裕可視情況加入。"
+          }
         },
         {
           time: "13:00〜13:40",
@@ -156,6 +167,7 @@ var ITINERARY_DATA = {
             historyBrief: "大阪城由豐臣秀吉於1583年下令建造，象徵其統一天下的權勢地位。歷經戰火與雷擊多次焚毀，現存天守閣為1931年重建的鋼筋混凝土建築，內部已改為展示館，並非豐臣時代原貌。",
             summary: "大阪代表性城郭地標，天守閣為園區核心焦點。",
             highlights: "天守閣最上層展望台可360度俯瞰大阪市區。",
+            photoTips: "護城河沿岸可拍攝天守閣倒影，水面平靜時效果較佳。",
             tips: "園區範圍廣大，建議把體力留給天守閣核心區，外圍庭園可視時間彈性取捨。"
           }
         },
@@ -183,7 +195,12 @@ var ITINERARY_DATA = {
             "御堂筋為主要車道，請沿人行道步行，不要為拍照穿越馬路"
           ],
           badges: ["FOOD", "PHOTO"],
-          locationQuery: "御堂筋 大阪"
+          locationQuery: "御堂筋 大阪",
+          guide: {
+            type: "attraction",
+            summary: "大阪南北向主要幹道，秋冬期間以彩燈點綴行道樹，是大阪冬季代表性夜景之一。",
+            photoTips: "以延伸的行道樹燈海為主體，沿人行道取景；夜間光線偏暗，手持拍攝請穩住相機。"
+          }
         }
       ]
     },
@@ -528,7 +545,12 @@ var ITINERARY_DATA = {
             "551蓬莱（豬肉包，難波／心齋橋均有分店）"
           ],
           badges: ["SHOPPING", "FOOD"],
-          locationQuery: "難波 心齋橋 大阪"
+          locationQuery: "難波 心齋橋 大阪",
+          guide: {
+            type: "shopping",
+            highlights: "心齋橋筋商店街、難波 CITY、難波 Parks 都在同一區域，購物選擇集中。",
+            tips: "採買時間約30分鐘，建議擇一區域集中逛，並預留前往機場的時間。"
+          }
         },
         {
           time: "12:00〜12:45",
