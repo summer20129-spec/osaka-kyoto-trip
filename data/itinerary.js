@@ -94,7 +94,11 @@ var ITINERARY_DATA = {
           description: "",
           notes: [
             "晚餐建議：美津の（大阪燒，道頓堀本店）或福太郎本店（大阪燒，難波）",
-            "固力果跑跑人拍照、逛街"
+            "固力果跑跑人拍照、逛街",
+            {
+              text: "甜點：浪漫烤地瓜 芋之巢 美國村店（烤地瓜外帶，離心齋橋站約400公尺；僅收現金，營業時間請先確認）",
+              locationQuery: "浪漫焼き芋 芋の巢 アメリカ村店 大阪"
+            }
           ],
           badges: ["FOOD", "PHOTO", "SHOPPING"],
           locationQuery: "道頓堀 心齋橋 大阪",
@@ -172,29 +176,61 @@ var ITINERARY_DATA = {
           }
         },
         {
-          time: "15:30〜16:10",
-          title: "返回難波",
-          description: "",
-          notes: [],
+          time: "15:30〜16:15",
+          title: "移動至新世界",
+          description: "大阪城結束後直接前往大興壽司，不先回難波",
+          notes: [
+            "可搭JR大阪環狀線至新今宮站，再步行前往（實際路線與時間請用Google Maps確認）"
+          ],
           badges: ["TRANSPORT"]
         },
         {
-          time: "16:10〜18:00",
-          title: "自由活動／休息",
-          description: "",
-          notes: [],
-          badges: ["REST"]
+          time: "16:15〜17:30",
+          title: "晚餐：大興壽司 本店",
+          description: "新世界ジャンジャン横丁，職人現場握壽司",
+          notes: [
+            "不可預約，排隊約30〜40分鐘；提早用餐可避開晚餐尖峰",
+            "週四公休（今日週三有營業）；付款方式未查到，請備日幣現鈔",
+            "用餐後請直接前往下一站，不在新世界夜間逗留"
+          ],
+          badges: ["FOOD"],
+          locationQuery: "大興壽司 本店 大阪",
+          guide: {
+            type: "food",
+            specialty: "新世界老字號大眾壽司店，職人現場握製，3貫150円起，有吧台與桌位。",
+            mustTry: "紅味噌湯（赤だし）、8貫握壽司套餐",
+            budget: "約¥1,000〜2,000／人",
+            budgetVerifiedAt: "2026-10",
+            reservationTip: "不可預約，客人翻桌快，約30〜40分鐘可入座，建議提早前往。",
+            elderFriendly: "有桌位可坐，但店面小、需排隊、人多，建議先確認長輩能否接受。"
+          }
         },
         {
-          time: "18:00〜20:30",
-          title: "晚餐＋御堂筋燈飾夜景",
-          description: "晚餐後沿御堂筋散步賞燈，回住處順路",
+          time: "17:30〜18:30",
+          title: "MEGA驚安殿堂 新世界店",
+          description: "走路約1分鐘即達，藥妝零食一次逛",
+          notes: [
+            "有免稅服務，請隨身攜帶護照",
+            "購物袋較多時，可搭堺筋線回日本橋放置後再散步（出發前請用Google Maps確認路線）"
+          ],
+          badges: ["SHOPPING"],
+          locationQuery: "MEGAドン・キホーテ新世界店 大阪",
+          guide: {
+            type: "shopping",
+            highlights: "新世界區域的大型驚安殿堂，營業至深夜，品項齊全。",
+            tips: "先吃完壽司再逛，建議以輕巧的物品為主；隔天Day 3凌晨04:45出發，請控制時間。"
+          }
+        },
+        {
+          time: "18:45〜20:00",
+          title: "御堂筋燈飾夜景",
+          description: "回難波後沿御堂筋散步賞燈，回住處順路",
           notes: [
             "御堂筋燈飾展演期間2026/11/03〜12/31，點燈約17:00〜25:00（出發前請再確認官方公告）",
             "燈飾範圍為阪神前交差點～難波西口交差點；今晚可從難波往北散步，與Day 1的道頓堀・心齋橋互補",
             "御堂筋為主要車道，請沿人行道步行，不要為拍照穿越馬路"
           ],
-          badges: ["FOOD", "PHOTO"],
+          badges: ["PHOTO"],
           locationQuery: "御堂筋 大阪",
           guide: {
             type: "attraction",

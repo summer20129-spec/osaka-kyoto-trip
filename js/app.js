@@ -452,7 +452,19 @@
     if (item.notes && item.notes.length) {
       var notesWrap = el("div", "timeline-item__notes");
       item.notes.forEach(function (note) {
-        notesWrap.appendChild(el("p", "timeline-item__note", note));
+        // A note is a plain string, or { text, locationQuery } to also
+        // show a MAP link for a place mentioned in that note.
+        var hasMap = !!(note && typeof note === "object" && note.locationQuery);
+        var noteEl = el("p", "timeline-item__note", hasMap ? note.text : note);
+        if (hasMap) {
+          var mapLink = el("a", "map-link timeline-item__note-map", "MAP");
+          mapLink.href = buildMapUrl(note.locationQuery);
+          mapLink.target = "_blank";
+          mapLink.rel = "noopener noreferrer";
+          mapLink.setAttribute("aria-label", "在 Google Maps 開啟" + note.locationQuery);
+          noteEl.appendChild(mapLink);
+        }
+        notesWrap.appendChild(noteEl);
       });
       li.appendChild(notesWrap);
     }
