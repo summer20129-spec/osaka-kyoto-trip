@@ -502,57 +502,89 @@ var ITINERARY_DATA = {
       highActivity: false,
       items: [
         {
-          time: "08:30",
-          title: "難波→嵐山",
-          description: "",
-          notes: [],
+          time: "07:30〜09:00",
+          title: "前往嵯峨嵐山（JR路線）",
+          description: "建議走JR路線，約09:00抵達JR嵯峨嵐山站",
+          notes: [
+            "JR大阪站→京都→嵯峨嵐山站，官方攻略估約48分鐘（不含轉車等待）",
+            "從住處先前往JR大阪站（梅田）轉乘JR，實際路線與時間請用Google Maps確認"
+          ],
           badges: ["TRANSPORT"]
         },
         {
-          time: "09:30〜10:30",
-          title: "渡月橋・竹林小徑",
-          description: "",
+          time: "09:10〜10:00",
+          title: "常寂光寺",
+          description: "11月初可看初期紅葉",
+          notes: [],
+          badges: ["PHOTO"],
+          locationQuery: "常寂光寺 京都"
+        },
+        {
+          time: "10:00〜10:40",
+          title: "竹林之道＋野宮神社",
+          description: "竹林本身約30分鐘可走完",
+          notes: [],
+          badges: ["PHOTO"],
+          locationQuery: "嵐山竹林小徑 京都"
+        },
+        {
+          time: "10:40〜11:40",
+          title: "天龍寺",
+          description: "建議「北門進、正門出」",
+          notes: [],
+          badges: ["PHOTO"],
+          locationQuery: "天龍寺 京都"
+        },
+        {
+          time: "11:40〜13:00",
+          title: "嵐山大街午餐＋逛街",
+          description: "不急著趕行程",
           notes: [
+            "午餐選項：湯豆腐（原行程安排）",
             "順路：中村屋総本店可樂餅",
             "建議先電話確認營業狀態：075-861-1888"
           ],
-          badges: ["PHOTO", "FOOD", "PENDING"],
+          badges: ["FOOD", "SHOPPING", "PENDING"],
+          locationQuery: "嵐山 商店街 京都"
+        },
+        {
+          time: "13:00〜14:00",
+          title: "渡月橋＋嵐山公園",
+          description: "拍照、散步",
+          notes: [],
+          badges: ["PHOTO"],
           locationQuery: "渡月橋 京都"
         },
         {
-          time: "11:00〜12:30",
-          title: "嵯峨野觀光小火車",
-          description: "坐著賞景，全程輕鬆",
+          time: "14:00〜14:40",
+          title: "咖啡／甜點、移動",
+          description: "前往嵯峨野小火車嵐山站",
           notes: [],
+          badges: ["FOOD", "TRANSPORT"]
+        },
+        {
+          time: "15:05〜15:25",
+          title: "嵯峨野觀光小火車（嵐山站→龜岡站）",
+          description: "坐著賞景，全程輕鬆，約20分鐘",
+          notes: [
+            "建議搭乘15:05嵐山站上車的班次",
+            "請確認購票方式與日期，旺季建議提早購買"
+          ],
           badges: ["PHOTO"],
           locationQuery: "嵯峨野觀光小火車 京都"
         },
         {
-          time: "12:30〜14:00",
-          title: "嵐山湯豆腐午餐",
-          description: "",
+          time: "15:30〜15:45",
+          title: "步行至JR馬堀站",
+          description: "接JR回程",
           notes: [],
-          badges: ["FOOD"]
+          badges: ["TRANSPORT"],
+          locationQuery: "馬堀駅 亀岡"
         },
         {
-          time: "14:30〜16:00",
-          title: "金閣寺",
-          description: "",
-          notes: [],
-          badges: ["PHOTO"],
-          locationQuery: "金閣寺 京都",
-          guide: {
-            type: "attraction",
-            historyBrief: "金閣寺原為室町幕府將軍足利義滿於1397年建造的北山山莊，義滿過世後依其遺願改為禪寺。1950年曾遭僧人縱火燒毀，現存金閣為1955年重建，並非中世紀原始建築。",
-            summary: "京都最具代表性景點之一，金箔外牆倒映鏡湖池，是經典畫面。",
-            photoTips: "鏡湖池對岸為最佳合影角度，可將金閣寺與倒影一同入鏡。",
-            tips: "順時針單向參觀動線，沿途皆為戶外步道，全程約30〜40分鐘。"
-          }
-        },
-        {
-          time: "17:00",
-          title: "返回大阪，晚餐",
-          description: "",
+          time: "17:00〜18:00",
+          title: "回到大阪",
+          description: "晚餐再安排於大阪",
           notes: [],
           badges: ["TRANSPORT", "FOOD"]
         }
@@ -639,7 +671,7 @@ var ITINERARY_DATA = {
         { id: "tkt-teamlab", day: "Day 3", label: "teamLab Biovortex Kyoto 時段票（已購票）", detail: "17:00 入場，3位成人；票券請存在手機，現場出示" },
         { id: "rsv-kimono", day: "Day 3", label: "和服店預約確認", detail: "08:15 抵達報到，09:00 換裝" },
         { id: "rsv-namiri", day: "Day 3", label: "午餐：祇園白川 なみ里 預約", detail: "12:30 用餐時段，假日尤其熱門" },
-        { id: "tkt-sagano", day: "Day 4", label: "嵯峨野觀光小火車", detail: "11:00〜12:30 搭乘；確認購票方式與日期，旺季建議提早購買" }
+        { id: "tkt-sagano", day: "Day 4", label: "嵯峨野觀光小火車", detail: "15:05 嵐山站上車；確認購票方式與日期，旺季建議提早購買" }
       ]
     },
     {
@@ -648,7 +680,8 @@ var ITINERARY_DATA = {
         { id: "buy-kaiyukan", day: "Day 2", label: "海遊館" },
         { id: "buy-osakajo", day: "Day 2", label: "大阪城天守閣" },
         { id: "buy-kiyomizu", day: "Day 3", label: "清水寺（拜觀費）" },
-        { id: "buy-kinkakuji", day: "Day 4", label: "金閣寺（拜觀費）" },
+        { id: "buy-joujakkouji", day: "Day 4", label: "常寂光寺（拜觀費）" },
+        { id: "buy-tenryuji", day: "Day 4", label: "天龍寺（拜觀費）" },
         { id: "buy-harukas", day: "Day 5", label: "阿倍野HARUKAS展望台" }
       ]
     },
