@@ -466,10 +466,13 @@ var ITINERARY_DATA = {
           locationQuery: "京都駅 京都"
         },
         {
-          time: "16:30〜18:30",
+          time: "17:00〜18:30",
           title: "teamLab Biovortex Kyoto",
-          description: "京都駅八條東口步行7分，¥3,800起（浮動定價）",
-          notes: [],
+          description: "京都駅八條東口步行7分，已購票",
+          notes: [
+            "已購票：3位成人，17:00入場（票券請存在手機，現場出示）",
+            "16:20抵達京都駅後，可先在站內休息或用餐，16:30前後再步行前往會場"
+          ],
           badges: ["RESERVATION"],
           group: "傍晚／晚間",
           locationQuery: "teamLab Biovortex Kyoto 京都"
@@ -633,7 +636,7 @@ var ITINERARY_DATA = {
       title: "需提前預約／購票",
       items: [
         { id: "tkt-rapit", day: "Day 1", label: "南海 Rapi:t 指定席（關西機場→難波）", detail: "確認車次、座位與月台；不要誤搭 JR 關空快速" },
-        { id: "tkt-teamlab", day: "Day 3", label: "teamLab Biovortex Kyoto 時段票", detail: "16:30〜18:30 入場，於官網或 KLOOK 預約；¥3,800 起（浮動定價）" },
+        { id: "tkt-teamlab", day: "Day 3", label: "teamLab Biovortex Kyoto 時段票（已購票）", detail: "17:00 入場，3位成人；票券請存在手機，現場出示" },
         { id: "rsv-kimono", day: "Day 3", label: "和服店預約確認", detail: "08:15 抵達報到，09:00 換裝" },
         { id: "rsv-namiri", day: "Day 3", label: "午餐：祇園白川 なみ里 預約", detail: "12:30 用餐時段，假日尤其熱門" },
         { id: "tkt-sagano", day: "Day 4", label: "嵯峨野觀光小火車", detail: "11:00〜12:30 搭乘；確認購票方式與日期，旺季建議提早購買" }
@@ -683,7 +686,7 @@ var ITINERARY_DATA = {
     },
     {
       title: "teamLab預約",
-      body: "需提前於官網或KLOOK預約時段票。"
+      body: "已購票，11/5 17:00入場，3位成人。"
     }
   ]
 };
