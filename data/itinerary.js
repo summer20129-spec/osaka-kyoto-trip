@@ -684,10 +684,6 @@ var ITINERARY_DATA = {
     {
       title: "teamLab預約",
       body: "需提前於官網或KLOOK預約時段票。"
-    },
-    {
-      title: "Day3體力提醒",
-      body: "全天近14小時行程，凌晨出發、深夜返回，體力消耗最大，建議先與女友母親確認能否配合。"
     }
   ]
 };
