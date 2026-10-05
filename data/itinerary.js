@@ -512,7 +512,73 @@ var ITINERARY_DATA = {
           badges: ["TRANSPORT"]
         },
         {
-          time: "09:10〜10:00",
+          time: "09:00〜09:25",
+          title: "步行前往渡月橋",
+          description: "沿途散步",
+          notes: [],
+          badges: ["TRANSPORT"]
+        },
+        {
+          time: "09:25〜10:00",
+          title: "渡月橋＋桂川",
+          description: "",
+          notes: [],
+          badges: ["PHOTO"],
+          locationQuery: "渡月橋 京都"
+        },
+        {
+          time: "10:00〜11:00",
+          title: "天龍寺",
+          description: "",
+          notes: [],
+          badges: ["PHOTO"],
+          locationQuery: "天龍寺 京都"
+        },
+        {
+          time: "11:00〜12:00",
+          title: "嵐山大街逛街／伴手禮",
+          description: "",
+          notes: [
+            "順路：中村屋総本店可樂餅",
+            "建議先電話確認營業狀態：075-861-1888"
+          ],
+          badges: ["SHOPPING", "FOOD", "PENDING"],
+          locationQuery: "嵐山 商店街 京都"
+        },
+        {
+          time: "12:00〜13:10",
+          title: "午餐",
+          description: "",
+          notes: [
+            "午餐選項：湯豆腐（原行程安排）"
+          ],
+          badges: ["FOOD"]
+        },
+        {
+          time: "13:10〜13:45",
+          title: "咖啡／甜點、稍微休息",
+          description: "",
+          notes: [],
+          badges: ["FOOD", "REST"]
+        },
+        {
+          time: "13:45〜14:20",
+          title: "竹林之道",
+          description: "",
+          notes: [],
+          badges: ["PHOTO"],
+          locationQuery: "嵐山竹林小徑 京都"
+        },
+        {
+          time: "14:20〜14:40",
+          title: "野宮神社",
+          description: "",
+          notes: [],
+          badges: ["PHOTO"],
+          locationQuery: "野宮神社 京都"
+        },
+        {
+          time: "14:40〜15:40",
           title: "常寂光寺",
           description: "11月初可看初期紅葉",
           notes: [],
@@ -520,73 +586,60 @@ var ITINERARY_DATA = {
           locationQuery: "常寂光寺 京都"
         },
         {
-          time: "10:00〜10:40",
-          title: "竹林之道＋野宮神社",
-          description: "竹林本身約30分鐘可走完",
+          time: "15:40〜16:20",
+          title: "周邊散步／紅葉拍照",
+          description: "",
           notes: [],
-          badges: ["PHOTO"],
-          locationQuery: "嵐山竹林小徑 京都"
+          badges: ["PHOTO"]
         },
         {
-          time: "10:40〜11:40",
-          title: "天龍寺",
-          description: "建議「北門進、正門出」",
+          time: "16:20〜16:40",
+          title: "移動到小火車嵐山站",
+          description: "",
           notes: [],
-          badges: ["PHOTO"],
-          locationQuery: "天龍寺 京都"
+          badges: ["TRANSPORT"]
         },
         {
-          time: "11:40〜13:00",
-          title: "嵐山大街午餐＋逛街",
-          description: "不急著趕行程",
+          time: "16:40〜17:05",
+          title: "上廁所、買飲料、準備搭車",
+          description: "",
+          notes: [],
+          badges: ["REST"]
+        },
+        {
+          time: "17:13〜17:38",
+          title: "嵯峨野觀光小火車（嵯峨野81號，嵐山站→龜岡站）",
+          description: "沿線點燈夜景，坐著賞景，全程輕鬆",
           notes: [
-            "午餐選項：湯豆腐（原行程安排）",
-            "順路：中村屋総本店可樂餅",
-            "建議先電話確認營業狀態：075-861-1888"
-          ],
-          badges: ["FOOD", "SHOPPING", "PENDING"],
-          locationQuery: "嵐山 商店街 京都"
-        },
-        {
-          time: "13:00〜14:00",
-          title: "渡月橋＋嵐山公園",
-          description: "拍照、散步",
-          notes: [],
-          badges: ["PHOTO"],
-          locationQuery: "渡月橋 京都"
-        },
-        {
-          time: "14:00〜14:40",
-          title: "咖啡／甜點、移動",
-          description: "前往嵯峨野小火車嵐山站",
-          notes: [],
-          badges: ["FOOD", "TRANSPORT"]
-        },
-        {
-          time: "15:05〜15:25",
-          title: "嵯峨野觀光小火車（嵐山站→龜岡站）",
-          description: "坐著賞景，全程輕鬆，約20分鐘",
-          notes: [
-            "建議搭乘15:05嵐山站上車的班次",
-            "請確認購票方式與日期，旺季建議提早購買"
+            "嵯峨野81號為「光の幻想列車」期間加開的臨時列車（沿線點燈，2026/10/24〜12/15），嵐山站17:13出發，約17:35〜17:38抵達龜岡站",
+            "班次與購票方式請以官方網站公告為準，車票於乘車日前約1個月開賣，旺季建議提早購買"
           ],
           badges: ["PHOTO"],
           locationQuery: "嵯峨野觀光小火車 京都"
         },
         {
-          time: "15:30〜15:45",
+          time: "17:40〜18:00",
           title: "步行至JR馬堀站",
-          description: "接JR回程",
-          notes: [],
+          description: "步行約10〜15分鐘",
+          notes: [
+            "天色已暗，請沿大路步行並留意安全"
+          ],
           badges: ["TRANSPORT"],
           locationQuery: "馬堀駅 亀岡"
         },
         {
-          time: "17:00〜18:00",
-          title: "回到大阪",
-          description: "晚餐再安排於大阪",
+          time: "18:00〜19:15",
+          title: "JR馬堀→京都→大阪",
+          description: "",
           notes: [],
-          badges: ["TRANSPORT", "FOOD"]
+          badges: ["TRANSPORT"]
+        },
+        {
+          time: "19:15〜20:00",
+          title: "回大阪吃晚餐",
+          description: "",
+          notes: [],
+          badges: ["FOOD"]
         }
       ]
     },
@@ -671,7 +724,7 @@ var ITINERARY_DATA = {
         { id: "tkt-teamlab", day: "Day 3", label: "teamLab Biovortex Kyoto 時段票（已購票）", detail: "17:00 入場，3位成人；票券請存在手機，現場出示" },
         { id: "rsv-kimono", day: "Day 3", label: "和服店預約確認", detail: "08:15 抵達報到，09:00 換裝" },
         { id: "rsv-namiri", day: "Day 3", label: "午餐：祇園白川 なみ里 預約", detail: "12:30 用餐時段，假日尤其熱門" },
-        { id: "tkt-sagano", day: "Day 4", label: "嵯峨野觀光小火車", detail: "15:05 嵐山站上車；確認購票方式與日期，旺季建議提早購買" }
+        { id: "tkt-sagano", day: "Day 4", label: "嵯峨野觀光小火車（嵯峨野81號）", detail: "17:13 嵐山站出發；車票於乘車日前約1個月（日本時間00:00）開賣，請盡早購買，並以官網公告為準" }
       ]
     },
     {
