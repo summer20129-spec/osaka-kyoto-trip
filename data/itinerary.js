@@ -76,30 +76,49 @@ var ITINERARY_DATA = {
           locationQuery: "近鐵日本橋站 大阪"
         },
         {
-          time: "15:30〜16:30",
-          title: "黑門市場",
-          description: "純逛街拍照，不在此用餐",
+          time: "14:00〜15:30",
+          title: "自由活動／休息",
+          description: "搭機後先休息，15:30前出發前往梅田",
           notes: [],
-          badges: ["PHOTO"],
-          locationQuery: "黑門市場 大阪",
+          badges: ["REST"]
+        },
+        {
+          time: "15:30〜16:00",
+          title: "前往梅田",
+          description: "搭御堂筋線至梅田（大阪站）",
+          notes: [
+            "難波到梅田搭御堂筋線約10分鐘，從住處出發請預留約25〜30分鐘（實際路線與時間請用Google Maps確認）"
+          ],
+          badges: ["TRANSPORT"]
+        },
+        {
+          time: "16:00〜18:30",
+          title: "大丸梅田店",
+          description: "13樓 Nintendo OSAKA、寶可夢中心大阪",
+          notes: [
+            "營業10:00〜20:00；13樓的Nintendo OSAKA與寶可夢中心大阪營業時間同大丸，人多時可能需排隊進場",
+            {
+              text: "優惠券需出示護照，單筆含稅滿¥3,000，食品與餐廳不適用，有效至2027/8/31；角色商品是否適用請向店員確認",
+              image: { src: "images/coupons/daimaru.jpg", alt: "大丸／松坂屋 優惠券", label: "優惠券" }
+            }
+          ],
+          badges: ["SHOPPING"],
+          locationQuery: "大丸梅田店 大阪",
           guide: {
-            type: "attraction",
-            summary: "大阪最有名的傳統市場，擺滿海鮮、水果和現做小吃，外國遊客很多。",
-            highlights: "市場一條街很長，兩旁都是攤位，邊走邊看就很有大阪市場的氣氛。",
-            photoTips: "熱門拍法：攤位上的新鮮海鮮和水果，還有市場入口的大招牌。白天人多，想拍乾淨的畫面可以早點來。",
-            photoExample: {
-              src: "images/photos/kuromon.jpg",
-              alt: "黑門市場入口的招牌",
-              caption: "黑門市場的入口招牌",
-              author: "Mc681",
-              sourceUrl: "https://commons.wikimedia.org/wiki/File:Kuromon-ichiba_in_201408.JPG",
-              licenseName: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/"
-            },
-            tips: "本行程只逛街拍照，不在這裡用餐（見頁尾「用餐原則」）。人多時請看好背包，拍攤位前最好先打聲招呼。"
+            type: "shopping",
+            highlights: "位在JR大阪站南門大樓，13樓集中Nintendo OSAKA、寶可夢中心大阪等角色商店，是任天堂與寶可夢周邊的熱門採買點。",
+            tips: "店20:00打烊，建議18:30前離開；2026/11/1起免稅改為出境後退稅，結帳方式請向店員確認。"
           }
         },
         {
-          time: "17:30〜21:00",
+          time: "18:30〜19:00",
+          title: "返回難波",
+          description: "搭御堂筋線回難波，前往道頓堀",
+          notes: [],
+          badges: ["TRANSPORT"]
+        },
+        {
+          time: "19:00〜21:00",
           title: "道頓堀・心齋橋",
           description: "",
           notes: [
@@ -110,14 +129,13 @@ var ITINERARY_DATA = {
               locationQuery: "浪漫焼き芋 芋の巢 アメリカ村店 大阪"
             },
             {
+              text: "甜點：元祖Ice Dog（美國村，西心齋橋；11:00〜21:00營業，不定休）。招牌是把軟式冰淇淋夾進現炸的甜麵包，口味有牛奶、抹茶、巧克力等，加¥50可加醬料；價格各網站寫法不同，請看現場菜單。與芋之巢同在美國村，二選一即可",
+              locationQuery: "元祖アイスドッグ 西心斎橋 大阪"
+            },
+            {
               text: "藥妝：Sundrug 道頓堀店（宗右衛門町，營業至深夜）；優惠券單筆未稅滿¥10,000起適用，最高約17% OFF（含免稅），有效至2026/12/31",
               locationQuery: "サンドラッグ 道頓堀店 大阪",
               image: { src: "images/coupons/sundrug.jpg", alt: "Sundrug 優惠券", label: "優惠券" }
-            },
-            {
-              text: "百貨：大丸心齋橋店（10:00〜20:00，需先逛再用餐）；優惠券需出示護照，單筆含稅滿¥3,000，食品與餐廳不適用，有效至2027/8/31",
-              locationQuery: "大丸心斎橋店 大阪",
-              image: { src: "images/coupons/daimaru.jpg", alt: "大丸／松坂屋 優惠券", label: "優惠券" }
             }
           ],
           badges: ["FOOD", "PHOTO", "SHOPPING"],
@@ -398,9 +416,35 @@ var ITINERARY_DATA = {
           }
         },
         {
-          time: "07:30〜07:40",
+          time: "07:30〜07:50",
+          title: "八坂之塔晨間拍照",
+          description: "日東堂（八坂之塔旁）10:00才開門，早上只拍外觀",
+          notes: [
+            "換好和服後，10:15會再回到日東堂喝咖啡"
+          ],
+          badges: ["PHOTO"],
+          locationQuery: "八坂の塔 京都",
+          guide: {
+            type: "attraction",
+            historyBrief: "八坂之塔是法觀寺的五重塔，高約40公尺，是京都市區少數保留下來的古塔，被列為重要文化財。",
+            summary: "京都東山最經典的古塔畫面：五重塔從石板坡道和老房子後面升起，外國遊客必拍。",
+            highlights: "五重塔和石板路、老房子一起入鏡，是外國遊客最愛拍的京都景色之一。",
+            photoTips: "最經典的角度在八坂通：塔在遠處升起，前面是石板坡道和町家。清晨5:30〜7:00人最少，塔晚上也有點燈。",
+            photoExample: {
+              src: "images/photos/yasaka.jpg",
+              alt: "八坂通與八坂之塔",
+              caption: "八坂通與八坂之塔（清晨）",
+              author: "Basile Morin",
+              sourceUrl: "https://commons.wikimedia.org/wiki/File:Yasaka-dori_early_morning_with_street_lanterns_and_the_Tower_of_Yasaka_%28Hokan-ji_Temple%29%2C_Kyoto%2C_Japan.jpg",
+              licenseName: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+            tips: "日東堂就在塔旁，10:00才開門，早上主要拍照；10:15會再回來喝咖啡。"
+          }
+        },
+        {
+          time: "07:50〜08:05",
           title: "八坂神社",
-          description: "新增，順路零額外時間成本",
+          description: "",
           notes: [],
           badges: ["PHOTO"],
           locationQuery: "八坂神社 京都",
@@ -421,32 +465,6 @@ var ITINERARY_DATA = {
           }
         },
         {
-          time: "07:40〜08:15",
-          title: "日東堂",
-          description: "八坂之塔正對面，僅外觀拍照，10點才開門",
-          notes: [
-            "附設KYOTO COFFEE咖啡站，招牌咖啡牛奶",
-            "必買：京都みるくサンドクッキー（クローバー牧場特別牛乳，6個入約993円／12個入約1,695円）"
-          ],
-          badges: ["FOOD", "SHOPPING", "PHOTO"],
-          locationQuery: "日東堂 京都",
-          guide: {
-            type: "attraction",
-            historyBrief: "正對面的八坂之塔是法觀寺的五重塔，高約40公尺，是京都市區少數保留下來的古塔，被列為重要文化財。",
-            summary: "位在八坂之塔正對面，可以直接拍到京都東山最經典的古塔畫面。",
-            highlights: "五重塔和石板路、老房子一起入鏡，是外國遊客最愛拍的京都景色之一。",
-            photoTips: "最經典的角度在八坂通：塔在遠處升起，前面是石板坡道和町家。清晨5:30〜7:00人最少，塔晚上也有點燈。",
-            photoExample: {
-              src: "images/photos/yasaka.jpg",
-              alt: "八坂通與八坂之塔",
-              caption: "八坂通與八坂之塔（清晨）",
-              author: "Basile Morin",
-              sourceUrl: "https://commons.wikimedia.org/wiki/File:Yasaka-dori_early_morning_with_street_lanterns_and_the_Tower_of_Yasaka_%28Hokan-ji_Temple%29%2C_Kyoto%2C_Japan.jpg",
-              licenseName: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/"
-            },
-          }
-        },
-        {
           time: "08:15〜09:00",
           title: "抵達和服店，報到候位",
           description: "祇園區店家",
@@ -462,26 +480,25 @@ var ITINERARY_DATA = {
           badges: ["RESERVATION"]
         },
         {
-          time: "10:15〜11:00",
-          title: "LE LABO 京都町家",
-          description: "開店後15分鐘抵達，避免搶購撲空",
+          time: "10:15〜11:15",
+          title: "日東堂 KYOTO COFFEE",
+          description: "八坂之塔旁，喝咖啡牛奶，穿和服在八坂之塔拍照",
           notes: [
-            "必買：OSMANTHUS 19金木犀（京都限定城市香）",
-            "15mL約¥22,110／50mL約¥48,730／100mL約¥70,180"
+            "10:00〜18:00營業（最後點餐17:30），週一與國定假日公休；附設KYOTO COFFEE咖啡站，招牌咖啡牛奶",
+            "必買：京都みるくサンドクッキー（クローバー牧場特別牛乳，6個入約993円／12個入約1,695円）",
+            "從和服店（祇園）步行約10〜15分鐘，穿和服請慢慢走"
           ],
-          badges: ["SHOPPING"],
-          locationQuery: "LE LABO 京都町家 京都",
+          badges: ["FOOD", "SHOPPING", "PHOTO"],
+          locationQuery: "日東堂 京都",
           guide: {
             type: "shopping",
-            highlights: "改裝自京都傳統町家建築，香氛品牌LE LABO日本限定店",
-            recommendedItems: "OSMANTHUS 19金木犀（京都限定城市香）",
-            limitedItems: "京都限定香氛僅此門市販售",
-            limitedItemsVerifiedAt: "2026-08",
-            tips: "開店後15分鐘內抵達可避開排隊人潮"
+            highlights: "古民家改裝的日本雜貨店，附設KYOTO COFFEE咖啡站；2樓有玻璃茶室，窗外可以看到八坂之塔。",
+            recommendedItems: "招牌咖啡牛奶；京都みるくサンドクッキー",
+            tips: "穿和服在八坂之塔旁拍照很上相；營業時間請以官網為準。"
           }
         },
         {
-          time: "11:15〜12:15",
+          time: "11:30〜12:15",
           title: "祇園・花見小路散策拍照",
           description: "",
           notes: [
