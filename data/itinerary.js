@@ -87,6 +87,14 @@ var ITINERARY_DATA = {
             summary: "大阪最有名的傳統市場，擺滿海鮮、水果和現做小吃，外國遊客很多。",
             highlights: "市場一條街很長，兩旁都是攤位，邊走邊看就很有大阪市場的氣氛。",
             photoTips: "熱門拍法：攤位上的新鮮海鮮和水果，還有市場入口的大招牌。白天人多，想拍乾淨的畫面可以早點來。",
+            photoExample: {
+              src: "images/photos/kuromon.jpg",
+              alt: "黑門市場入口的招牌",
+              caption: "黑門市場的入口招牌",
+              author: "Mc681",
+              sourceUrl: "https://commons.wikimedia.org/wiki/File:Kuromon-ichiba_in_201408.JPG",
+              licenseName: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
             tips: "本行程只逛街拍照，不在這裡用餐（見頁尾「用餐原則」）。人多時請看好背包，拍攤位前最好先打聲招呼。"
           }
         },
@@ -157,6 +165,14 @@ var ITINERARY_DATA = {
             summary: "世界級的大型水族館，最大亮點是中央的「太平洋」大水槽，裡面有鯨鯊。",
             highlights: "先搭手扶梯到最高樓，再沿著斜坡一路往下走，可以從不同高度看同一個大水槽；水獺和企鵝也很受歡迎。",
             photoTips: "最熱門的是大水槽裡的鯨鯊。手機貼近玻璃可以減少反光，請不要開閃光燈（館內禁止）。下層的大窗口可以近距離看到魚群。",
+            photoExample: {
+              src: "images/photos/kaiyukan.jpg",
+              alt: "海遊館大水槽裡的鯨鯊與鬼蝠魟",
+              caption: "「太平洋」大水槽裡的鯨鯊與鬼蝠魟",
+              author: "SR EXR",
+              sourceUrl: "https://commons.wikimedia.org/wiki/File:Kaiyukan_Manta_and_Whale_shark.JPG",
+              licenseName: "CC0", licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/"
+            },
             tips: "10:30開館（依日期會變動，請以官網為準）；動線是單向的，不用走回頭路。"
           }
         },
@@ -171,7 +187,15 @@ var ITINERARY_DATA = {
             type: "attraction",
             summary: "海遊館旁邊的美食街兼伴手禮商場，吃飯、買紀念品都很方便。",
             highlights: "旁邊就是天保山大摩天輪，吃完飯可以順便看；同區還有港灣遊船，行程沒有排入，時間夠再考慮。",
-            photoTips: "大摩天輪是這一帶最醒目的背景，可以把它和港邊景色一起拍。"
+            photoTips: "大摩天輪是這一帶最醒目的背景，可以把它和港邊景色一起拍。",
+            photoExample: {
+              src: "images/photos/tempozan.jpg",
+              alt: "海遊館與遠處的天保山大摩天輪",
+              caption: "海遊館（左）與遠處的大摩天輪",
+              author: "Jan Eglinger",
+              sourceUrl: "https://commons.wikimedia.org/wiki/File:Osaka_harbour_tempozan_view.jpg",
+              licenseName: "CC BY-SA 3.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/"
+            },
           }
         },
         {
@@ -194,6 +218,14 @@ var ITINERARY_DATA = {
             summary: "大阪最有名的城堡，白綠色的天守閣立在高高的石牆上，四周有護城河和公園。",
             highlights: "天守閣最上層是戶外展望台，可以360度看大阪市區；天守閣有電梯，不用爬樓梯。",
             photoTips: "熱門拍照點：西之丸庭園（從西邊拍天守閣，是經典明信片角度）、極樂橋（橋和城堡一起入鏡）、護城河倒影（水面平靜時最好看）。早上10點前光線好、人也少。",
+            photoExample: {
+              src: "images/photos/osakajo.jpg",
+              alt: "大阪城護城河與極樂橋",
+              caption: "護城河與極樂橋（照片中沒有拍到天守閣）",
+              author: "そらみみ (Soramimi)",
+              sourceUrl: "https://commons.wikimedia.org/wiki/File:Gokurakubashi_Bridge_on_Inner_Moat_of_Osaka_Castle.JPG",
+              licenseName: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
             tips: "園區很大，建議把體力留給天守閣，外圍庭園看時間再決定。"
           }
         },
@@ -258,7 +290,15 @@ var ITINERARY_DATA = {
             type: "attraction",
             summary: "大阪最主要的南北向大馬路，秋冬時兩旁的行道樹（以銀杏為主）會亮起金黃色彩燈，是大阪冬天的代表夜景。",
             highlights: "燈飾範圍從阪神前交差點到難波西口交差點，從難波往北走就能看到；也可以順便逛心齋橋。",
-            photoTips: "熱門拍法：站在人行道上，拍整排亮燈的行道樹一路延伸到遠方。夜晚光線暗，手機請拿穩或靠著欄杆拍。"
+            photoTips: "熱門拍法：站在人行道上，拍整排亮燈的行道樹一路延伸到遠方。夜晚光線暗，手機請拿穩或靠著欄杆拍。",
+            photoExample: {
+              src: "images/photos/midosuji.jpg",
+              alt: "御堂筋行道樹燈飾夜景",
+              caption: "御堂筋的行道樹燈飾（2024年12月）",
+              author: "Tokumeigakarinoaoshima",
+              sourceUrl: "https://commons.wikimedia.org/wiki/File:Midosuji_illumination_on_4th_December_2024.jpg",
+              licenseName: "CC0", licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/"
+            },
           }
         }
       ]
@@ -346,6 +386,14 @@ var ITINERARY_DATA = {
             summary: "京都東山最有名的石板老街，兩旁是木造老房子和小店，很有古都氣氛。",
             highlights: "沿著坡道往下走就是三年坂；旁邊的八坂通可以看到八坂之塔，是熱門的京都畫面。",
             photoTips: "最熱門的拍法：到八坂通，拍八坂之塔配石板路和老房子。早上6〜7點幾乎沒人，最好拍。",
+            photoExample: {
+              src: "images/photos/sannenzaka.jpg",
+              alt: "二年坂三年坂一帶的石板路與老房子",
+              caption: "二年坂・三年坂一帶的石板路與老房子",
+              author: "Andrea Schaffer",
+              sourceUrl: "https://commons.wikimedia.org/wiki/File:Sannenzaka_street,_Kyoto_(3811257874).jpg",
+              licenseName: "CC BY 2.0", licenseUrl: "https://creativecommons.org/licenses/by/2.0/"
+            },
             tips: "石板路和坡道比較滑，請穿好走的鞋；早上很多店還沒開，主要是散步拍照。"
           }
         },
@@ -361,7 +409,15 @@ var ITINERARY_DATA = {
             historyBrief: "傳說656年創建，是京都夏天「祇園祭」的發源地，歷史超過一千年。",
             summary: "祇園一帶的信仰中心，朱紅色的大門和樓門很醒目。",
             highlights: "朱紅色的西樓門是最醒目的地標；境內有很多燈籠，晚上很有氣氛；從這裡往南走就是花見小路和祇園。",
-            photoTips: "熱門拍法：在四條通的盡頭拍朱紅色的西樓門。晚上燈籠亮起來最漂亮；你們早上來，人少，拍樓門比較乾淨。"
+            photoTips: "熱門拍法：在四條通的盡頭拍朱紅色的西樓門。晚上燈籠亮起來最漂亮；你們早上來，人少，拍樓門比較乾淨。",
+            photoExample: {
+              src: "images/photos/yasakashrine.jpg",
+              alt: "八坂神社西樓門",
+              caption: "從四條通方向看八坂神社西樓門",
+              author: "DXR",
+              sourceUrl: "https://commons.wikimedia.org/wiki/File:Nishiromon_Gate,_Yasaka_Shrine,_Kyoto,_West_view_20190416_1.jpg",
+              licenseName: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
           }
         },
         {
@@ -439,6 +495,14 @@ var ITINERARY_DATA = {
             summary: "京都最有名的傳統街景，石板路兩旁是木造茶屋和燈籠，很有古都氣氛。",
             highlights: "從八坂神社往南走就是花見小路；走過辰巳橋可以到白川河邊，柳樹配老房子也是熱門拍照點，午餐的白川なみ里就在附近。",
             photoTips: "熱門拍法：在花見小路主街（公共道路）拍石板路和兩旁的茶屋；傍晚燈籠亮起來更好看。白川河邊的景色也很上相。",
+            photoExample: {
+              src: "images/photos/hanamikoji.jpg",
+              alt: "祇園的石板路與茶屋街景",
+              caption: "祇園的石板路與傳統茶屋街景（夜間）",
+              author: "lumoplank",
+              sourceUrl: "https://commons.wikimedia.org/wiki/File:Streets_of_Gion,_Kyoto_-_Gion7708.jpg",
+              licenseName: "CC0", licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/"
+            },
             tips: "主街可以拍照，但兩旁的私人小巷禁止拍照，部分小巷已禁止進入，請遵守標示。請不要追拍、攔住或近距離拍藝妓與舞妓，尊重當地居民。"
           }
         },
@@ -613,6 +677,14 @@ var ITINERARY_DATA = {
             summary: "嵐山最有名的禪寺，特色是庭園：用池塘加上遠方的嵐山，組成一幅像畫一樣的景色。",
             highlights: "重點是曹源池庭園，坐在大方丈（主殿）的走廊看最舒服。大殿天花板的龍畫（雲龍圖）要另外付費，只在特定日期開放。",
             photoTips: "熱門拍法：從大方丈走廊拍池塘、石頭和後面的山。早上開門時人少、水面平靜，倒影最漂亮；人多時可以等一下找空檔。",
+            photoExample: {
+              src: "images/photos/tenryuji.jpg",
+              alt: "天龍寺曹源池庭園與秋季楓葉",
+              caption: "曹源池庭園與秋季楓葉",
+              author: "lumoplank",
+              sourceUrl: "https://commons.wikimedia.org/wiki/File:Arashiyama,_Part_II_-_Arashiyama7538.jpg",
+              licenseName: "CC0", licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/"
+            },
             tips: "北門出口直接接竹林之道。"
           }
         },
@@ -680,6 +752,14 @@ var ITINERARY_DATA = {
             summary: "藏在竹林旁的小神社，入口的黑色鳥居很特別，是用帶著樹皮的原木做的。",
             highlights: "黑木鳥居被認為保留了最古老的鳥居樣式；日本人常來這裡求愛情、學業和安產。",
             photoTips: "熱門點：黑木鳥居，後面搭配竹林。神社很小，拍照要快，不要擋住參拜的人。",
+            photoExample: {
+              src: "images/photos/nonomiya.jpg",
+              alt: "野宮神社的黑木鳥居",
+              caption: "野宮神社的黑木鳥居",
+              author: "Hyppolyte de Saint-Rambert",
+              sourceUrl: "https://commons.wikimedia.org/wiki/File:Nonomiya-jinja_(Uky%C5%8D-ku_Kyoto)_Black_Torii_hdsr_S5_07.jpg",
+              licenseName: "CC BY 4.0", licenseUrl: "https://creativecommons.org/licenses/by/4.0/"
+            },
             tips: "人多時請輪流拍照，不要久留。"
           }
         },
@@ -696,6 +776,14 @@ var ITINERARY_DATA = {
             summary: "比天龍寺更安靜的紅葉寺，滿山有兩百多棵楓樹，秋天像走進紅葉隧道。",
             highlights: "仁王門是茅草屋頂的老山門；往坡上走到高處有多寶塔（高約12公尺），可以看到楓葉和遠處的京都市區。",
             photoTips: "最熱門的三個點：仁王門前的楓葉拱道、仁王門的茅草屋頂、多寶塔配紅葉。11月初多半是初期紅葉，最盛約在11月中下旬；早上9點前人比較少。",
+            photoExample: {
+              src: "images/photos/jojakkoji.jpg",
+              alt: "常寂光寺多寶塔與紅葉",
+              caption: "多寶塔與紅葉（11月下旬）",
+              author: "Inoue-hiro",
+              sourceUrl: "https://commons.wikimedia.org/wiki/File:Jyoujyakouji-tahoutou-20071124.jpg",
+              licenseName: "CC BY-SA 3.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/"
+            },
             tips: "要走坡道和階梯，長輩同行請放慢，只逛下段也可以。"
           }
         },
@@ -735,6 +823,14 @@ var ITINERARY_DATA = {
             summary: "沿著保津川山谷行駛的復古小火車，約20〜25分鐘，窗外是溪谷和山林，秋天和春天特別熱門。",
             highlights: "5號車廂「The Rich」是沒有窗戶的開放式車廂，視野最好，拍照不隔玻璃（實際車廂以票面為準）。17:13的嵯峨野81號是點燈列車（2026/10/24〜12/15），有報導說現行車輛今年底退役，是最後一季。",
             photoTips: "這班在傍晚，以沿線點燈夜景為主。開放式車廂最好拍；一般車廂有玻璃反光，手機貼近玻璃、不要開閃光燈。",
+            photoExample: {
+              src: "images/photos/sagano.jpg",
+              alt: "行駛在保津峽谷的嵯峨野小火車",
+              caption: "行駛在保津峽谷的嵯峨野小火車（春季）",
+              author: "Toshinori baba",
+              sourceUrl: "https://commons.wikimedia.org/wiki/File:Sagano_scenic_railway_hotsukyo.jpg",
+              licenseName: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
             tips: "開放式車廂可能風大、比較冷，請多帶一件外套。班次與購票請以官網為準，車票最好提前買。"
           }
         },
