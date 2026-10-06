@@ -119,6 +119,14 @@ var ITINERARY_DATA = {
             summary: "大阪最有名的夜景街，運河兩邊都是霓虹招牌，是大阪的象徵畫面。",
             highlights: "固力果跑跑人看板和大螃蟹招牌是外國遊客必拍；沿著河邊走很有氣氛，心齋橋筋商店街可以順路逛街。",
             photoTips: "最熱門的拍法：站在戎橋上，面向北邊（背對難波站），讓固力果招牌和運河一起入鏡。天黑招牌全亮最好看；橋上很擠，拍完請讓位給後面的人。",
+            photoExample: {
+              src: "images/photos/dotonbori.jpg",
+              alt: "道頓堀運河與霓虹看板夜景",
+              caption: "戎橋一帶看道頓堀運河與霓虹看板（夜景）",
+              author: "Martin Falbisoner",
+              sourceUrl: "https://commons.wikimedia.org/wiki/File:Dotonbori,_Osaka,_at_night,_November_2016.jpg",
+              licenseName: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
             tips: "晚上人很多，貴重物品要看好；沿河邊單側走比較順。"
           }
         }
@@ -138,7 +146,7 @@ var ITINERARY_DATA = {
       highActivity: false,
       items: [
         {
-          time: "09:00〜11:30",
+          time: "10:30〜12:30",
           title: "海遊館",
           description: "鯨鯊、企鵝、水獺，室內動線平緩",
           notes: [],
@@ -149,11 +157,11 @@ var ITINERARY_DATA = {
             summary: "世界級的大型水族館，最大亮點是中央的「太平洋」大水槽，裡面有鯨鯊。",
             highlights: "先搭手扶梯到最高樓，再沿著斜坡一路往下走，可以從不同高度看同一個大水槽；水獺和企鵝也很受歡迎。",
             photoTips: "最熱門的是大水槽裡的鯨鯊。手機貼近玻璃可以減少反光，請不要開閃光燈（館內禁止）。下層的大窗口可以近距離看到魚群。",
-            tips: "通常10:00開館（依日期會變動，請以官網為準）；動線是單向的，不用走回頭路。"
+            tips: "10:30開館（依日期會變動，請以官網為準）；動線是單向的，不用走回頭路。"
           }
         },
         {
-          time: "12:00〜13:00",
+          time: "12:30〜13:20",
           title: "天保山市場街午餐",
           description: "",
           notes: [],
@@ -167,14 +175,14 @@ var ITINERARY_DATA = {
           }
         },
         {
-          time: "13:00〜13:40",
+          time: "13:20〜14:00",
           title: "移動至大阪城",
           description: "",
           notes: [],
           badges: ["TRANSPORT"]
         },
         {
-          time: "13:40〜15:30",
+          time: "14:00〜15:30",
           title: "大阪城公園・天守閣",
           description: "天守閣有電梯，免爬樓梯",
           notes: [],
@@ -269,7 +277,7 @@ var ITINERARY_DATA = {
       highActivity: true,
       warning: {
         label: "HIGH ACTIVITY",
-        title: "04:45 出發，全天近 14 小時",
+        title: "04:45 出發，全天逾 15 小時",
         body: "本次旅程體力消耗最大的一天，凌晨出發、深夜返回"
       },
       items: [
@@ -314,6 +322,14 @@ var ITINERARY_DATA = {
             summary: "京都最有名的寺院之一，蓋在山坡上，最大特色是懸空突出的木造舞台。",
             highlights: "站在舞台上可以俯瞰京都市區；音羽瀑布有三道水流，各代表不同的祈願；朱紅色的三重塔（約31公尺）很醒目。",
             photoTips: "熱門拍照點：舞台往外拍京都街景；從奧之院那一側拍本堂和舞台的全景；三重塔配山景。舞台上人多、動線快，站在側邊拍幾張就好。早上6點前後人最少。",
+            photoExample: {
+              src: "images/photos/kiyomizu.jpg",
+              alt: "從對面山坡看清水寺本堂與舞台全景",
+              caption: "從對面山坡看本堂與清水舞台全景（秋季）",
+              author: "Martin Falbisoner",
+              sourceUrl: "https://commons.wikimedia.org/wiki/File:Kiyomizu-dera,_Kyoto,_November_2016_-01.jpg",
+              licenseName: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
             tips: "石階濕滑，請穿防滑的鞋；多數區域不能使用腳架。"
           }
         },
@@ -363,7 +379,15 @@ var ITINERARY_DATA = {
             historyBrief: "正對面的八坂之塔是法觀寺的五重塔，高約40公尺，是京都市區少數保留下來的古塔，被列為重要文化財。",
             summary: "位在八坂之塔正對面，可以直接拍到京都東山最經典的古塔畫面。",
             highlights: "五重塔和石板路、老房子一起入鏡，是外國遊客最愛拍的京都景色之一。",
-            photoTips: "最經典的角度在八坂通：塔在遠處升起，前面是石板坡道和町家。清晨5:30〜7:00人最少，塔晚上也有點燈。"
+            photoTips: "最經典的角度在八坂通：塔在遠處升起，前面是石板坡道和町家。清晨5:30〜7:00人最少，塔晚上也有點燈。",
+            photoExample: {
+              src: "images/photos/yasaka.jpg",
+              alt: "八坂通與八坂之塔",
+              caption: "八坂通與八坂之塔（清晨）",
+              author: "Basile Morin",
+              sourceUrl: "https://commons.wikimedia.org/wiki/File:Yasaka-dori_early_morning_with_street_lanterns_and_the_Tower_of_Yasaka_%28Hokan-ji_Temple%29%2C_Kyoto%2C_Japan.jpg",
+              licenseName: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
           }
         },
         {
@@ -471,6 +495,14 @@ var ITINERARY_DATA = {
             summary: "京都最熱門的景點之一，山路上一整排朱紅色鳥居，像走進橘紅色的隧道。",
             highlights: "前段的千本鳥居最密集、最經典；走到半山腰的四辻可以看到京都市區，多數遊客走到這裡就折返。",
             photoTips: "熱門拍法：入口後方的雙排鳥居隧道，很多人排隊拍。人最少是早上8點前，10點後很擠；過了四辻後人明顯變少。你們下午3點到，建議往裡走一點，找人少的空檔拍。",
+            photoExample: {
+              src: "images/photos/fushimi.jpg",
+              alt: "伏見稻荷千本鳥居的雙排鳥居隧道",
+              caption: "千本鳥居的雙排鳥居隧道",
+              author: "Basile Morin",
+              sourceUrl: "https://commons.wikimedia.org/wiki/File:Double_torii_path_at_Fushimi_Inari_Taisha_Shrine,_Kyoto,_Japan.jpg",
+              licenseName: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
             tips: "整座稻荷山往返要2小時以上；你們只有約1小時，走前段千本鳥居就能拍到主要畫面，再依體力決定要不要走到四辻。"
           }
         },
@@ -483,12 +515,13 @@ var ITINERARY_DATA = {
           locationQuery: "京都駅 京都"
         },
         {
-          time: "17:00〜18:30",
+          time: "17:00〜20:00",
           title: "teamLab Biovortex Kyoto",
           description: "京都駅八條東口步行7分，已購票",
           notes: [
             "已購票：3位成人，17:00入場（票券請存在手機，現場出示）",
-            "16:20抵達京都駅後，可先在站內休息或用餐，16:30前後再步行前往會場"
+            "預留約3小時參觀，預計20:00前後離場，再步行回京都駅",
+            "16:20抵達京都駅後，可先在站內休息或用晚餐，16:30前後再步行前往會場"
           ],
           badges: ["RESERVATION"],
           group: "傍晚／晚間",
@@ -498,15 +531,16 @@ var ITINERARY_DATA = {
             summary: "2025年10月開幕，是日本最大的teamLab數位藝術館，共4層、50多件作品，大多是黑暗空間配上光影與互動。",
             highlights: "作品大多由光、空氣、水和泡泡組成，會隨著人的動作改變；很多房間的地板是鏡面。",
             photoTips: "可以拍照、錄影和發社群，但禁止閃光燈、無人機，以及30公分以上的腳架、自拍棒等器材。鏡面房間請不要碰鏡子，以免留下指紋影響別人拍照。",
-            tips: "建議穿好走的鞋；有人建議穿褲子，因為地板鏡面會反光。多數介紹建議預留3小時以上，營業到21:00（最晚入場19:30，請以官網為準），目前行程排到18:30，可視情況延後返回時間。"
+            tips: "建議穿好走的鞋；有人建議穿褲子，因為地板鏡面會反光。多數介紹建議預留3小時以上，營業到21:00（最晚入場19:30，請以官網為準），行程已預留到20:00。"
           }
         },
         {
-          time: "18:45",
+          time: "20:15",
           title: "返回大阪",
           description: "JR新快速＋轉乘，約60分鐘",
           notes: [
-            "提醒：略碰到晚間尖峰尾端(17:00-19:00)，車廂可能較擁擠"
+            "預計約21:15抵達難波一帶，末班車時間請事先確認",
+            "晚餐可在京都駅周邊解決，或回大阪後再吃"
           ],
           badges: ["TRANSPORT"]
         }
@@ -555,6 +589,14 @@ var ITINERARY_DATA = {
             summary: "嵐山最有名的橋，後面就是嵐山的山景，外國遊客多半從這裡開始逛嵐山。",
             highlights: "橋長約155公尺，可以走上橋看河景；橋旁的河邊有步道和小島（中之島），人比橋上少，適合坐下來休息。",
             photoTips: "最熱門的角度：站在河北岸（天龍寺、嵐山商店街這一側），面對橋拍，山景就在橋的後面。也可以在橋上拍上游的山。早上人少最好拍。",
+            photoExample: {
+              src: "images/photos/togetsukyo.jpg",
+              alt: "從河岸看渡月橋與嵐山山景",
+              caption: "從河岸看渡月橋與嵐山山景（傍晚長曝光，與白天樣子不同）",
+              author: "Basile Morin",
+              sourceUrl: "https://commons.wikimedia.org/wiki/File:Togetsu-kyo_bridge_at_dusk,_Kyoto,_Japan.jpg",
+              licenseName: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
             tips: "橋上人多，拍照請靠邊，不要擋路。"
           }
         },
@@ -614,6 +656,14 @@ var ITINERARY_DATA = {
             summary: "高大的竹子夾道，像走進綠色隧道，是嵐山最有名的畫面。全長約400公尺，從野宮神社附近走到天龍寺北門。",
             highlights: "認真拍照大約需要30分鐘。天龍寺北門往大河內山莊那一段，有遊客說人較少、竹子更高。",
             photoTips: "熱門點：野宮神社入口附近，和天龍寺北門那一側。站在路中間往上拍，竹子會一路伸向天空。早上8點前人最少，下午人多，可以等人潮空檔再拍。",
+            photoExample: {
+              src: "images/photos/bamboo.jpg",
+              alt: "嵐山竹林的竹子近拍",
+              caption: "嵐山竹林的竹子（近拍質感，不是步道全景）",
+              author: "Basile Morin",
+              sourceUrl: "https://commons.wikimedia.org/wiki/File:Bamboo_Forest,_Arashiyama,_Kyoto,_Japan.jpg",
+              licenseName: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
             tips: "路很窄，拍照請靠邊，不要在路中間停太久。"
           }
         },
@@ -820,7 +870,7 @@ var ITINERARY_DATA = {
         { id: "prep-cash", label: "準備日幣現鈔", detail: "寺廟門票、交通儲值、街邊小吃需現金，其餘以信用卡為主" },
         { id: "prep-weather", label: "洋蔥式穿搭與輕便雨具", detail: "白天約20〜23°C，晚上約13°C" },
         { id: "prep-network", label: "手機網路與行動電源" },
-        { id: "prep-day3", day: "Day 3", label: "前一晚早點休息", detail: "04:45 出發，全天近 14 小時" }
+        { id: "prep-day3", day: "Day 3", label: "前一晚早點休息", detail: "04:45 出發，全天逾 15 小時" }
       ]
     }
   ],

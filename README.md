@@ -61,6 +61,8 @@ osaka-kyoto-trip/
 
 備註物件也可加上 `image: { src: "images/...", alt: "...", label: "優惠券" }`，會顯示成可展開的圖片（`src` 限專案內 `images/` 路徑）。
 
+攻略（`guide`）可加上 `photoExample: { src, alt, caption, author, sourceUrl, licenseName, licenseUrl }`，會在「拍照重點」下方顯示範例照片與署名；`src` 限專案內 `images/` 路徑，署名連結限 Wikimedia Commons／Creative Commons。使用他人照片時，請確認授權並保留署名。
+
 直接修改對應欄位的文字即可，例如把 `time` 改成新的時段，或把 `title` 換成新地點。
 
 ### 新增景點
@@ -102,7 +104,7 @@ osaka-kyoto-trip/
 highActivity: true,
 warning: {
   label: "HIGH ACTIVITY",
-  title: "04:45 出發，全天近 14 小時",
+  title: "04:45 出發，全天逾 15 小時",
   body: "本次旅程體力消耗最大的一天……"
 }
 ```

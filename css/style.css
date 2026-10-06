@@ -672,6 +672,33 @@ ul { padding: 0; list-style: none; }
   border-radius: var(--radius-md);
 }
 
+.guide-photo {
+  margin: 0;
+}
+
+.guide-photo__img {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  max-height: 520px;
+  object-fit: cover;
+  height: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.guide-photo__caption {
+  margin-top: var(--space-2);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+.guide-photo__credit {
+  color: var(--color-text-muted);
+  text-decoration: underline;
+}
+
 .timeline-item__badges {
   display: flex;
   flex-wrap: wrap;

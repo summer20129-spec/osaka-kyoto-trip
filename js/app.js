@@ -416,6 +416,64 @@
     return wrap;
   }
 
+  /**
+   * Example photo for a guide's photoTips: { src, alt, caption, author,
+   * sourceUrl, licenseName, licenseUrl }. src must be a project-relative
+   * path under images/ and the credit links may only point at
+   * Wikimedia Commons or Creative Commons, so data can never inject an
+   * arbitrary URL. The credit line is always shown with the photo.
+   */
+  var PHOTO_SRC_PATTERN = /^images\/[A-Za-z0-9_\-\/.]+$/;
+  var PHOTO_LINK_PATTERN = /^https:\/\/(commons\.wikimedia\.org|creativecommons\.org)\//;
+
+  function renderPhotoExample(photo) {
+    if (!photo || typeof photo.src !== "string") return null;
+    if (!PHOTO_SRC_PATTERN.test(photo.src) || photo.src.indexOf("..") !== -1) return null;
+
+    var figure = el("figure", "guide-photo");
+
+    var link = el("a", "guide-photo__link");
+    link.href = photo.src;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.setAttribute("aria-label", "開啟範例照片原圖：" + (photo.alt || ""));
+
+    var img = document.createElement("img");
+    img.className = "guide-photo__img";
+    img.src = photo.src;
+    img.alt = photo.alt || "";
+    img.loading = "lazy";
+    link.appendChild(img);
+    figure.appendChild(link);
+
+    var caption = el("figcaption", "guide-photo__caption");
+    caption.appendChild(document.createTextNode("範例照片：" + (photo.caption || "") + "（攝影：" + (photo.author || "") + "，"));
+    if (photo.sourceUrl && PHOTO_LINK_PATTERN.test(photo.sourceUrl)) {
+      var source = el("a", "guide-photo__credit", "Wikimedia Commons");
+      source.href = photo.sourceUrl;
+      source.target = "_blank";
+      source.rel = "noopener noreferrer";
+      caption.appendChild(source);
+      caption.appendChild(document.createTextNode("，"));
+    }
+    if (photo.licenseName) {
+      if (photo.licenseUrl && PHOTO_LINK_PATTERN.test(photo.licenseUrl)) {
+        var license = el("a", "guide-photo__credit", photo.licenseName);
+        license.href = photo.licenseUrl;
+        license.target = "_blank";
+        license.rel = "noopener noreferrer";
+        caption.appendChild(license);
+      } else {
+        caption.appendChild(document.createTextNode(photo.licenseName));
+      }
+      caption.appendChild(document.createTextNode("，"));
+    }
+    caption.appendChild(document.createTextNode("已縮小）"));
+    figure.appendChild(caption);
+
+    return figure;
+  }
+
   function renderGuidePanel(item, panelId) {
     var panel = el("div", "guide-panel");
     panel.id = panelId;
@@ -425,6 +483,10 @@
     fields.forEach(function (field) {
       var fieldEl = renderGuideField(field, item.guide);
       if (fieldEl) panel.appendChild(fieldEl);
+      if (field.key === "photoTips" && item.guide.photoExample) {
+        var photoEl = renderPhotoExample(item.guide.photoExample);
+        if (photoEl) panel.appendChild(photoEl);
+      }
     });
 
     return panel;
@@ -459,8 +521,16 @@
     var panelId = "guide-panel-" + guideIdCounter;
 
     var wrap = el("div", "timeline-item__guide");
-    wrap.appendChild(renderGuideButton(panelId));
-    wrap.appendChild(renderGuidePanel(item, panelId));
+    var button = renderGuideButton(panelId);
+    var panel = renderGuidePanel(item, panelId);
+    // Fetch example photos as soon as the panel is opened, instead of
+    // waiting on the browser's lazy-load heuristics.
+    button.addEventListener("click", function () {
+      var photos = panel.querySelectorAll("img[loading=lazy]");
+      for (var i = 0; i < photos.length; i++) photos[i].loading = "eager";
+    });
+    wrap.appendChild(button);
+    wrap.appendChild(panel);
     return wrap;
   }
 
