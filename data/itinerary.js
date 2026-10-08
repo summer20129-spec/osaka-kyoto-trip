@@ -92,7 +92,7 @@ var ITINERARY_DATA = {
           badges: ["TRANSPORT"]
         },
         {
-          time: "16:00〜18:30",
+          time: "16:00〜17:30",
           title: "大丸梅田店",
           description: "13樓 Nintendo OSAKA、寶可夢中心大阪",
           notes: [
@@ -107,18 +107,36 @@ var ITINERARY_DATA = {
           guide: {
             type: "shopping",
             highlights: "位在JR大阪站南門大樓，13樓集中Nintendo OSAKA、寶可夢中心大阪等角色商店，是任天堂與寶可夢周邊的熱門採買點。",
-            tips: "店20:00打烊，建議18:30前離開；2026/11/1起免稅改為出境後退稅，結帳方式請向店員確認。"
+            tips: "店20:00打烊，行程安排17:30前離開，步行前往茶屋町；2026/11/1起免稅改為出境後退稅，結帳方式請向店員確認。"
           }
         },
         {
-          time: "18:30〜19:00",
+          time: "17:45〜18:30",
+          title: "alotta 梅田茶屋町（Milbon護髮）",
+          description: "大丸梅田步行約10〜15分鐘，沙龍專賣護髮品商店",
+          notes: [
+            "地址：大阪市北區茶屋町2-28（Central茶屋町）；御堂筋線梅田站步行約2分鐘，阪急梅田站茶屋町口步行約1〜3分鐘",
+            "1樓商店常備5,000種以上沙龍專賣護髮品，可現場試用與諮詢；Milbon（ミルボン）是其取扱品牌之一，建議先上網確認想買的產品線有沒有",
+            "營業約11:00〜20:00（假日10:00〜20:00），各網站寫法不一致，免稅是否可用也尚未確認，請先電話或官網確認",
+            "護髮品多為液體，請放托運行李；購買後要帶到旅程最後，請預留行李空間"
+          ],
+          badges: ["SHOPPING"],
+          locationQuery: "alotta 梅田茶屋町 大阪",
+          guide: {
+            type: "shopping",
+            highlights: "1樓商店常備約5,000種沙龍專賣護髮品，可現場試用與諮詢，包含Milbon等品牌；2樓是全包廂式美容院。",
+            tips: "各網站營業時間與公休日寫法不一致，請先確認；液體商品請放托運行李；免稅是否可用請先詢問。"
+          }
+        },
+        {
+          time: "18:30〜19:15",
           title: "返回難波",
           description: "搭御堂筋線回難波，前往道頓堀",
           notes: [],
           badges: ["TRANSPORT"]
         },
         {
-          time: "19:00〜21:00",
+          time: "19:15〜21:00",
           title: "道頓堀・心齋橋",
           description: "",
           notes: [
@@ -513,7 +531,7 @@ var ITINERARY_DATA = {
             type: "attraction",
             historyBrief: "花見小路是祇園最有名的街，江戶時代因為靠近八坂神社、客人多，漸漸發展成茶屋聚集的花街。現在仍有藝妓、舞妓在這一帶活動。",
             summary: "京都最有名的傳統街景，石板路兩旁是木造茶屋和燈籠，很有古都氣氛。",
-            highlights: "從八坂神社往南走就是花見小路；走過辰巳橋可以到白川河邊，柳樹配老房子也是熱門拍照點，午餐的白川なみ里就在附近。",
+            highlights: "從八坂神社往南走就是花見小路；走過辰巳橋可以到白川河邊，柳樹配老房子也是熱門拍照點。",
             photoTips: "熱門拍法：在花見小路主街（公共道路）拍石板路和兩旁的茶屋；傍晚燈籠亮起來更好看。白川河邊的景色也很上相。",
             photoExample: {
               src: "images/photos/hanamikoji.jpg",
@@ -528,28 +546,32 @@ var ITINERARY_DATA = {
         },
         {
           time: "12:15〜12:30",
-          title: "移動至白川なみ里",
-          description: "步行約5分",
+          title: "移動至午餐餐廳",
+          description: "依當天選定的餐廳調整",
           notes: [],
           badges: ["TRANSPORT"],
           group: "下午"
         },
         {
           time: "12:30〜14:00",
-          title: "午餐：祇園白川 なみ里",
-          description: "白川沿岸京料理，輕鬆用餐氣氛",
-          notes: [],
-          badges: ["FOOD"],
-          locationQuery: "祇園白川 なみ里 京都",
-          guide: {
-            type: "food",
-            specialty: "白川沿岸京料理，環境優雅、步調輕鬆",
-            mustTry: "季節御膳、京都野菜料理",
-            budget: "約¥4,000〜6,000／人",
-            budgetVerifiedAt: "2026-08",
-            reservationTip: "用餐時段建議提前預約，假日尤其熱門",
-            elderFriendly: "座位需脫鞋入座，行動不便者建議事先詢問是否有椅子座位"
-          }
+          title: "午餐：待決定（祇園一帶）",
+          description: "餐廳之後再決定",
+          notes: [
+            "待確認：原定的祇園白川 なみ里 週四（11/5）不供應午餐，已確認不可用；いづ重 週三、週四公休，也不可用",
+            {
+              text: "備選（尚未預約，僅供參考）：祇園 京料理 花咲（週四有營業；午餐約¥4,950起；有椅子席、可網路預約）",
+              locationQuery: "祇園 京料理 花咲 京都"
+            },
+            {
+              text: "備選（尚未預約，僅供參考）：祇園うえもり（冷奴／湯豆腐會席；只接受電話預約，週四營業需先確認）",
+              locationQuery: "祇園うえもり 京都"
+            },
+            {
+              text: "備選（尚未預約，僅供參考）：おかる（手打京都烏龍麵；多數資料寫只收現金，預約資訊不一致）",
+              locationQuery: "祇園 おかる うどん 京都"
+            }
+          ],
+          badges: ["FOOD", "PENDING"]
         },
         {
           time: "14:00〜14:15",
@@ -961,7 +983,7 @@ var ITINERARY_DATA = {
         { id: "tkt-rapit", day: "Day 1", label: "南海 Rapi:t 指定席（關西機場→難波）", detail: "確認車次、座位與月台；不要誤搭 JR 關空快速" },
         { id: "tkt-teamlab", day: "Day 3", label: "teamLab Biovortex Kyoto 時段票（已購票）", detail: "17:00 入場，3位成人；票券請存在手機，現場出示" },
         { id: "rsv-kimono", day: "Day 3", label: "和服店預約確認", detail: "08:15 抵達報到，09:00 換裝" },
-        { id: "rsv-namiri", day: "Day 3", label: "午餐：祇園白川 なみ里 預約", detail: "12:30 用餐時段，假日尤其熱門" },
+        { id: "rsv-lunch-day3", day: "Day 3", label: "午餐餐廳（待決定與預約）", detail: "なみ里週四無午餐，請另找午餐餐廳；備選已記在行程備註" },
         { id: "tkt-sagano", day: "Day 4", label: "嵯峨野觀光小火車（嵯峨野81號）", detail: "17:13 嵐山站出發；車票於乘車日前約1個月（日本時間00:00）開賣，請盡早購買，並以官網公告為準" }
       ]
     },
