@@ -37,8 +37,8 @@ var ITINERARY_DATA = {
     accommodation: {
       name: "日本橋近鐵站附近套房",
       detail: "4晚・3人",
-      location: "大阪市中央區，近鐵日本橋站步行約5分鐘，鄰近黑門市場／難波／道頓堀",
-      locationQuery: "近鐵日本橋站 大阪"
+      location: "2-chōme-6-17 Kōzu, Chuo Ward, Osaka, Osaka 542-0072（〒542-0072 大阪市中央區高津2丁目6-17）；近鐵日本橋站步行約5分鐘，鄰近黑門市場／難波／道頓堀",
+      locationQuery: "2-chōme-6-17 Kōzu, Chuo Ward, Osaka, Osaka 542-0072"
     }
   },
 
@@ -73,7 +73,7 @@ var ITINERARY_DATA = {
           description: "稍作休息",
           notes: [],
           badges: ["REST"],
-          locationQuery: "近鐵日本橋站 大阪"
+          locationQuery: "2-chōme-6-17 Kōzu, Chuo Ward, Osaka, Osaka 542-0072"
         },
         {
           time: "14:00〜15:30",
