@@ -501,7 +501,7 @@ var ITINERARY_DATA = {
           badges: ["RESERVATION"]
         },
         {
-          time: "10:15〜11:15",
+          time: "10:15〜11:10",
           title: "日東堂 KYOTO COFFEE",
           description: "八坂之塔旁，喝咖啡牛奶，穿和服在八坂之塔拍照",
           notes: [
@@ -519,13 +519,42 @@ var ITINERARY_DATA = {
           }
         },
         {
-          time: "11:30〜12:15",
+          time: "11:10〜11:30",
+          title: "移動至祇園 ゆやま",
+          description: "從八坂之塔步行前往，11:30入座，請提早5〜10分鐘到",
+          notes: [],
+          badges: ["TRANSPORT"]
+        },
+        {
+          time: "11:30〜13:00",
+          title: "午餐：祇園 ゆやま",
+          description: "新橋通花見小路東入，日本料理（京懷石），已訂位",
+          notes: [
+            "已訂位：3位，11:30入座，用餐時間約1小時30分鐘；預訂編號請另存在手機，不放網站",
+            "套餐：【會食推薦】清水計劃（共7道），每人¥7,500（含稅）",
+            "店面小（約8席，另有1間個室）；週一公休，11/5週四有營業；是否為椅子席尚未確認，穿和服與長輩同行建議先詢問店家"
+          ],
+          badges: ["FOOD", "RESERVATION"],
+          locationQuery: "祇園 ゆやま 京都",
+          guide: {
+            type: "food",
+            specialty: "新橋通花見小路東入的京懷石小店，料理長從市場採買食材，離花見小路與白川很近。",
+            mustTry: "【清水】計劃（共7道，含縁高盛り）",
+            budget: "套餐每人¥7,500（含稅，已訂位的方案）",
+            budgetVerifiedAt: "2026-10",
+            reservationTip: "已訂位；店只有約8席，請準時入座，遲到前請先聯絡店家。",
+            elderFriendly: "席位少、椅子席是否可選尚未確認，長輩同行建議先詢問。"
+          }
+        },
+        {
+          time: "13:00〜13:50",
           title: "祇園・花見小路散策拍照",
           description: "",
           notes: [
             "可順手購買：生八ッ橋、茶の菓（MALEBRANCHE）－沿路店家皆有販售"
           ],
           badges: ["PHOTO", "SHOPPING"],
+          group: "下午",
           locationQuery: "祇園 花見小路 京都",
           guide: {
             type: "attraction",
@@ -543,35 +572,6 @@ var ITINERARY_DATA = {
             },
             tips: "主街可以拍照，但兩旁的私人小巷禁止拍照，部分小巷已禁止進入，請遵守標示。請不要追拍、攔住或近距離拍藝妓與舞妓，尊重當地居民。"
           }
-        },
-        {
-          time: "12:15〜12:30",
-          title: "移動至午餐餐廳",
-          description: "依當天選定的餐廳調整",
-          notes: [],
-          badges: ["TRANSPORT"],
-          group: "下午"
-        },
-        {
-          time: "12:30〜14:00",
-          title: "午餐：待決定（祇園一帶）",
-          description: "餐廳之後再決定",
-          notes: [
-            "待確認：原定的祇園白川 なみ里 週四（11/5）不供應午餐，已確認不可用；いづ重 週三、週四公休，也不可用",
-            {
-              text: "備選（尚未預約，僅供參考）：祇園 京料理 花咲（週四有營業；午餐約¥4,950起；有椅子席、可網路預約）",
-              locationQuery: "祇園 京料理 花咲 京都"
-            },
-            {
-              text: "備選（尚未預約，僅供參考）：祇園うえもり（冷奴／湯豆腐會席；只接受電話預約，週四營業需先確認）",
-              locationQuery: "祇園うえもり 京都"
-            },
-            {
-              text: "備選（尚未預約，僅供參考）：おかる（手打京都烏龍麵；多數資料寫只收現金，預約資訊不一致）",
-              locationQuery: "祇園 おかる うどん 京都"
-            }
-          ],
-          badges: ["FOOD", "PENDING"]
         },
         {
           time: "14:00〜14:15",
@@ -983,7 +983,7 @@ var ITINERARY_DATA = {
         { id: "tkt-rapit", day: "Day 1", label: "南海 Rapi:t 指定席（關西機場→難波）", detail: "確認車次、座位與月台；不要誤搭 JR 關空快速" },
         { id: "tkt-teamlab", day: "Day 3", label: "teamLab Biovortex Kyoto 時段票（已購票）", detail: "17:00 入場，3位成人；票券請存在手機，現場出示" },
         { id: "rsv-kimono", day: "Day 3", label: "和服店預約確認", detail: "08:15 抵達報到，09:00 換裝" },
-        { id: "rsv-lunch-day3", day: "Day 3", label: "午餐餐廳（待決定與預約）", detail: "なみ里週四無午餐，請另找午餐餐廳；備選已記在行程備註" },
+        { id: "rsv-yuyama", day: "Day 3", label: "午餐：祇園 ゆやま（已訂位）", detail: "11:30 入座，3位；預訂資訊請存在手機" },
         { id: "tkt-sagano", day: "Day 4", label: "嵯峨野觀光小火車（嵯峨野81號）", detail: "17:13 嵐山站出發；車票於乘車日前約1個月（日本時間00:00）開賣，請盡早購買，並以官網公告為準" }
       ]
     },
