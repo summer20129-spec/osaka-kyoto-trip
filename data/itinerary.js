@@ -941,13 +941,18 @@ var ITINERARY_DATA = {
               text: "運動用品（選擇性）：難波Parks 4樓 SPORTS DEPO／Alpen Outdoors（11:00起營業）；優惠券5% OFF，有效至2027/6/30",
               locationQuery: "スポーツデポ なんばパークス店 大阪",
               image: { src: "images/coupons/alpen.jpg", alt: "Alpen 優惠券", label: "優惠券" }
+            },
+            {
+              text: "家電／藥妝：BicCamera 難波店（千日前2-10-1，連接難波Walk，離難波站約2〜3分鐘；年中無休，營業約10:00〜21:00，各網站寫法不一致）；優惠券免稅10%，另加照相機／家電／玩具7%、藥妝／食品／日用品5%、日本酒3%，結帳兩個條碼都要掃；Apple、遊戲機等不適用，有效至2026/12/31；與EDION優惠券不能疊加，同類商品擇一店購買",
+              locationQuery: "ビックカメラ なんば店 大阪",
+              image: { src: "images/coupons/biccamera.jpg", alt: "BicCamera 優惠券", label: "優惠券" }
             }
           ],
           badges: ["SHOPPING", "FOOD"],
           locationQuery: "難波 心齋橋 大阪",
           guide: {
             type: "shopping",
-            highlights: "心齋橋筋商店街、難波 CITY、難波 Parks 都在同一區域，購物選擇集中。",
+            highlights: "心齋橋筋商店街、難波 CITY、難波 Parks、BicCamera 難波店都在同一區域，購物選擇集中。",
             tips: "採買時間約30分鐘，建議擇一區域集中逛，並預留前往機場的時間。"
           }
         },
