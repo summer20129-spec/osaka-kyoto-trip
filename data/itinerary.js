@@ -63,7 +63,14 @@ var ITINERARY_DATA = {
             "入境提領行李後，依「南海電鐵／NANKAI」指標前往關西機場站（南海電鐵車站位於第1航廈2F，經聯絡空橋可達）",
             "搭乘南海特急Rapi:t前往「難波」站，為指定席，搭車前請確認車次、座位與月台",
             "抵達南海難波站後，再依當日住宿位置前往近鐵日本橋站附近",
-            "提醒：不要誤搭JR關空快速；本行程使用南海Rapi:t前往難波"
+            "提醒：不要誤搭JR關空快速；本行程使用南海Rapi:t前往難波",
+            "入境卡：官方推薦用Visit Japan Web線上填寫（取得QR碼），也可以用紙本；紙本有繁體中文版，多半在飛機上發放，或在入境審查場入口附近自取（實際以航班與現場為準），每人一張",
+            "紙本填寫重點：英文或日文、黑色原子筆；姓名依護照拼音；生日依序日／月／年；現住所填TAIWAN與居住城市；目的勾「觀光」；填搭乘的航班編號；停留天數11/3〜11/7填5天；日本聯絡處填住宿名稱與地址（一處即可），電話填自己的電話；三題皆沒有就勾「いいえ／No」；簽名與護照相同",
+            "建議在飛機上先填好，下機排隊時就不用再停下來寫；範例圖為自行繪製的示意圖，實際以現場拿到的入境卡為準",
+            {
+              text: "紙本入境卡填寫範例圖（虛構資料，請依自己的護照與行程填寫）",
+              image: { src: "images/guides/arrival-card-example.png", alt: "紙本入境卡填寫範例（示意圖）", label: "填寫範例" }
+            }
           ],
           badges: ["TRANSPORT"]
         },
@@ -589,7 +596,28 @@ var ITINERARY_DATA = {
           locationQuery: "伏見稻荷大社 京都"
         },
         {
-          time: "15:00〜16:00",
+          time: "15:00〜15:20",
+          title: "祢ざめ家（稻荷壽司）",
+          description: "伏見稻荷參道上的老店，指定吃稻荷壽司（豆皮壽司，いなり寿し）",
+          notes: [
+            "營業約10:00〜16:00（賣完即打烊，各網站寫法不一致，不定休），建議一到伏見稻荷就先過來",
+            "稻荷壽司外帶約4個¥600、7個¥1,000；店內價格請看現場菜單；醋飯裡拌有黑芝麻、牛蒡與麻籽，是這間的特色",
+            "餐廳另有鰻魚飯、狐狸烏龍麵等，這次只吃稻荷壽司；若覺得時間不夠，也可以外帶邊走邊吃"
+          ],
+          badges: ["FOOD"],
+          locationQuery: "祢ざめ家 伏見稲荷 京都",
+          guide: {
+            type: "food",
+            specialty: "伏見稻荷參道上的老店，以稻荷壽司（豆皮壽司）聞名，醋飯拌有黑芝麻、牛蒡與麻籽。",
+            mustTry: "稻荷壽司（いなり寿し）",
+            budget: "外帶約4個¥600、7個¥1,000（資料價格，現場可能不同）",
+            budgetVerifiedAt: "2026-10",
+            reservationTip: "沒有查到預約資訊；營業到約16:00且賣完即打烊，建議抵達後先來。",
+            elderFriendly: "店內席位與是否有椅子席尚未確認，需要時可外帶。"
+          }
+        },
+        {
+          time: "15:20〜16:00",
           title: "伏見稻荷大社、千本鳥居",
           description: "已換回一般服裝",
           notes: [],
@@ -609,7 +637,7 @@ var ITINERARY_DATA = {
               sourceUrl: "https://commons.wikimedia.org/wiki/File:Double_torii_path_at_Fushimi_Inari_Taisha_Shrine,_Kyoto,_Japan.jpg",
               licenseName: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/"
             },
-            tips: "整座稻荷山往返要2小時以上；你們只有約1小時，走前段千本鳥居就能拍到主要畫面，再依體力決定要不要走到四辻。"
+            tips: "整座稻荷山往返要2小時以上；你們只有約40分鐘，走前段千本鳥居就能拍到主要畫面，再依體力決定要不要走到四辻。"
           }
         },
         {
@@ -1007,6 +1035,7 @@ var ITINERARY_DATA = {
       title: "行前準備",
       items: [
         { id: "prep-passport", label: "護照效期與入境所需文件確認" },
+        { id: "prep-arrivalcard", label: "入境卡：Visit Japan Web 或紙本", detail: "官方推薦Visit Japan Web；紙本在飛機上或機場領取，填寫範例見Day 1備註" },
         { id: "prep-lodging", label: "確認住宿入住方式與抵達時間" },
         { id: "prep-ic", label: "準備交通 IC 卡", detail: "建議使用 ICOCA（關西最通用）" },
         { id: "prep-coupons", label: "優惠券與護照", detail: "優惠券已附在行程備註；2026/11/1起免稅改為出境後退稅，結帳方式請向店員確認" },
