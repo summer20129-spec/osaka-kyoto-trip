@@ -519,6 +519,23 @@
     return parts.join(" ");
   }
 
+  /**
+   * JMA's weekly forecast covers about 7 days ahead, so a trip day's
+   * forecast should appear around 7 days before it. Returns e.g.
+   * "預報約10/27起", or null when that date is today or already past.
+   */
+  function forecastHint(dayISO) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(dayISO));
+    if (!m) return null;
+    var tripDay = Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+    var available = new Date(tripDay - 7 * 24 * 60 * 60 * 1000);
+    var today = /^(\d{4})-(\d{2})-(\d{2})$/.exec(getJapanNow().dateISO);
+    if (!today) return null;
+    var todayUtc = Date.UTC(Number(today[1]), Number(today[2]) - 1, Number(today[3]));
+    if (available.getTime() <= todayUtc) return null;
+    return "預報約" + (available.getUTCMonth() + 1) + "/" + available.getUTCDate() + "起";
+  }
+
   /** Fills the weather chip right of each day's date (hidden when no data). */
   function fillDayWeather(data) {
     var cfg = data.weather;
@@ -530,7 +547,16 @@
       var office = cfg.offices[day.city];
       var byDate = weatherByCity[day.city];
       var text = office && byDate ? describeForecast(byDate[day.dateISO]) : null;
-      if (text) {
+      var hint = null;
+      if (!text && office && byDate) {
+        hint = forecastHint(day.dateISO);
+      }
+      if (!text && hint) {
+        // Forecast not published yet: tell when it should appear.
+        strip.textContent = hint;
+        strip.setAttribute("aria-label", office.label + "天氣預報尚未公布：" + hint);
+        strip.hidden = false;
+      } else if (text) {
         // "降雨10%" -> "降" is its own span so very narrow phones show "雨10%".
         strip.textContent = "";
         var rainAt = text.indexOf("降雨");
@@ -630,7 +656,9 @@
         table.appendChild(row);
       });
       if (rows > 0) {
-        status.textContent = "氣象廳預報（" + rows + "／" + data.days.length + " 天已公布）";
+        status.textContent = rows === data.days.length
+          ? "氣象廳預報：行程 " + data.days.length + " 天都已公布"
+          : "氣象廳預報：行程 " + data.days.length + " 天中已公布 " + rows + " 天，其餘約出發前7天陸續公布";
         table.hidden = false;
       } else {
         status.textContent = "氣象廳預報：行程日期尚未公布（約出發前7天開始），目前以一般氣候為準。";
