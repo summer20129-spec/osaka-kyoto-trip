@@ -227,17 +227,39 @@
     food: [
       { key: "specialty", label: "店家特色" },
       { key: "mustTry", label: "招牌必點" },
+      { key: "orderingTips", label: "點餐攻略" },
+      { key: "reviewSummary", label: "網路評價" },
       { key: "budget", label: "價格帶", verifiedAtKey: "budgetVerifiedAt" },
+      { key: "hours", label: "營業時間" },
       { key: "reservationTip", label: "預約建議" },
-      { key: "elderFriendly", label: "長輩友善提示" }
+      { key: "elderFriendly", label: "長輩友善提示" },
+      { key: "checkTips", label: "入店時可確認" }
+    ],
+    // Plain information card (transport, forms…): content comes from
+    // guide.sections only.
+    info: [],
+    // One time slot, several shops: guide.intro + guide.stops[] (each
+    // stop has its own MAP link and the fields in STOP_FIELD_CONFIG).
+    stops: [
+      { key: "intro", label: "路線順序" }
     ],
     shopping: [
       { key: "highlights", label: "店家特色" },
       { key: "recommendedItems", label: "必買" },
+      { key: "orderingTips", label: "點餐攻略" },
       { key: "limitedItems", label: "限定商品", verifiedAtKey: "limitedItemsVerifiedAt" },
+      { key: "hours", label: "營業時間" },
       { key: "tips", label: "購買提醒" }
     ]
   };
+
+  var STOP_FIELD_CONFIG = [
+    { key: "specialty", label: "店家特色" },
+    { key: "mustTry", label: "招牌必點／必買" },
+    { key: "orderingTips", label: "點餐攻略" },
+    { key: "budget", label: "價位", verifiedAtKey: "budgetVerifiedAt" },
+    { key: "hours", label: "營業時間" }
+  ];
 
   function el(tag, className, text) {
     var node = document.createElement(tag);
@@ -474,6 +496,31 @@
     return figure;
   }
 
+  /**
+   * One shop inside a multi-shop guide (guide.type === "stops"): a
+   * small card with its own MAP link, built through buildMapUrl() like
+   * every other external link in the app.
+   */
+  function renderGuideStop(stop) {
+    var card = el("div", "guide-stop");
+    var head = el("div", "guide-stop__head");
+    head.appendChild(el("p", "guide-stop__name", stop.name || ""));
+    if (stop.locationQuery) {
+      var link = el("a", "map-link", "MAP");
+      link.href = buildMapUrl(stop.locationQuery);
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.setAttribute("aria-label", "在 Google Maps 開啟" + (stop.name || stop.locationQuery));
+      head.appendChild(link);
+    }
+    card.appendChild(head);
+    STOP_FIELD_CONFIG.forEach(function (field) {
+      var fieldEl = renderGuideField(field, stop);
+      if (fieldEl) card.appendChild(fieldEl);
+    });
+    return card;
+  }
+
   function renderGuidePanel(item, panelId) {
     var panel = el("div", "guide-panel");
     panel.id = panelId;
@@ -488,6 +535,24 @@
         if (photoEl) panel.appendChild(photoEl);
       }
     });
+
+    // Optional extra labelled paragraphs: sections: [{ label, text }].
+    if (item.guide.sections && item.guide.sections.length) {
+      item.guide.sections.forEach(function (section) {
+        if (!section || !section.text) return;
+        var wrap = el("div", "guide-panel__field");
+        wrap.appendChild(el("p", "guide-panel__label", section.label || ""));
+        wrap.appendChild(el("p", "guide-panel__value", section.text));
+        panel.appendChild(wrap);
+      });
+    }
+
+    // Optional shops list for any guide type (each with its own MAP).
+    if (item.guide.stops && item.guide.stops.length) {
+      item.guide.stops.forEach(function (stop) {
+        panel.appendChild(renderGuideStop(stop));
+      });
+    }
 
     return panel;
   }
@@ -516,7 +581,7 @@
     return btn;
   }
 
-  function renderGuide(item) {
+  function renderGuide(item, openByDefault) {
     guideIdCounter += 1;
     var panelId = "guide-panel-" + guideIdCounter;
 
@@ -531,6 +596,15 @@
     });
     wrap.appendChild(button);
     wrap.appendChild(panel);
+
+    // Travel Mode: the guide of the item happening right now starts
+    // open, so the ordering tips are already there when you walk in.
+    if (openByDefault) {
+      button.setAttribute("aria-expanded", "true");
+      panel.hidden = false;
+      var openPhotos = panel.querySelectorAll("img[loading=lazy]");
+      for (var j = 0; j < openPhotos.length; j++) openPhotos[j].loading = "eager";
+    }
     return wrap;
   }
 
@@ -553,6 +627,10 @@
       timeEl.appendChild(el("span", "travel-tag travel-tag--now", "Now"));
     } else if (isNext) {
       timeEl.appendChild(el("span", "travel-tag travel-tag--next", "Next"));
+    }
+    // Optional confirmed-booking label, e.g. status: "已訂位 11:30".
+    if (typeof item.status === "string" && item.status) {
+      timeEl.appendChild(el("span", "status-chip", item.status));
     }
     li.appendChild(timeEl);
     li.appendChild(el("p", "timeline-item__title", item.title));
@@ -596,7 +674,7 @@
     }
 
     if (item.guide) {
-      li.appendChild(renderGuide(item));
+      li.appendChild(renderGuide(item, isNow));
     }
 
     return li;

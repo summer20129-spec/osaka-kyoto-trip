@@ -14,6 +14,9 @@
   --color-text: #2B2925;
   --color-text-muted: #6B6559;
   --color-text-faint: #756E5D;
+  --color-text-note: #4A453C;   /* item notes: darker than muted for outdoor reading */
+  --status-bg: #E3EEE2;
+  --status-text: #2C5A31;
 
   --color-accent: #A8582F;       /* muted terracotta */
   --color-accent-soft: #F0E1D3;  /* accent tint for backgrounds */
@@ -610,6 +613,21 @@ ul { padding: 0; list-style: none; }
   color: var(--color-accent);
 }
 
+/* Confirmed booking / ticket label shown next to the time. */
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  margin-left: var(--space-2);
+  vertical-align: middle;
+  background: var(--status-bg);
+  color: var(--status-text);
+}
+
 .timeline-item__title {
   font-size: var(--fs-item-title);
   font-weight: 600;
@@ -630,8 +648,8 @@ ul { padding: 0; list-style: none; }
 
 .timeline-item__note {
   position: relative;
-  font-size: var(--fs-small);
-  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  color: var(--color-text-note);
   padding-left: var(--space-4);
   margin-bottom: var(--space-1);
   line-height: 1.5;
@@ -846,6 +864,35 @@ ul { padding: 0; list-style: none; }
   color: var(--color-text);
   line-height: 1.6;
   overflow-wrap: break-word;
+}
+
+/* Multi-shop guide: one small card per shop, each with its own MAP. */
+.guide-stop {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: var(--color-surface-muted);
+  border-radius: var(--radius-sm);
+}
+
+.guide-stop__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.guide-stop__name {
+  font-size: var(--fs-body);
+  font-weight: 700;
+  color: var(--color-text);
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.guide-stop .guide-panel__value {
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 .guide-panel__verified {

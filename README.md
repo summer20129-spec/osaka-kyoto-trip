@@ -63,6 +63,16 @@ osaka-kyoto-trip/
 
 攻略（`guide`）可加上 `photoExample: { src, alt, caption, author, sourceUrl, licenseName, licenseUrl }`，會在「拍照重點」下方顯示範例照片與署名；`src` 限專案內 `images/` 路徑，署名連結限 Wikimedia Commons／Creative Commons。使用他人照片時，請確認授權並保留署名。
 
+項目可加上 `status: "已訂位 11:30"`，會在時間旁顯示綠色狀態標籤（只用於已確認的訂位／購票，預訂編號不要放在網站上）。
+
+備註建議只留 1～2 行「必看提醒」；店家的特色、點餐攻略、營業時間、評價請放進 `guide`。餐廳攻略（`type: "food"`）除了原有欄位，另支援 `orderingTips`（點餐攻略）、`reviewSummary`（網路評價）、`hours`（營業時間）、`checkTips`（入店時可確認）。
+
+同一時段有多家店時，使用 `guide: { type: "stops", intro: "路線順序…", stops: [{ name, locationQuery, specialty, mustTry, orderingTips, budget, budgetVerifiedAt, hours }] }`，每家店會有自己的 MAP 連結。
+
+`stops` 可加在任何類型的攻略裡（例如景點攻略 + 周邊店家）；`sections: [{ label, text }]` 可為任何攻略補上自訂的標題與段落；`type: "info"` 是只由 `sections` 組成的資訊卡（例如交通與入境卡說明）。
+
+Travel Mode 判斷為「現在進行中」的項目，其攻略會預設展開。
+
 直接修改對應欄位的文字即可，例如把 `time` 改成新的時段，或把 `title` 換成新地點。
 
 ### 新增景點
