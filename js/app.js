@@ -285,29 +285,372 @@
     if (!container) return;
     var overview = data.overview;
 
-    var cards = [
-      { label: "旅行日期", value: overview.dates },
-      { label: "旅行人數", value: overview.travelers },
-      { label: "主要城市", value: overview.cities },
-      {
-        label: "住宿",
-        value: overview.accommodation.name,
-        detail: overview.accommodation.detail + " · " + overview.accommodation.location,
-        locationQuery: overview.accommodation.locationQuery
-      }
-    ];
+    renderFlightCard(overview, container);
+    renderAccommodationCard(overview.accommodation, container);
+    renderWeatherCard(data, container);
+  }
 
-    cards.forEach(function (card) {
-      var wrap = el("div", "overview__card");
-      wrap.appendChild(el("p", "overview__card-label", card.label));
-      wrap.appendChild(el("p", "overview__card-value", card.value));
-      if (card.detail) {
-        wrap.appendChild(el("p", "overview__card-detail", card.detail));
+  /**
+   * Accommodation card: name, nearest station, MAP link; the full
+   * address sits behind an expand button.
+   */
+  function renderAccommodationCard(acc, container) {
+    if (!acc) return;
+    var card = el("div", "overview__card");
+    card.appendChild(el("p", "overview__card-label", "住宿"));
+    card.appendChild(el("p", "overview__card-value", acc.name));
+    var detail = [acc.detail, acc.station].filter(Boolean).join(" · ");
+    if (detail) card.appendChild(el("p", "overview__card-detail", detail));
+
+    var actions = el("div", "overview__actions");
+    if (acc.locationQuery) {
+      actions.appendChild(renderMapLink({ title: acc.name, locationQuery: acc.locationQuery }));
+    }
+    var panelId = "address-panel";
+    if (acc.address) {
+      actions.appendChild(renderGuideButton(panelId, "詳細地址"));
+    }
+    card.appendChild(actions);
+
+    if (acc.address) {
+      var panel = el("div", "guide-panel overview__address");
+      panel.id = panelId;
+      panel.hidden = true;
+      panel.appendChild(el("p", "guide-panel__value", acc.address));
+      card.appendChild(panel);
+    }
+    container.appendChild(card);
+  }
+
+  /**
+   * Flights card: label, flight number, times, terminals. Data only
+   * carries public trip facts (no passenger name, booking reference or
+   * ticket number — those stay out of the public site).
+   */
+  function renderFlightCard(overview, container) {
+    if (!overview.flights || !overview.flights.length) return;
+    var card = el("div", "overview__card overview__card--wide flight-card");
+    card.appendChild(el("p", "overview__card-label", "航班"));
+
+    overview.flights.forEach(function (f) {
+      var row = el("div", "flight-row");
+      var head = el("p", "flight-row__head");
+      head.appendChild(el("span", "flight-row__dir", f.label));
+      head.appendChild(el("span", "flight-row__no", f.flightNo));
+      head.appendChild(el("span", "flight-row__meta", f.date));
+      row.appendChild(head);
+
+      var route = el("p", "flight-row__route");
+      route.appendChild(el("span", "flight-row__time", f.departs));
+      route.appendChild(el("span", "flight-row__place", f.from));
+      route.appendChild(el("span", "flight-row__arrow", "→"));
+      route.appendChild(el("span", "flight-row__time", f.arrives));
+      route.appendChild(el("span", "flight-row__place", f.to));
+      row.appendChild(route);
+
+      card.appendChild(row);
+    });
+
+    if (overview.flightNote) {
+      card.appendChild(el("p", "overview__card-detail", overview.flightNote));
+    }
+    container.appendChild(card);
+  }
+
+  /**
+   * WEATHER — Japan Meteorological Agency (JMA) forecast.
+   * ------------------------------------------------------------------
+   * Static climate text always shows. When the trip days fall inside
+   * JMA's 7-day forecast window, a per-day row (weather, min–max °C,
+   * rain probability) is added from JMA's public forecast JSON.
+   * - Only a GET to a fixed https://www.jma.go.jp/... URL built from a
+   *   validated 6-digit office code; no cookies, no referrer, no user
+   *   data; nothing is stored.
+   * - Any failure (offline, format change) silently keeps the static
+   *   text. Values are rendered via textContent only.
+   * - window.__WEATHER_MOCK__ (object: office code -> parsed JSON) is a
+   *   test hook, undefined in production.
+   * Source credit shown on the card: 出典：気象庁ホームページ.
+   * ------------------------------------------------------------------
+   */
+  var JMA_FORECAST_URL = "https://www.jma.go.jp/bosai/forecast/data/forecast/";
+  var JMA_FORECAST_PAGE = "https://www.jma.go.jp/bosai/forecast/#area_type=offices&area_code=";
+
+  var WEATHER_CODE_TEXT = {
+    "100": "晴", "101": "晴時多雲", "102": "晴一時雨", "103": "晴時有雨", "104": "晴一時雪",
+    "110": "晴後時多雲", "111": "晴後多雲", "112": "晴後一時雨", "113": "晴後時有雨", "114": "晴後雨",
+    "200": "多雲", "201": "多雲時晴", "202": "多雲一時雨", "203": "多雲時有雨", "204": "多雲一時雪",
+    "210": "多雲後時晴", "211": "多雲後晴", "212": "多雲後一時雨", "213": "多雲後時有雨", "214": "多雲後雨",
+    "300": "雨", "301": "雨時晴", "302": "雨時停", "303": "雨時有雪", "306": "大雨",
+    "311": "雨後晴", "313": "雨後多雲", "400": "雪"
+  };
+  var WEATHER_BASE_TEXT = { "1": "晴", "2": "多雲", "3": "雨", "4": "雪" };
+
+  function weatherCodeToText(code) {
+    var key = String(code || "");
+    if (WEATHER_CODE_TEXT[key]) return WEATHER_CODE_TEXT[key];
+    return WEATHER_BASE_TEXT[key.charAt(0)] || "—";
+  }
+
+  function toNumberOrNull(value) {
+    if (value === "" || value === null || value === undefined) return null;
+    var n = Number(value);
+    return isFinite(n) ? n : null;
+  }
+
+  /** JMA forecast JSON -> { "YYYY-MM-DD": { code, pop, tmin, tmax } } */
+  function buildForecastByDate(json, tempAreaName) {
+    var byDate = {};
+    function slot(date) {
+      if (!byDate[date]) byDate[date] = { code: null, pop: null, tmin: null, tmax: null };
+      return byDate[date];
+    }
+    function pickArea(areas, name) {
+      if (!areas || !areas.length) return null;
+      for (var i = 0; i < areas.length; i++) {
+        if (areas[i].area && areas[i].area.name === name) return areas[i];
       }
-      if (card.locationQuery) {
-        wrap.appendChild(renderMapLink({ title: card.value, locationQuery: card.locationQuery }));
+      return areas[0];
+    }
+    if (!Array.isArray(json)) return byDate;
+
+    // Weekly block (json[1]): per-day code / probability / min-max temp.
+    var weekly = json[1];
+    if (weekly && Array.isArray(weekly.timeSeries)) {
+      var wCode = weekly.timeSeries[0];
+      var wTemp = weekly.timeSeries[1];
+      if (wCode && Array.isArray(wCode.timeDefines) && wCode.areas && wCode.areas[0]) {
+        wCode.timeDefines.forEach(function (t, i) {
+          var s = slot(String(t).slice(0, 10));
+          var code = wCode.areas[0].weatherCodes && wCode.areas[0].weatherCodes[i];
+          if (code) s.code = String(code);
+          if (wCode.areas[0].pops) s.pop = toNumberOrNull(wCode.areas[0].pops[i]);
+        });
       }
-      container.appendChild(wrap);
+      var tArea = wTemp && pickArea(wTemp.areas, tempAreaName);
+      if (tArea && Array.isArray(wTemp.timeDefines)) {
+        wTemp.timeDefines.forEach(function (t, i) {
+          var s = slot(String(t).slice(0, 10));
+          s.tmin = toNumberOrNull(tArea.tempsMin && tArea.tempsMin[i]);
+          s.tmax = toNumberOrNull(tArea.tempsMax && tArea.tempsMax[i]);
+        });
+      }
+    }
+
+    // Short-range block (json[0]) is more precise for the next ~2 days.
+    var daily = json[0];
+    if (daily && Array.isArray(daily.timeSeries)) {
+      var dCode = daily.timeSeries[0];
+      var dPop = daily.timeSeries[1];
+      var dTemp = daily.timeSeries[2];
+      if (dCode && dCode.areas && dCode.areas[0] && Array.isArray(dCode.timeDefines)) {
+        dCode.timeDefines.forEach(function (t, i) {
+          var code = dCode.areas[0].weatherCodes && dCode.areas[0].weatherCodes[i];
+          if (code) slot(String(t).slice(0, 10)).code = String(code);
+        });
+      }
+      if (dPop && dPop.areas && dPop.areas[0] && Array.isArray(dPop.timeDefines)) {
+        var maxPop = {};
+        dPop.timeDefines.forEach(function (t, i) {
+          var n = toNumberOrNull(dPop.areas[0].pops && dPop.areas[0].pops[i]);
+          if (n === null) return;
+          var d = String(t).slice(0, 10);
+          if (maxPop[d] === undefined || n > maxPop[d]) maxPop[d] = n;
+        });
+        Object.keys(maxPop).forEach(function (d) {
+          slot(d).pop = maxPop[d];
+        });
+      }
+      var dArea = dTemp && pickArea(dTemp.areas, tempAreaName);
+      if (dArea && Array.isArray(dTemp.timeDefines)) {
+        dTemp.timeDefines.forEach(function (t, i) {
+          var iso = String(t);
+          var n = toNumberOrNull(dArea.temps && dArea.temps[i]);
+          if (n === null) return;
+          var s = slot(iso.slice(0, 10));
+          if (iso.indexOf("T00:00") !== -1) s.tmin = n;
+          else s.tmax = n;
+        });
+      }
+    }
+    return byDate;
+  }
+
+  function loadForecast(code) {
+    if (!/^\d{6}$/.test(String(code))) return Promise.reject(new Error("bad office code"));
+    if (typeof window !== "undefined" && window.__WEATHER_MOCK__ && window.__WEATHER_MOCK__[code]) {
+      return Promise.resolve(window.__WEATHER_MOCK__[code]);
+    }
+    if (typeof fetch !== "function") return Promise.reject(new Error("no fetch"));
+    var controller = typeof AbortController === "function" ? new AbortController() : null;
+    var timer = controller ? setTimeout(function () { controller.abort(); }, 8000) : null;
+    return fetch(JMA_FORECAST_URL + code + ".json", {
+      method: "GET",
+      mode: "cors",
+      credentials: "omit",
+      referrerPolicy: "no-referrer",
+      signal: controller ? controller.signal : undefined
+    })
+      .then(function (res) {
+        if (timer) clearTimeout(timer);
+        if (!res.ok) throw new Error("http " + res.status);
+        return res.json();
+      })
+      .catch(function (err) {
+        if (timer) clearTimeout(timer);
+        throw err;
+      });
+  }
+
+  // City key (OSAKA / KYOTO) -> forecast-by-date map, filled by the card.
+  var weatherByCity = {};
+
+  /**
+   * Short text for the day header: "白21° 晚13° 降雨10%". Returns null
+   * when the forecast has neither temperature nor rain probability.
+   */
+  function describeForecast(forecast) {
+    if (!forecast) return null;
+    var parts = [];
+    if (forecast.tmax !== null) parts.push("白" + forecast.tmax + "°");
+    if (forecast.tmin !== null) parts.push("晚" + forecast.tmin + "°");
+    if (forecast.pop !== null) parts.push("降雨" + forecast.pop + "%");
+    if (!parts.length) return null;
+    return parts.join(" ");
+  }
+
+  /** Fills the weather chip right of each day's date (hidden when no data). */
+  function fillDayWeather(data) {
+    var cfg = data.weather;
+    if (!cfg || !cfg.offices) return;
+    data.days.forEach(function (day) {
+      var section = document.getElementById(day.id);
+      var strip = section && section.querySelector(".day__weather");
+      if (!strip) return;
+      var office = cfg.offices[day.city];
+      var byDate = weatherByCity[day.city];
+      var text = office && byDate ? describeForecast(byDate[day.dateISO]) : null;
+      if (text) {
+        // "降雨10%" -> "降" is its own span so very narrow phones show "雨10%".
+        strip.textContent = "";
+        var rainAt = text.indexOf("降雨");
+        if (rainAt === -1) {
+          strip.textContent = text;
+        } else {
+          strip.appendChild(document.createTextNode(text.slice(0, rainAt)));
+          strip.appendChild(el("span", "day__weather-opt", "降"));
+          strip.appendChild(document.createTextNode(text.slice(rainAt + 1)));
+        }
+        strip.setAttribute("aria-label", office.label + "天氣預報：" + text.replace("白", "白天").replace("晚", "晚上"));
+        strip.hidden = false;
+      } else {
+        strip.hidden = true;
+      }
+    });
+  }
+
+  function renderWeatherCard(data, container) {
+    var cfg = data.weather;
+    if (!cfg) return;
+
+    var card = el("div", "overview__card overview__card--wide weather-card");
+    card.appendChild(el("p", "overview__card-label", "天氣"));
+    card.appendChild(el("p", "overview__card-value", "11月上旬一般氣候"));
+
+    var tiles = el("div", "weather-tiles");
+    [
+      { label: "白天", value: cfg.dayTemp },
+      { label: "晚上", value: cfg.nightTemp }
+    ].forEach(function (t) {
+      if (!t.value) return;
+      var tile = el("div", "weather-tile");
+      tile.appendChild(el("span", "weather-tile__label", t.label));
+      tile.appendChild(el("span", "weather-tile__value", t.value));
+      tiles.appendChild(tile);
+    });
+    if (tiles.childNodes.length) card.appendChild(tiles);
+    if (cfg.climate) card.appendChild(el("p", "overview__card-detail", cfg.climate));
+
+    var status = el("p", "weather-card__status", "氣象廳預報：載入中…");
+    card.appendChild(status);
+    var table = el("div", "weather-table");
+    table.hidden = true;
+    card.appendChild(table);
+
+    var credit = el("p", "weather-card__credit");
+    credit.appendChild(document.createTextNode("白天＝預報最高氣溫、晚上＝預報最低氣溫（多出現在夜間至清晨）。出典：気象庁ホームページ（天氣與降雨機率經整理後顯示）。預報約在出發前7天內才有；"));
+    ["OSAKA", "KYOTO"].forEach(function (key, idx) {
+      var office = cfg.offices && cfg.offices[key];
+      if (!office || !/^\d{6}$/.test(String(office.code))) return;
+      if (idx > 0) credit.appendChild(document.createTextNode("、"));
+      var link = el("a", "weather-card__link", "氣象廳" + office.label + "預報");
+      link.href = JMA_FORECAST_PAGE + office.code;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      credit.appendChild(link);
+    });
+    card.appendChild(credit);
+    container.appendChild(card);
+
+    // One request per office actually needed by the trip days.
+    var cityKeys = {};
+    data.days.forEach(function (day) {
+      if (cfg.offices && cfg.offices[day.city]) cityKeys[day.city] = true;
+    });
+    var keys = Object.keys(cityKeys);
+    var results = {};
+    var pending = keys.length;
+    if (!pending) {
+      status.textContent = "";
+      return;
+    }
+
+    function finish() {
+      Object.keys(results).forEach(function (key) {
+        weatherByCity[key] = results[key];
+      });
+      fillDayWeather(data);
+      var rows = 0;
+      table.textContent = "";
+      data.days.forEach(function (day) {
+        var office = cfg.offices[day.city];
+        var forecast = office && results[day.city] && results[day.city][day.dateISO];
+        if (!forecast || (forecast.code === null && forecast.pop === null && forecast.tmax === null)) return;
+        rows += 1;
+        var row = el("div", "weather-row");
+        var top = el("div", "weather-row__top");
+        top.appendChild(el("span", "weather-row__day", day.date + " " + office.label));
+        top.appendChild(el("span", "weather-row__sky", forecast.code ? weatherCodeToText(forecast.code) : "—"));
+        top.appendChild(el("span", "weather-row__rain", forecast.pop !== null ? "降雨" + forecast.pop + "%" : "降雨—"));
+        row.appendChild(top);
+        var temps = el("div", "weather-row__temps");
+        temps.appendChild(el("span", "weather-row__temp", "白天 " + (forecast.tmax !== null ? forecast.tmax + "°C" : "—")));
+        temps.appendChild(el("span", "weather-row__temp", "晚上 " + (forecast.tmin !== null ? forecast.tmin + "°C" : "—")));
+        row.appendChild(temps);
+        table.appendChild(row);
+      });
+      if (rows > 0) {
+        status.textContent = "氣象廳預報（" + rows + "／" + data.days.length + " 天已公布）";
+        table.hidden = false;
+      } else {
+        status.textContent = "氣象廳預報：行程日期尚未公布（約出發前7天開始），目前以一般氣候為準。";
+        table.hidden = true;
+      }
+    }
+
+    keys.forEach(function (key) {
+      var office = cfg.offices[key];
+      loadForecast(office.code)
+        .then(function (json) {
+          results[key] = buildForecastByDate(json, office.tempArea || office.label);
+        })
+        .catch(function () {
+          results[key] = null;
+        })
+        .then(function () {
+          pending -= 1;
+          if (pending === 0) finish();
+        });
     });
   }
 
@@ -497,15 +840,32 @@
     return figure;
   }
 
+  var stopIdCounter = 0;
+
   /**
-   * One shop inside a multi-shop guide (guide.type === "stops"): a
-   * small card with its own MAP link, built through buildMapUrl() like
-   * every other external link in the app.
+   * One shop inside a multi-shop guide: a collapsed-by-default card.
+   * The header shows the shop name and a one-line brief; the toggle
+   * button opens the details, and the MAP link (built through
+   * buildMapUrl() like every other external link) stays visible. The
+   * brief is data (stop.brief) — never derived from URLs or HTML.
    */
   function renderGuideStop(stop) {
+    stopIdCounter += 1;
+    var bodyId = "guide-stop-" + stopIdCounter;
+
     var card = el("div", "guide-stop");
     var head = el("div", "guide-stop__head");
-    head.appendChild(el("p", "guide-stop__name", stop.name || ""));
+
+    var toggle = el("button", "guide-stop__toggle");
+    toggle.type = "button";
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-controls", bodyId);
+    toggle.appendChild(el("span", "guide-stop__name", stop.name || ""));
+    if (stop.brief) {
+      toggle.appendChild(el("span", "guide-stop__brief", stop.brief));
+    }
+    head.appendChild(toggle);
+
     if (stop.locationQuery) {
       var link = el("a", "map-link", "MAP");
       link.href = buildMapUrl(stop.locationQuery);
@@ -515,11 +875,40 @@
       head.appendChild(link);
     }
     card.appendChild(head);
+
+    var body = el("div", "guide-stop__body");
+    body.id = bodyId;
+    body.hidden = true;
     STOP_FIELD_CONFIG.forEach(function (field) {
       var fieldEl = renderGuideField(field, stop);
-      if (fieldEl) card.appendChild(fieldEl);
+      if (fieldEl) body.appendChild(fieldEl);
     });
+    card.appendChild(body);
+
+    toggle.addEventListener("click", function () {
+      var isOpen = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!isOpen));
+      body.hidden = isOpen;
+    });
+
     return card;
+  }
+
+  /** "Expand all / collapse all" for a guide with several shop cards. */
+  function renderStopsToggleAll(panel) {
+    var btn = el("button", "guide-stops__toggle-all", "全部展開");
+    btn.type = "button";
+    btn.addEventListener("click", function () {
+      var expand = btn.textContent === "全部展開";
+      var toggles = panel.querySelectorAll(".guide-stop__toggle");
+      for (var i = 0; i < toggles.length; i++) {
+        toggles[i].setAttribute("aria-expanded", String(expand));
+        var body = document.getElementById(toggles[i].getAttribute("aria-controls"));
+        if (body) body.hidden = !expand;
+      }
+      btn.textContent = expand ? "全部收合" : "全部展開";
+    });
+    return btn;
   }
 
   function renderGuidePanel(item, panelId) {
@@ -561,6 +950,9 @@
 
     // Optional shops list for any guide type (each with its own MAP).
     if (item.guide.stops && item.guide.stops.length) {
+      if (item.guide.stops.length >= 3) {
+        panel.appendChild(renderStopsToggleAll(panel));
+      }
       item.guide.stops.forEach(function (stop) {
         panel.appendChild(renderGuideStop(stop));
       });
@@ -620,8 +1012,24 @@
     return wrap;
   }
 
-  function renderTimelineItem(item, travelState) {
+  /**
+   * Quick-filter categories for an item: food (FOOD badge), shopping
+   * (SHOPPING badge), reservation (RESERVATION badge or a confirmed
+   * booking status).
+   */
+  function itemCategories(item) {
+    var cats = [];
+    var badges = item.badges || [];
+    if (badges.indexOf("FOOD") !== -1) cats.push("food");
+    if (badges.indexOf("SHOPPING") !== -1) cats.push("shopping");
+    if (badges.indexOf("RESERVATION") !== -1 || item.status) cats.push("reservation");
+    return cats;
+  }
+
+  function renderTimelineItem(item, travelState, itemKey) {
     var li = el("li", "timeline-item");
+    li.setAttribute("data-item-key", itemKey);
+    li.setAttribute("data-cats", itemCategories(item).join(" "));
 
     var isNow = !!(travelState && travelState.nowItem === item);
     var isNext = !!(travelState && !isNow && travelState.nextItem === item);
@@ -708,6 +1116,58 @@
     return wrap;
   }
 
+  var overviewIdCounter = 0;
+
+  /**
+   * "今日一覽": a collapsed list of time + title for the day. Each row
+   * scrolls to its timeline item (found through data-item-key, never an
+   * id taken from data). Open by default only on the actual trip day.
+   */
+  function renderDayOverview(day, travelState, openByDefault) {
+    overviewIdCounter += 1;
+    var listId = "day-overview-" + overviewIdCounter;
+
+    var wrap = el("div", "day-overview");
+    var btn = el("button", "day-overview__toggle", "今日一覽（" + day.items.length + " 項）");
+    btn.type = "button";
+    btn.setAttribute("aria-expanded", String(!!openByDefault));
+    btn.setAttribute("aria-controls", listId);
+    wrap.appendChild(btn);
+
+    var list = el("ol", "day-overview__list");
+    list.id = listId;
+    list.hidden = !openByDefault;
+
+    day.items.forEach(function (item, index) {
+      var key = day.id + "-" + index;
+      var row = el("li", "day-overview__item");
+      row.setAttribute("data-cats", itemCategories(item).join(" "));
+
+      var go = el("button", "day-overview__row");
+      go.type = "button";
+      go.appendChild(el("span", "day-overview__time", item.time));
+      go.appendChild(el("span", "day-overview__title", item.title));
+      if (typeof item.status === "string" && item.status) {
+        go.appendChild(el("span", "status-chip", item.status));
+      }
+      go.addEventListener("click", function () {
+        var target = document.querySelector('[data-item-key="' + key + '"]');
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      row.appendChild(go);
+      list.appendChild(row);
+    });
+    wrap.appendChild(list);
+
+    btn.addEventListener("click", function () {
+      var isOpen = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", String(!isOpen));
+      list.hidden = isOpen;
+    });
+
+    return wrap;
+  }
+
   function renderDay(day, travelState) {
     var section = el("section", "day");
     section.id = day.id;
@@ -722,9 +1182,15 @@
     var dayLabel = el("span", "day__number", "DAY " + String(day.day).padStart(2, "0"));
     eyebrow.appendChild(dayLabel);
     eyebrow.appendChild(el("span", "day__city", day.city));
-    eyebrow.appendChild(
-      el("span", "day__date", day.date + " " + day.weekday + "（" + day.weekdayLocal + "）")
-    );
+    // The English weekday is its own span so narrow phones can hide it
+    // and keep the weather chip on the same line.
+    var dateEl = el("span", "day__date", day.date);
+    dateEl.appendChild(el("span", "day__date-en", " " + day.weekday));
+    dateEl.appendChild(document.createTextNode("（" + day.weekdayLocal + "）"));
+    eyebrow.appendChild(dateEl);
+    var weatherChip = el("span", "day__weather");
+    weatherChip.hidden = true;
+    eyebrow.appendChild(weatherChip);
     header.appendChild(eyebrow);
 
     var h2 = el("h2", "day__title", day.title);
@@ -741,14 +1207,21 @@
       section.appendChild(renderWarningCallout(day.warning));
     }
 
+    var openOverview = !!(travelState && travelState.todayDay && travelState.todayDay.id === day.id);
+    section.appendChild(renderDayOverview(day, travelState, openOverview));
+
     var timeline = el("ul", "timeline");
-    day.items.forEach(function (item) {
+    day.items.forEach(function (item, index) {
       if (item.group) {
         timeline.appendChild(el("li", "timeline-group", item.group));
       }
-      timeline.appendChild(renderTimelineItem(item, travelState));
+      timeline.appendChild(renderTimelineItem(item, travelState, day.id + "-" + index));
     });
     section.appendChild(timeline);
+
+    var empty = el("p", "timeline-empty", "這一天沒有符合篩選的項目");
+    empty.hidden = true;
+    section.appendChild(empty);
 
     return section;
   }
@@ -761,16 +1234,105 @@
     });
   }
 
-  function renderTravelNotes(data) {
-    var container = document.getElementById("travel-notes-grid");
-    if (!container) return;
-    data.travelNotes.forEach(function (note) {
-      var card = el("div", "travel-note");
-      card.appendChild(el("p", "travel-note__title", note.title));
-      card.appendChild(el("p", "travel-note__body", note.body));
-      container.appendChild(card);
+  /**
+   * Quick filter: 全部 / 餐廳 / 購物 / 預約. Pure show/hide of already
+   * rendered items (data-cats), no state saved anywhere.
+   */
+  var FILTERS = [
+    { id: "all", label: "全部" },
+    { id: "food", label: "餐廳" },
+    { id: "shopping", label: "購物" },
+    { id: "reservation", label: "預約" }
+  ];
+  var currentFilter = "all";
+
+  function applyFilter(filterId, data) {
+    currentFilter = filterId;
+    var filtering = filterId !== "all";
+
+    var tagged = document.querySelectorAll("[data-cats]");
+    for (var i = 0; i < tagged.length; i++) {
+      var cats = (tagged[i].getAttribute("data-cats") || "").split(" ");
+      tagged[i].hidden = filtering && cats.indexOf(filterId) === -1;
+    }
+
+    var groups = document.querySelectorAll(".timeline-group");
+    for (var g = 0; g < groups.length; g++) {
+      groups[g].hidden = filtering;
+    }
+
+    data.days.forEach(function (day) {
+      var section = document.getElementById(day.id);
+      if (!section) return;
+      var visible = section.querySelectorAll(".timeline-item:not([hidden])").length;
+      var empty = section.querySelector(".timeline-empty");
+      if (empty) empty.hidden = !(filtering && visible === 0);
     });
+
+    var chips = document.querySelectorAll(".filter-chip");
+    for (var c = 0; c < chips.length; c++) {
+      chips[c].setAttribute("aria-pressed", String(chips[c].getAttribute("data-filter") === filterId));
+    }
+
+    var pill = document.getElementById("filter-pill");
+    if (pill) {
+      pill.hidden = !filtering;
+      var label = "";
+      FILTERS.forEach(function (f) {
+        if (f.id === filterId) label = f.label;
+      });
+      var text = pill.querySelector(".filter-pill__text");
+      if (text) text.textContent = "篩選：" + label;
+    }
   }
+
+  function renderFilterBar(data) {
+    var days = document.getElementById("days");
+    if (!days || !days.parentNode) return;
+
+    var counts = { all: 0, food: 0, shopping: 0, reservation: 0 };
+    data.days.forEach(function (day) {
+      day.items.forEach(function (item) {
+        counts.all += 1;
+        itemCategories(item).forEach(function (cat) {
+          counts[cat] += 1;
+        });
+      });
+    });
+
+    var bar = el("div", "filter-bar");
+    bar.setAttribute("role", "group");
+    bar.setAttribute("aria-label", "行程篩選");
+    bar.appendChild(el("span", "filter-bar__label", "快速篩選"));
+    var chipRow = el("div", "filter-bar__chips");
+    bar.appendChild(chipRow);
+    FILTERS.forEach(function (f) {
+      var chip = el("button", "filter-chip", f.label + "（" + counts[f.id] + "）");
+      chip.type = "button";
+      chip.setAttribute("data-filter", f.id);
+      chip.setAttribute("aria-pressed", String(f.id === "all"));
+      chip.addEventListener("click", function () {
+        applyFilter(f.id, data);
+      });
+      chipRow.appendChild(chip);
+    });
+    days.parentNode.insertBefore(bar, days);
+
+    // Floating reminder while a filter is on, so it can be cleared from
+    // anywhere on the page.
+    var pill = el("div", "filter-pill");
+    pill.id = "filter-pill";
+    pill.hidden = true;
+    pill.appendChild(el("span", "filter-pill__text", ""));
+    var clear = el("button", "filter-pill__clear", "清除");
+    clear.type = "button";
+    clear.addEventListener("click", function () {
+      applyFilter("all", data);
+    });
+    pill.appendChild(clear);
+    document.body.appendChild(pill);
+  }
+
 
   var CHECKLIST_STORAGE_KEY = "osaka-kyoto-trip:checklist";
 
@@ -872,6 +1434,7 @@
     }
 
     btn.addEventListener("click", function () {
+      if (currentFilter !== "all") applyFilter("all", ITINERARY_DATA);
       var targetId = travelState.dayComplete
         ? travelState.todayDay.id
         : travelState.nowItem
@@ -951,7 +1514,7 @@
     renderChecklist(ITINERARY_DATA);
     renderDayNav(ITINERARY_DATA, travelState);
     renderDays(ITINERARY_DATA, travelState);
-    renderTravelNotes(ITINERARY_DATA);
+    renderFilterBar(ITINERARY_DATA);
     renderTravelJump(travelState);
     setupActiveDayHighlight(ITINERARY_DATA);
   }

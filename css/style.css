@@ -440,7 +440,7 @@ ul { padding: 0; list-style: none; }
 .days {
   max-width: var(--content-max);
   margin: 0 auto;
-  padding: 0 var(--space-4);
+  padding: 0 var(--space-4) var(--space-7);
 }
 
 .day {
@@ -458,8 +458,9 @@ ul { padding: 0; list-style: none; }
 
 .day__eyebrow {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: var(--space-3);
+  gap: var(--space-1) var(--space-3);
   font-size: var(--fs-day-number);
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -866,11 +867,12 @@ ul { padding: 0; list-style: none; }
   overflow-wrap: break-word;
 }
 
-/* Multi-shop guide: one small card per shop, each with its own MAP. */
+/* Multi-shop guide: one collapsed card per shop; header = name + brief,
+   the MAP link stays visible, details open on tap. */
 .guide-stop {
   display: grid;
   gap: var(--space-2);
-  padding: var(--space-3);
+  padding: var(--space-2) var(--space-3);
   background: var(--color-surface-muted);
   border-radius: var(--radius-sm);
 }
@@ -882,12 +884,73 @@ ul { padding: 0; list-style: none; }
   gap: var(--space-3);
 }
 
+.guide-stop__toggle {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 44px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: var(--space-2);
+  text-align: left;
+  font-family: inherit;
+  color: var(--color-text);
+  background: transparent;
+  border: none;
+  padding: var(--space-2) 0;
+  cursor: pointer;
+}
+
+.guide-stop__toggle::after {
+  content: "▸";
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  font-size: 0.7em;
+  color: var(--color-text-faint);
+  transition: transform 0.15s ease;
+}
+
+.guide-stop__toggle[aria-expanded="true"]::after {
+  transform: rotate(90deg);
+}
+
 .guide-stop__name {
+  grid-column: 1;
   font-size: var(--fs-body);
   font-weight: 700;
-  color: var(--color-text);
-  min-width: 0;
   overflow-wrap: break-word;
+}
+
+.guide-stop__brief {
+  grid-column: 1;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  overflow-wrap: break-word;
+}
+
+.guide-stop__body {
+  display: grid;
+  gap: var(--space-2);
+  padding-bottom: var(--space-2);
+}
+
+.guide-stop__body[hidden] {
+  display: none;
+}
+
+.guide-stops__toggle-all {
+  justify-self: start;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  min-height: 44px;
+  cursor: pointer;
 }
 
 .guide-stop .guide-panel__value {
@@ -899,45 +962,6 @@ ul { padding: 0; list-style: none; }
   font-size: 0.7rem;
   color: var(--color-text-faint);
   font-style: italic;
-}
-
-/* -------------------- Travel Notes -------------------- */
-.travel-notes {
-  max-width: var(--content-max);
-  margin: 0 auto;
-  padding: var(--space-8) var(--space-4) var(--space-7);
-}
-
-.travel-notes__grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-3);
-}
-
-@media (min-width: 560px) {
-  .travel-notes__grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.travel-note {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-4);
-}
-
-.travel-note__title {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--color-accent);
-  margin-bottom: var(--space-2);
-}
-
-.travel-note__body {
-  font-size: var(--fs-small);
-  color: var(--color-text-muted);
-  line-height: 1.6;
 }
 
 /* -------------------- Footer -------------------- */
@@ -1004,4 +1028,416 @@ ul { padding: 0; list-style: none; }
     font-size: 0.8rem;
     padding: var(--space-2) var(--space-5);
   }
+}
+
+
+/* -------------------- Day overview (今日一覽) -------------------- */
+.day-overview {
+  margin-bottom: var(--space-5);
+}
+
+.day-overview__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  min-height: 44px;
+  cursor: pointer;
+}
+
+.day-overview__toggle::after {
+  content: "▸";
+  font-size: 0.65em;
+  transition: transform 0.15s ease;
+}
+
+.day-overview__toggle[aria-expanded="true"]::after {
+  transform: rotate(90deg);
+}
+
+.day-overview__list {
+  list-style: none;
+  margin-top: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.day-overview__list[hidden],
+.day-overview__item[hidden] {
+  display: none;
+}
+
+.day-overview__row {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+  text-align: left;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-2) 0;
+  cursor: pointer;
+}
+
+.day-overview__item:last-child .day-overview__row {
+  border-bottom: none;
+}
+
+.day-overview__time {
+  font-weight: 700;
+  color: var(--color-accent);
+  font-variant-numeric: tabular-nums;
+  min-width: 6.5em;
+}
+
+.day-overview__title {
+  flex: 1 1 10em;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.timeline-item {
+  scroll-margin-top: calc(var(--day-nav-height) + var(--space-3));
+}
+
+.timeline-item[hidden],
+.timeline-group[hidden],
+.timeline-empty[hidden] {
+  display: none;
+}
+
+.timeline-empty {
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+  padding: var(--space-3) 0;
+}
+
+/* -------------------- Quick filter -------------------- */
+.filter-bar {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-4) 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.filter-bar__chips {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.filter-bar__label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-text-faint);
+  margin-right: var(--space-1);
+}
+
+.filter-chip {
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: var(--space-2) var(--space-1);
+  min-height: 44px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.filter-chip[aria-pressed="true"] {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-accent-contrast);
+}
+
+.filter-pill {
+  position: fixed;
+  left: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-accent);
+  border-radius: 999px;
+  padding: var(--space-1) var(--space-1) var(--space-1) var(--space-4);
+  box-shadow: var(--shadow-soft);
+}
+
+.filter-pill[hidden] {
+  display: none;
+}
+
+.filter-pill__clear {
+  font-family: inherit;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  color: var(--color-accent-contrast);
+  background: var(--color-accent);
+  border: none;
+  border-radius: 999px;
+  padding: var(--space-2) var(--space-4);
+  min-height: 44px;
+  cursor: pointer;
+}
+
+
+/* -------------------- Weather card (JMA forecast) -------------------- */
+.overview__card--wide {
+  grid-column: 1 / -1;
+}
+
+.weather-card__status {
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-top: var(--space-3);
+}
+
+.weather-table {
+  margin-top: var(--space-2);
+  border-top: 1px solid var(--color-border);
+}
+
+.weather-table[hidden] {
+  display: none;
+}
+
+.weather-row {
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
+
+.weather-row__top {
+  display: grid;
+  grid-template-columns: 5.4em minmax(0, 1fr) auto;
+  gap: var(--space-2);
+  align-items: baseline;
+}
+
+.weather-row__day {
+  font-weight: 700;
+  color: var(--color-accent);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.weather-row__rain {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.weather-row__temps {
+  display: flex;
+  gap: var(--space-4);
+  margin-top: 2px;
+  padding-left: calc(5.4em + var(--space-2));
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.weather-tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.weather-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--color-accent-soft);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+}
+
+.weather-tile__label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+}
+
+.weather-tile__value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.weather-card__credit {
+  font-size: 0.72rem;
+  color: var(--color-text-faint);
+  margin-top: var(--space-3);
+  line-height: 1.5;
+}
+
+.weather-card__link {
+  color: var(--color-text-muted);
+  text-decoration: underline;
+}
+
+/* On phones, drop the English weekday so the forecast chip fits on the
+   same line as the date. */
+@media (max-width: 420px) {
+  .day__eyebrow {
+    column-gap: var(--space-2);
+  }
+
+  .day__date-en {
+    display: none;
+  }
+}
+
+/* Very narrow phones: a slightly tighter header so the chip still fits. */
+@media (max-width: 380px) {
+  .day__eyebrow {
+    letter-spacing: 0.03em;
+    column-gap: 6px;
+  }
+
+  .day__eyebrow .day__weather {
+    font-size: 0.72rem;
+    padding: 2px var(--space-2);
+  }
+
+  .day__weather-opt {
+    display: none;
+  }
+}
+
+/* Forecast chip in the day header, right of the date (only with data;
+   wraps under the date when there is no room). */
+.day__eyebrow .day__weather {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--color-text);
+  background: var(--color-accent-soft);
+  border-radius: var(--radius-sm);
+  padding: 2px var(--space-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.day__eyebrow .day__weather[hidden] {
+  display: none;
+}
+
+/* -------------------- Flight card -------------------- */
+.flight-row {
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.flight-row:first-of-type {
+  padding-top: var(--space-2);
+}
+
+.flight-row__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+  margin-bottom: var(--space-1);
+}
+
+.flight-row__dir {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-accent-contrast);
+  background: var(--color-accent);
+  border-radius: var(--radius-sm);
+  padding: 2px var(--space-2);
+}
+
+.flight-row__no {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: 0.04em;
+}
+
+.flight-row__meta {
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+}
+
+.flight-row__route {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-2);
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+
+.flight-row__time {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.flight-row__place {
+  color: var(--color-text-muted);
+}
+
+.flight-row__arrow {
+  color: var(--color-text-faint);
+  margin: 0 var(--space-1);
+}
+
+.flight-row__duration {
+  font-size: var(--fs-small);
+  color: var(--color-text-faint);
+  margin-top: var(--space-1);
+}
+
+/* Accommodation card actions: MAP + expandable address side by side. */
+.overview__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.overview__card .timeline-item__map {
+  margin: 0;
+}
+
+.overview__address {
+  margin-top: var(--space-3);
+}
+
+.overview__address[hidden] {
+  display: none;
 }

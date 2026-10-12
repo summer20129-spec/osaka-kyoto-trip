@@ -8,3 +8,6 @@ build/
 
 # Source-of-truth itinerary notes: private travel context, kept local only
 大阪京都五日行程.txt
+
+# local preview pages (mock data, never published)
+_preview-*.html

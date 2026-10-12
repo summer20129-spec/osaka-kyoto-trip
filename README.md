@@ -39,9 +39,9 @@ osaka-kyoto-trip/
 打開 `data/itinerary.js`，找到全域變數 `ITINERARY_DATA`，裡面有三大區塊：
 
 - `trip`：Hero 顯示的標題、日期、統計數字（Travelers / Nights / Cities）
-- `overview`：Trip Overview 卡片（旅行日期、人數、城市、住宿）
+- `overview`：頂端卡片（`flights` 去回程航班、`accommodation` 住宿；航班只放公開資訊，不放旅客姓名、訂位代號、機票號碼）
 - `days`：一個陣列，每個元素是一天的行程
-- `travelNotes`：頁尾 Travel Notes 卡片
+- `weather`：頂端天氣卡（一般氣候文字＋氣象廳預報連動）
 
 ### 修改時間 / 景點 / 餐廳 / 交通 / 備註
 
@@ -125,15 +125,15 @@ warning: {
 
 編輯最外層的 `checklist` 陣列，每組為 `{ title, items }`，每個項目為 `{ id, label, detail?, day? }`。`id` 必須唯一且不要隨意更改（勾選狀態以 `id` 儲存在使用者自己瀏覽器的 localStorage，不會上傳到任何地方）。
 
-### 修改 Travel Notes
+### 修改天氣卡
 
-編輯最外層的 `travelNotes` 陣列，每個項目為 `{ title, body }`。
+編輯最外層的 `weather`：`climate` 是一般氣候文字；`offices` 對應各天 `city`（OSAKA／KYOTO）的氣象廳地區代碼（6 位數）。行程日期進入氣象廳 7 天預報範圍後，會自動顯示每天的天氣、氣溫與降雨機率；抓不到資料時只顯示一般氣候。測試用的 `window.__WEATHER_MOCK__`（物件，鍵為地區代碼）預設為 undefined。
 
 ## 技術說明
 
 - 純 HTML5 + CSS3 + Vanilla JavaScript，無任何 npm package、外部 CDN、UI framework。
 - `data/itinerary.js` 與 `js/app.js` 皆以一般 `<script>`（非 `type="module"`）載入，確保用 `file://` 直接開啟也能正常運作。
-- 無任何外部網路請求（無 Google Maps、無 Analytics、無 Tracking、無外部字型 CDN）。
+- 唯一的外部請求是天氣卡向氣象廳公開預報資料的 GET（不帶 Cookie、不帶 Referrer、不儲存資料），失敗時自動回到靜態氣候；沒有 Analytics、Tracking、外部字型 CDN。
 - Mobile First：Sticky Day Navigation 可水平滑動，目前瀏覽的 Day 會自動 highlight（使用 `IntersectionObserver`）。
 
 ## 安全性
