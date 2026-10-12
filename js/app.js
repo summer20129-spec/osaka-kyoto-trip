@@ -257,6 +257,7 @@
     { key: "specialty", label: "店家特色" },
     { key: "mustTry", label: "招牌必點／必買" },
     { key: "orderingTips", label: "點餐攻略" },
+    { key: "reviewSummary", label: "網路評價" },
     { key: "budget", label: "價位", verifiedAtKey: "budgetVerifiedAt" },
     { key: "hours", label: "營業時間" }
   ];
@@ -526,6 +527,15 @@
     panel.id = panelId;
     panel.hidden = true;
 
+    var guideSections = item.guide.sections || [];
+    var placedSections = [];
+    function renderSection(section) {
+      var wrap = el("div", "guide-panel__field");
+      wrap.appendChild(el("p", "guide-panel__label", section.label || ""));
+      wrap.appendChild(el("p", "guide-panel__value", section.text));
+      return wrap;
+    }
+
     var fields = GUIDE_FIELD_CONFIG[item.guide.type] || [];
     fields.forEach(function (field) {
       var fieldEl = renderGuideField(field, item.guide);
@@ -534,18 +544,20 @@
         var photoEl = renderPhotoExample(item.guide.photoExample);
         if (photoEl) panel.appendChild(photoEl);
       }
+      // A section with after: "<field key>" is shown right below that field.
+      guideSections.forEach(function (section) {
+        if (section && section.text && section.after === field.key) {
+          panel.appendChild(renderSection(section));
+          placedSections.push(section);
+        }
+      });
     });
 
     // Optional extra labelled paragraphs: sections: [{ label, text }].
-    if (item.guide.sections && item.guide.sections.length) {
-      item.guide.sections.forEach(function (section) {
-        if (!section || !section.text) return;
-        var wrap = el("div", "guide-panel__field");
-        wrap.appendChild(el("p", "guide-panel__label", section.label || ""));
-        wrap.appendChild(el("p", "guide-panel__value", section.text));
-        panel.appendChild(wrap);
-      });
-    }
+    guideSections.forEach(function (section) {
+      if (!section || !section.text || placedSections.indexOf(section) !== -1) return;
+      panel.appendChild(renderSection(section));
+    });
 
     // Optional shops list for any guide type (each with its own MAP).
     if (item.guide.stops && item.guide.stops.length) {
