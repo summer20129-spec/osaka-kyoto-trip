@@ -1441,3 +1441,18 @@ ul { padding: 0; list-style: none; }
 .overview__address[hidden] {
   display: none;
 }
+
+/* Expandable text under a note (e.g. coupon terms + official link). */
+.note-details-panel {
+  margin-top: var(--space-2);
+}
+
+.note-details-panel[hidden] {
+  display: none;
+}
+
+.note-details-panel__link {
+  justify-self: start;
+  text-transform: none;
+  letter-spacing: 0.02em;
+}

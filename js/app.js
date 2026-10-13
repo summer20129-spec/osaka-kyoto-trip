@@ -741,6 +741,39 @@
 
   var guideIdCounter = 0;
   var noteImageIdCounter = 0;
+  var noteDetailsIdCounter = 0;
+
+  /**
+   * Optional text disclosure under a note: { label, text, link? }.
+   * link.url may only point at the official Don Quijote coupon pages
+   * (https://japanportal.donki-global.com/coupon/…html), so data can
+   * never inject an arbitrary external URL. Collapsed by default.
+   */
+  var COUPON_LINK_PATTERN = /^https:\/\/japanportal\.donki-global\.com\/coupon\/[A-Za-z0-9_\-\.]+\.html$/;
+
+  function renderNoteDetails(details) {
+    if (!details || typeof details.text !== "string") return null;
+    noteDetailsIdCounter += 1;
+    var panelId = "note-details-" + noteDetailsIdCounter;
+
+    var wrap = el("div", "timeline-item__note-image");
+    wrap.appendChild(renderGuideButton(panelId, details.label || "詳細"));
+
+    var panel = el("div", "guide-panel note-details-panel");
+    panel.id = panelId;
+    panel.hidden = true;
+    panel.appendChild(el("p", "guide-panel__value", details.text));
+
+    if (details.link && typeof details.link.url === "string" && COUPON_LINK_PATTERN.test(details.link.url)) {
+      var link = el("a", "map-link note-details-panel__link", details.link.label || "開啟官方頁面");
+      link.href = details.link.url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      panel.appendChild(link);
+    }
+    wrap.appendChild(panel);
+    return wrap;
+  }
 
   /**
    * Optional image attached to a note ({ src, alt, label }), shown in
@@ -1108,6 +1141,11 @@
         if (note && typeof note === "object" && note.image) {
           var imageEl = renderNoteImage(note.image);
           if (imageEl) notesWrap.appendChild(imageEl);
+        }
+
+        if (note && typeof note === "object" && note.details) {
+          var detailsEl = renderNoteDetails(note.details);
+          if (detailsEl) notesWrap.appendChild(detailsEl);
         }
       });
       li.appendChild(notesWrap);
