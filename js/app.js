@@ -940,6 +940,8 @@
     var body = el("div", "guide-stop__body");
     body.id = bodyId;
     body.hidden = true;
+    var stopImage = renderGuideImage(stop.image);
+    if (stopImage) body.appendChild(stopImage);
     STOP_FIELD_CONFIG.forEach(function (field) {
       var fieldEl = renderGuideField(field, stop);
       if (fieldEl) body.appendChild(fieldEl);
@@ -972,6 +974,27 @@
     return btn;
   }
 
+  /**
+   * Optional project-local image inside a guide (src must be under
+   * images/, never a URL). Tap opens the original in a new tab.
+   */
+  function renderGuideImage(image) {
+    if (!image || typeof image.src !== "string") return null;
+    if (!/^images\/[A-Za-z0-9_\-\/.]+$/.test(image.src) || image.src.indexOf("..") !== -1) return null;
+    var link = el("a", "guide-panel__image-link");
+    link.href = image.src;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.setAttribute("aria-label", "開啟原圖：" + (image.alt || ""));
+    var img = document.createElement("img");
+    img.className = "guide-panel__img";
+    img.src = image.src;
+    img.alt = image.alt || "";
+    img.loading = "lazy";
+    link.appendChild(img);
+    return link;
+  }
+
   function renderGuidePanel(item, panelId) {
     var panel = el("div", "guide-panel");
     panel.id = panelId;
@@ -983,23 +1006,8 @@
       var wrap = el("div", "guide-panel__field");
       wrap.appendChild(el("p", "guide-panel__label", section.label || ""));
       wrap.appendChild(el("p", "guide-panel__value", section.text));
-      // Optional project-local image (src under images/, never a URL).
-      var image = section.image;
-      if (image && typeof image.src === "string" &&
-          /^images\/[A-Za-z0-9_\-\/.]+$/.test(image.src) && image.src.indexOf("..") === -1) {
-        var link = el("a", "guide-panel__image-link");
-        link.href = image.src;
-        link.target = "_blank";
-        link.rel = "noopener noreferrer";
-        link.setAttribute("aria-label", "開啟原圖：" + (image.alt || ""));
-        var img = document.createElement("img");
-        img.className = "guide-panel__img";
-        img.src = image.src;
-        img.alt = image.alt || "";
-        img.loading = "lazy";
-        link.appendChild(img);
-        wrap.appendChild(link);
-      }
+      var imageEl = renderGuideImage(section.image);
+      if (imageEl) wrap.appendChild(imageEl);
       return wrap;
     }
 
