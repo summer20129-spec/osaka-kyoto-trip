@@ -691,6 +691,20 @@ ul { padding: 0; list-style: none; }
   border-radius: var(--radius-md);
 }
 
+.guide-panel__image-link {
+  display: block;
+  margin-top: var(--space-2);
+}
+
+.guide-panel__img {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
 .guide-photo {
   margin: 0;
 }

@@ -983,6 +983,23 @@
       var wrap = el("div", "guide-panel__field");
       wrap.appendChild(el("p", "guide-panel__label", section.label || ""));
       wrap.appendChild(el("p", "guide-panel__value", section.text));
+      // Optional project-local image (src under images/, never a URL).
+      var image = section.image;
+      if (image && typeof image.src === "string" &&
+          /^images\/[A-Za-z0-9_\-\/.]+$/.test(image.src) && image.src.indexOf("..") === -1) {
+        var link = el("a", "guide-panel__image-link");
+        link.href = image.src;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.setAttribute("aria-label", "開啟原圖：" + (image.alt || ""));
+        var img = document.createElement("img");
+        img.className = "guide-panel__img";
+        img.src = image.src;
+        img.alt = image.alt || "";
+        img.loading = "lazy";
+        link.appendChild(img);
+        wrap.appendChild(link);
+      }
       return wrap;
     }
 
