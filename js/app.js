@@ -20,7 +20,8 @@
     PHOTO: "Photo",
     TRANSPORT: "Transport",
     REST: "Rest",
-    PENDING: "Pending"
+    PENDING: "Pending",
+    SHOOT: "🎬 分鏡"
   };
 
   /**
@@ -749,10 +750,14 @@
    * (https://japanportal.donki-global.com/coupon/…html), so data can
    * never inject an arbitrary external URL. Collapsed by default.
    */
+  // Public Instagram reels may be linked (opens in a new tab, never embedded).
+  var INSTAGRAM_REEL_PATTERN = /^https:\/\/www\.instagram\.com\/reel\/[A-Za-z0-9_\-]+\/$/;
   var COUPON_LINK_PATTERN = /^https:\/\/japanportal\.donki-global\.com\/coupon\/[A-Za-z0-9_\-\.]+\.html$/;
 
   function renderNoteDetails(details) {
-    if (!details || typeof details.text !== "string") return null;
+    if (!details) return null;
+    var hasSteps = !!(details.steps && details.steps.length);
+    if (typeof details.text !== "string" && typeof details.intro !== "string" && !hasSteps) return null;
     noteDetailsIdCounter += 1;
     var panelId = "note-details-" + noteDetailsIdCounter;
 
@@ -762,9 +767,43 @@
     var panel = el("div", "guide-panel note-details-panel");
     panel.id = panelId;
     panel.hidden = true;
-    panel.appendChild(el("p", "guide-panel__value", details.text));
+    // Optional structure: intro (one line), steps [{ label, text }] shown as an
+    // ordered table, tips [string] as a short list; text stays as plain fallback.
+    if (typeof details.intro === "string") {
+      panel.appendChild(el("p", "guide-panel__value", details.intro));
+    }
+    if (hasSteps) {
+      var table = el("table", "note-steps");
+      var head = el("thead");
+      var headRow = el("tr");
+      headRow.appendChild(el("th", "", "步驟"));
+      headRow.appendChild(el("th", "", "做法"));
+      head.appendChild(headRow);
+      table.appendChild(head);
+      var tbody = el("tbody");
+      details.steps.forEach(function (step) {
+        if (!step || !step.text) return;
+        var row = el("tr");
+        row.appendChild(el("th", "note-steps__label", step.label || ""));
+        row.appendChild(el("td", "", step.text));
+        tbody.appendChild(row);
+      });
+      table.appendChild(tbody);
+      panel.appendChild(table);
+    }
+    if (details.tips && details.tips.length) {
+      var tipList = el("ul", "note-tips");
+      details.tips.forEach(function (tip) {
+        if (typeof tip === "string" && tip) tipList.appendChild(el("li", "", tip));
+      });
+      panel.appendChild(tipList);
+    }
+    if (typeof details.text === "string") {
+      panel.appendChild(el("p", "guide-panel__value", details.text));
+    }
 
-    if (details.link && typeof details.link.url === "string" && COUPON_LINK_PATTERN.test(details.link.url)) {
+    if (details.link && typeof details.link.url === "string" &&
+        (COUPON_LINK_PATTERN.test(details.link.url) || INSTAGRAM_REEL_PATTERN.test(details.link.url))) {
       var link = el("a", "map-link note-details-panel__link", details.link.label || "開啟官方頁面");
       link.href = details.link.url;
       link.target = "_blank";
@@ -1034,6 +1073,37 @@
       panel.appendChild(renderSection(section));
     });
 
+    // Optional collapsible groups of sections: groups: [{ title, brief,
+    // sections: [{ label, text }] }]. Collapsed by default.
+    (item.guide.groups || []).forEach(function (group) {
+      if (!group || !group.sections || !group.sections.length) return;
+      stopIdCounter += 1;
+      var bodyId = "guide-group-" + stopIdCounter;
+      var card = el("div", "guide-stop");
+      var head = el("div", "guide-stop__head");
+      var toggle = el("button", "guide-stop__toggle");
+      toggle.type = "button";
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.setAttribute("aria-controls", bodyId);
+      toggle.appendChild(el("span", "guide-stop__name", group.title || ""));
+      if (group.brief) toggle.appendChild(el("span", "guide-stop__brief", group.brief));
+      head.appendChild(toggle);
+      card.appendChild(head);
+      var body = el("div", "guide-stop__body");
+      body.id = bodyId;
+      body.hidden = true;
+      group.sections.forEach(function (section) {
+        if (section && section.text) body.appendChild(renderSection(section));
+      });
+      card.appendChild(body);
+      toggle.addEventListener("click", function () {
+        var isOpen = toggle.getAttribute("aria-expanded") === "true";
+        toggle.setAttribute("aria-expanded", String(!isOpen));
+        body.hidden = isOpen;
+      });
+      panel.appendChild(card);
+    });
+
     // Optional shops list for any guide type (each with its own MAP).
     if (item.guide.stops && item.guide.stops.length) {
       if (item.guide.stops.length >= 3) {
@@ -1109,7 +1179,48 @@
     if (badges.indexOf("FOOD") !== -1) cats.push("food");
     if (badges.indexOf("SHOPPING") !== -1) cats.push("shopping");
     if (badges.indexOf("RESERVATION") !== -1 || item.status) cats.push("reservation");
+    if (badges.indexOf("SHOOT") !== -1) cats.push("shoot");
     return cats;
+  }
+
+  /**
+   * Renders a list of notes. A note is a plain string, or an object
+   * { text, locationQuery, image, details }.
+   */
+  function renderNotes(notes) {
+    var notesWrap = el("div", "timeline-item__notes");
+    notes.forEach(function (note) {
+      var isObject = !!(note && typeof note === "object");
+      var hasMap = isObject && !!note.locationQuery;
+      var noteEl = el("p", "timeline-item__note", isObject ? note.text : note);
+      // kind: "shoot" turns the note (and its button) into a highlighted card.
+      var target = notesWrap;
+      if (isObject && note.kind === "shoot") {
+        target = el("div", "shoot-callout");
+        notesWrap.appendChild(target);
+        noteEl.className = "shoot-callout__text";
+      }
+      if (hasMap) {
+        var mapLink = el("a", "map-link timeline-item__note-map", "MAP");
+        mapLink.href = buildMapUrl(note.locationQuery);
+        mapLink.target = "_blank";
+        mapLink.rel = "noopener noreferrer";
+        mapLink.setAttribute("aria-label", "在 Google Maps 開啟" + note.locationQuery);
+        noteEl.appendChild(mapLink);
+      }
+      target.appendChild(noteEl);
+
+      if (isObject && note.image) {
+        var imageEl = renderNoteImage(note.image);
+        if (imageEl) target.appendChild(imageEl);
+      }
+
+      if (isObject && note.details) {
+        var detailsEl = renderNoteDetails(note.details);
+        if (detailsEl) target.appendChild(detailsEl);
+      }
+    });
+    return notesWrap;
   }
 
   function renderTimelineItem(item, travelState, itemKey) {
@@ -1146,34 +1257,7 @@
     }
 
     if (item.notes && item.notes.length) {
-      var notesWrap = el("div", "timeline-item__notes");
-      item.notes.forEach(function (note) {
-        // A note is a plain string, or { text, locationQuery } to also
-        // show a MAP link for a place mentioned in that note.
-        var isObject = !!(note && typeof note === "object");
-        var hasMap = isObject && !!note.locationQuery;
-        var noteEl = el("p", "timeline-item__note", isObject ? note.text : note);
-        if (hasMap) {
-          var mapLink = el("a", "map-link timeline-item__note-map", "MAP");
-          mapLink.href = buildMapUrl(note.locationQuery);
-          mapLink.target = "_blank";
-          mapLink.rel = "noopener noreferrer";
-          mapLink.setAttribute("aria-label", "在 Google Maps 開啟" + note.locationQuery);
-          noteEl.appendChild(mapLink);
-        }
-        notesWrap.appendChild(noteEl);
-
-        if (note && typeof note === "object" && note.image) {
-          var imageEl = renderNoteImage(note.image);
-          if (imageEl) notesWrap.appendChild(imageEl);
-        }
-
-        if (note && typeof note === "object" && note.details) {
-          var detailsEl = renderNoteDetails(note.details);
-          if (detailsEl) notesWrap.appendChild(detailsEl);
-        }
-      });
-      li.appendChild(notesWrap);
+      li.appendChild(renderNotes(item.notes));
     }
 
     if (item.badges && item.badges.length) {
@@ -1186,6 +1270,12 @@
 
     if (item.guide) {
       li.appendChild(renderGuide(item, isNow));
+    }
+
+    // Notes shown below the MAP / guide row (e.g. shopping side-stops
+    // that should not push the main guide buttons down).
+    if (item.notesAfter && item.notesAfter.length) {
+      li.appendChild(renderNotes(item.notesAfter));
     }
 
     return li;
@@ -1238,6 +1328,9 @@
       go.type = "button";
       go.appendChild(el("span", "day-overview__time", item.time));
       go.appendChild(el("span", "day-overview__title", item.title));
+      if ((item.badges || []).indexOf("SHOOT") !== -1) {
+        go.appendChild(el("span", "day-overview__shoot", "🎬 分鏡"));
+      }
       if (typeof item.status === "string" && item.status) {
         go.appendChild(el("span", "status-chip", item.status));
       }
@@ -1333,7 +1426,8 @@
     { id: "all", label: "全部" },
     { id: "food", label: "餐廳" },
     { id: "shopping", label: "購物" },
-    { id: "reservation", label: "預約" }
+    { id: "reservation", label: "預約" },
+    { id: "shoot", label: "🎬 分鏡" }
   ];
   var currentFilter = "all";
 
@@ -1381,7 +1475,7 @@
     var days = document.getElementById("days");
     if (!days || !days.parentNode) return;
 
-    var counts = { all: 0, food: 0, shopping: 0, reservation: 0 };
+    var counts = { all: 0, food: 0, shopping: 0, reservation: 0, shoot: 0 };
     data.days.forEach(function (day) {
       day.items.forEach(function (item) {
         counts.all += 1;

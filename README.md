@@ -59,6 +59,8 @@ osaka-kyoto-trip/
 
 `notes` 的每一項通常是純文字；若該則備註提到的地點想附上地圖連結，可改寫成 `{ text: "...", locationQuery: "搜尋字串" }`。
 
+想把某些備註放在 MAP／攻略按鈕「下方」（例如順路採買），改放進 `notesAfter: []`，格式與 `notes` 相同。
+
 備註物件也可加上 `image: { src: "images/...", alt: "...", label: "優惠券" }`，會顯示成可展開的圖片（`src` 限專案內 `images/` 路徑）。
 
 攻略（`guide`）可加上 `photoExample: { src, alt, caption, author, sourceUrl, licenseName, licenseUrl }`，會在「拍照重點」下方顯示範例照片與署名；`src` 限專案內 `images/` 路徑，署名連結限 Wikimedia Commons／Creative Commons。使用他人照片時，請確認授權並保留署名。

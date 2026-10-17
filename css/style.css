@@ -41,6 +41,11 @@
   --badge-rest-text: #836050;
   --badge-pending-bg: #FBEFD6;
   --badge-pending-text: #785B12;
+  --badge-shoot-bg: #F7E4E8;
+  --badge-shoot-text: #8E3A50;
+  --shoot-bg: #FCF1F3;
+  --shoot-border: #EBC2CB;
+  --shoot-accent: #DC9BAA;
 
   /* Typography */
   --font-base: -apple-system, BlinkMacSystemFont, "Hiragino Sans",
@@ -760,6 +765,40 @@ ul { padding: 0; list-style: none; }
 .badge--transport   { background: var(--badge-transport-bg); color: var(--badge-transport-text); }
 .badge--rest        { background: var(--badge-rest-bg); color: var(--badge-rest-text); }
 .badge--pending     { background: var(--badge-pending-bg); color: var(--badge-pending-text); }
+.badge--shoot       { background: var(--badge-shoot-bg); color: var(--badge-shoot-text); }
+
+/* 🎬 storyboard reminder card (note with kind: "shoot") */
+.shoot-callout {
+  margin: var(--space-2) 0;
+  padding: var(--space-3);
+  background: var(--shoot-bg);
+  border: 1px solid var(--shoot-border);
+  border-left: 4px solid var(--shoot-accent);
+  border-radius: var(--radius-md);
+}
+
+.shoot-callout__text {
+  margin: 0 0 var(--space-2);
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.shoot-callout .timeline-item__note-image {
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.day-overview__shoot {
+  flex: 0 0 auto;
+  margin-left: var(--space-2);
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--badge-shoot-bg);
+  color: var(--badge-shoot-text);
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
 
 /* -------------------- MAP link -------------------- */
 /* Secondary action, deliberately not part of the category Badge
@@ -1463,6 +1502,41 @@ ul { padding: 0; list-style: none; }
 
 .note-details-panel[hidden] {
   display: none;
+}
+
+.note-steps {
+  width: 100%;
+  margin-top: var(--space-2);
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.note-steps th,
+.note-steps td {
+  padding: var(--space-2);
+  border: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.note-steps thead th {
+  background: var(--color-surface-muted);
+  font-weight: 600;
+}
+
+.note-steps__label {
+  width: 6em;
+  font-weight: 600;
+  white-space: normal;
+}
+
+.note-tips {
+  list-style: disc;
+  margin: var(--space-2) 0 0;
+  padding-left: 1.25em;
+  font-size: 0.875rem;
+  line-height: 1.6;
 }
 
 .note-details-panel__link {
