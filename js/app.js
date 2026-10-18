@@ -754,6 +754,36 @@
   var INSTAGRAM_REEL_PATTERN = /^https:\/\/www\.instagram\.com\/reel\/[A-Za-z0-9_\-]+\/$/;
   var COUPON_LINK_PATTERN = /^https:\/\/japanportal\.donki-global\.com\/coupon\/[A-Za-z0-9_\-\.]+\.html$/;
 
+  /** Ordered "步驟 | 做法" table from [{ label, text }]. */
+  function renderStepsTable(steps) {
+    var table = el("table", "note-steps");
+    var head = el("thead");
+    var headRow = el("tr");
+    headRow.appendChild(el("th", "", "步驟"));
+    headRow.appendChild(el("th", "", "做法"));
+    head.appendChild(headRow);
+    table.appendChild(head);
+    var tbody = el("tbody");
+    steps.forEach(function (step) {
+      if (!step || !step.text) return;
+      var row = el("tr");
+      row.appendChild(el("th", "note-steps__label", step.label || ""));
+      row.appendChild(el("td", "", step.text));
+      tbody.appendChild(row);
+    });
+    table.appendChild(tbody);
+    return table;
+  }
+
+  /** Short bullet list from [string]. */
+  function renderTipList(tips) {
+    var list = el("ul", "note-tips");
+    tips.forEach(function (tip) {
+      if (typeof tip === "string" && tip) list.appendChild(el("li", "", tip));
+    });
+    return list;
+  }
+
   function renderNoteDetails(details) {
     if (!details) return null;
     var hasSteps = !!(details.steps && details.steps.length);
@@ -772,32 +802,8 @@
     if (typeof details.intro === "string") {
       panel.appendChild(el("p", "guide-panel__value", details.intro));
     }
-    if (hasSteps) {
-      var table = el("table", "note-steps");
-      var head = el("thead");
-      var headRow = el("tr");
-      headRow.appendChild(el("th", "", "步驟"));
-      headRow.appendChild(el("th", "", "做法"));
-      head.appendChild(headRow);
-      table.appendChild(head);
-      var tbody = el("tbody");
-      details.steps.forEach(function (step) {
-        if (!step || !step.text) return;
-        var row = el("tr");
-        row.appendChild(el("th", "note-steps__label", step.label || ""));
-        row.appendChild(el("td", "", step.text));
-        tbody.appendChild(row);
-      });
-      table.appendChild(tbody);
-      panel.appendChild(table);
-    }
-    if (details.tips && details.tips.length) {
-      var tipList = el("ul", "note-tips");
-      details.tips.forEach(function (tip) {
-        if (typeof tip === "string" && tip) tipList.appendChild(el("li", "", tip));
-      });
-      panel.appendChild(tipList);
-    }
+    if (hasSteps) panel.appendChild(renderStepsTable(details.steps));
+    if (details.tips && details.tips.length) panel.appendChild(renderTipList(details.tips));
     if (typeof details.text === "string") {
       panel.appendChild(el("p", "guide-panel__value", details.text));
     }
@@ -1044,10 +1050,15 @@
     function renderSection(section) {
       var wrap = el("div", "guide-panel__field");
       wrap.appendChild(el("p", "guide-panel__label", section.label || ""));
-      wrap.appendChild(el("p", "guide-panel__value", section.text));
+      if (section.text) wrap.appendChild(el("p", "guide-panel__value", section.text));
+      if (section.steps && section.steps.length) wrap.appendChild(renderStepsTable(section.steps));
+      if (section.tips && section.tips.length) wrap.appendChild(renderTipList(section.tips));
       var imageEl = renderGuideImage(section.image);
       if (imageEl) wrap.appendChild(imageEl);
       return wrap;
+    }
+    function hasSectionContent(section) {
+      return !!(section && (section.text || (section.steps && section.steps.length) || (section.tips && section.tips.length)));
     }
 
     var fields = GUIDE_FIELD_CONFIG[item.guide.type] || [];
@@ -1093,7 +1104,7 @@
       body.id = bodyId;
       body.hidden = true;
       group.sections.forEach(function (section) {
-        if (section && section.text) body.appendChild(renderSection(section));
+        if (hasSectionContent(section)) body.appendChild(renderSection(section));
       });
       card.appendChild(body);
       toggle.addEventListener("click", function () {
