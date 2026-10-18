@@ -1551,6 +1551,18 @@
     }
   }
 
+  /** data-item-key ("<dayId>-<index>") for { day, time }, or null. */
+  function findItemKey(data, ref) {
+    if (!ref || typeof ref.day !== "string" || typeof ref.time !== "string") return null;
+    for (var d = 0; d < data.days.length; d++) {
+      if (data.days[d].id !== ref.day) continue;
+      for (var i = 0; i < data.days[d].items.length; i++) {
+        if (data.days[d].items[i].time === ref.time) return ref.day + "-" + i;
+      }
+    }
+    return null;
+  }
+
   function renderChecklist(data) {
     var body = document.getElementById("checklist-body");
     var progress = document.getElementById("checklist-progress");
@@ -1592,6 +1604,18 @@
         var text = el("span", "checklist__text");
         if (item.day) text.appendChild(el("span", "checklist__day", item.day));
         text.appendChild(el("span", "checklist__label", item.label));
+        // Optional jump to the matching itinerary item: itemRef: { day, time, spot? }.
+        var jumpKey = findItemKey(data, item.itemRef);
+        if (jumpKey) {
+          var jump = el("a", "checklist__jump", "前往行程 ›" + (typeof item.itemRef.spot === "string" && item.itemRef.spot ? "（" + item.itemRef.spot + "）" : ""));
+          jump.href = "#" + jumpKey;
+          jump.addEventListener("click", function (event) {
+            event.preventDefault();
+            var target = document.querySelector('[data-item-key="' + jumpKey + '"]');
+            if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+          text.appendChild(jump);
+        }
         if (item.detail) text.appendChild(el("span", "checklist__detail", item.detail));
         label.appendChild(text);
 

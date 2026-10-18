@@ -351,6 +351,19 @@ ul { padding: 0; list-style: none; }
   color: var(--color-text);
 }
 
+.checklist__jump {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-accent, #A8532F);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.checklist__jump:hover,
+.checklist__jump:focus-visible {
+  text-decoration: underline;
+}
+
 .checklist__detail {
   flex-basis: 100%;
   font-size: var(--fs-small);

@@ -1800,57 +1800,17 @@ var ITINERARY_DATA = {
 
   checklist: [
     {
-      title: "需提前預約／購票",
-      items: [
-        { id: "tkt-rapit", day: "Day 1", label: "南海 Rapi:t 憑證（已購，關西機場→難波）", detail: "入境後在手機上劃位；3人要出發前先分享票給同行者（截圖無效）；確認座位等級（Klook可能只開放普通席）；不要誤搭 JR 關空快速" },
-        { id: "tkt-teamlab", day: "Day 3", label: "teamLab Biovortex Kyoto 時段票（已購票）", detail: "17:00 入場，3位成人；票券請存在手機，現場出示" },
-        { id: "chk-tempozan", day: "Day 2", label: "天保山午餐：確認營業店家（橫丁整修休業中）", detail: "なにわ食いしんぼ橫丁2026/9/29起除部分店家外休業，到現場才知道哪些店營業；出發前可電話06-6576-5501確認；沒營業就去森ノ宮吃麦笑（週三有營業，午餐11:00〜15:00）" },
-        { id: "rsv-takoume", day: "Day 2", label: "宵夜：たこ梅 本店（關東煮，可電話預約，尚未訂位）", detail: "預計20:00；只接受電話預約，15:00以後打（06-6211-6201，日文），一般客人一週前起受理，11/4的預約10/28（日本時間）15:00以後才能打；座位限90分鐘；每人お通し¥275；不預約則現場排隊；21:00前離店，Day 3凌晨04:45出發" },
-        { id: "rsv-transfer", day: "Day 5", label: "專車接送（已預約）", detail: "11/7 10:00住處上車，前往關西機場T1；3位、4個大行李、7人座Alphard；車資¥17,000現金付司機；免費等候30分鐘，超時¥2,500／30分鐘；取消或變更要在11/4 10:00（出發前72小時）前提出；聯絡資訊與預訂簡訊存在手機" },
-        { id: "rsv-kimono", day: "Day 3", label: "和服店預約確認", detail: "京都和服麗 祇園店已預約09:00：08:50抵達報到" },
-        { id: "rsv-yuyama", day: "Day 3", label: "午餐：祇園 ゆやま（已訂位）", detail: "11:30 入座，3位；預訂資訊請存在手機" },
-        { id: "rsv-shigetsu", day: "Day 4", label: "午餐：天龍寺 篩月（已訂位）", detail: "11:30 入席，3位，「雪」套餐¥3,800／人；預訂資訊請存在手機；餐費當天現場付款，庭園參拜費¥500／人另付" },
-        { id: "tkt-sagano", day: "Day 4", label: "嵯峨野觀光小火車（嵯峨野81號）", detail: "17:13 嵐山站出發；車票於乘車日前約1個月（日本時間00:00）開賣，請盡早購買，並以官網公告為準" }
-      ]
-    },
-    {
-      title: "當天購票（出發前確認票價與購買方式）",
-      items: [
-        { id: "buy-kaiyukan", day: "Day 2", label: "海遊館" },
-        { id: "buy-osakajo", day: "Day 2", label: "大阪城天守閣" },
-        { id: "buy-kiyomizu", day: "Day 3", label: "清水寺（拜觀費）" },
-        { id: "buy-joujakkouji", day: "Day 4", label: "常寂光寺（拜觀費）" },
-        { id: "buy-tenryuji", day: "Day 4", label: "天龍寺（拜觀費）" }
-      ]
-    },
-    {
-      title: "行前準備",
-      items: [
-        { id: "prep-passport", label: "護照效期與入境所需文件確認" },
-        { id: "prep-arrivalcard", label: "入境卡：Visit Japan Web 或紙本", detail: "官方推薦Visit Japan Web；紙本在飛機上或機場領取，填寫範例見Day 1備註" },
-        { id: "prep-flight", label: "機票與登機", detail: "去程CI156 11/3 08:05桃園第2航廈；回程CI153 11/7 14:30關西第1航廈，專車10:00上車、約11:15抵達機場；託運行李每人1件（重量未註明）；辦理登機需出示護照；電子機票收據（含個資）存在手機" },
-        { id: "prep-lodging", label: "確認住宿入住方式與抵達時間" },
-        { id: "prep-ic", label: "準備交通 IC 卡", detail: "建議使用 ICOCA（關西最通用）" },
-        { id: "prep-coupons", label: "優惠券與護照", detail: "優惠券已附在行程備註；2026/11/1起免稅改為出境後退稅，結帳方式請向店員確認" },
-        { id: "prep-cash", label: "準備日幣現鈔", detail: "個人建議攜帶約NT$6,000〜7,000的日幣現鈔；寺廟門票、交通儲值、街邊小吃需現金，其餘以信用卡為主；另外Day 5專車車資¥17,000要用現金付司機" },
-        { id: "prep-dining", label: "用餐原則", detail: "避開京都錦市場、大阪黑門市場用餐，網路評價不佳、易坑觀光客，僅適合走馬看花拍照" },
-        { id: "prep-weather", label: "洋蔥式穿搭與輕便雨具", detail: "白天約20〜23°C，晚上約13°C" },
-        { id: "prep-network", label: "手機網路與行動電源" },
-        { id: "prep-day3", day: "Day 3", label: "前一晚早點休息", detail: "04:45 出發，全天逾 15 小時" }
-      ]
-    },
-    {
       title: "轉場分鏡（拍完打勾）",
       items: [
-        { id: "shoot-countdown", day: "Day 1（去程）", label: "倒數 5→1：桃園機場＋機艙", detail: "5＝機場走道或登機門、4和3＝機艙自拍、2＝機翼窗外、1＝座位螢幕飛行地圖；在行程時間之前拍，每個約1秒" },
-        { id: "shoot-lookdown", day: "Day 1", label: "低頭看指標：關西機場（11:35 入境後）", detail: "手機往下對準腳和「南海／NANKAI」指標；入境審查和海關區不能拍" },
-        { id: "shoot-gate", day: "Day 1", label: "閘門過鏡頭：Rapi:t", detail: "手機放胸前，手刷QR過閘門，只拍閘門和手" },
-        { id: "shoot-grenier", day: "Day 1", label: "掀開盒蓋：grenier（16:05）", detail: "盒子闔著 → 手掀蓋 → 接甜點特寫，拿到就拍" },
-        { id: "shoot-dotonbori", day: "Day 1", label: "由下往上帶到招牌：道頓堀（20:30）", detail: "從腳邊往上抬到固力果招牌，停1秒，在不擋路的地方拍" },
-        { id: "shoot-reveal-setup", day: "Day 1〜2（住處）", label: "反轉鋪陳：面無表情、字幕「對水族館一點興趣都…」", detail: "素色牆、手機直立固定、雙手抱胸；停在「一點興趣都」；約6〜7秒" },
-        { id: "shoot-reveal-clips", day: "Day 2", label: "反轉快剪：海遊館（10:30）", detail: "6個鏡頭各1〜2秒（招牌、大水槽、鯨鯊、鬼蝠魟、反應表情、紀念品店）；禁止閃光燈、腳架、自拍棒" },
-        { id: "shoot-hand-a", day: "Day 3", label: "手遮鏡頭 片段A：八坂之塔（07:30，日常服）", detail: "記下位置標記，手遮滿鏡頭後停止錄影" },
-        { id: "shoot-hand-b", day: "Day 3", label: "手遮鏡頭 片段B：同一位置（10:15，和服）", detail: "對準標記、同高度同構圖，手從遮住鏡頭開始移開" }
+        { id: "shoot-countdown", itemRef: { day: "day1", time: "11:35〜12:50", spot: "抵達關西機場" }, day: "Day 1（去程）", label: "倒數 5→1：桃園機場＋機艙", detail: "5＝機場走道或登機門、4和3＝機艙自拍、2＝機翼窗外、1＝座位螢幕飛行地圖；在行程時間之前拍，每個約1秒" },
+        { id: "shoot-lookdown", itemRef: { day: "day1", time: "11:35〜12:50", spot: "抵達關西機場" }, day: "Day 1", label: "低頭看指標：關西機場（11:35 入境後）", detail: "手機往下對準腳和「南海／NANKAI」指標；入境審查和海關區不能拍" },
+        { id: "shoot-gate", itemRef: { day: "day1", time: "11:35〜12:50", spot: "抵達關西機場" }, day: "Day 1", label: "閘門過鏡頭：Rapi:t", detail: "手機放胸前，手刷QR過閘門，只拍閘門和手" },
+        { id: "shoot-grenier", itemRef: { day: "day1", time: "16:05〜16:25", spot: "grenier 梅田店" }, day: "Day 1", label: "掀開盒蓋：grenier（16:05）", detail: "盒子闔著 → 手掀蓋 → 接甜點特寫，拿到就拍" },
+        { id: "shoot-dotonbori", itemRef: { day: "day1", time: "20:30〜22:00", spot: "道頓堀" }, day: "Day 1", label: "由下往上帶到招牌：道頓堀（20:30）", detail: "從腳邊往上抬到固力果招牌，停1秒，在不擋路的地方拍" },
+        { id: "shoot-reveal-setup", itemRef: { day: "day2", time: "10:30〜12:30", spot: "海遊館" }, day: "Day 1〜2（住處）", label: "反轉鋪陳：面無表情、字幕「對水族館一點興趣都…」", detail: "素色牆、手機直立固定、雙手抱胸；停在「一點興趣都」；約6〜7秒" },
+        { id: "shoot-reveal-clips", itemRef: { day: "day2", time: "10:30〜12:30", spot: "海遊館" }, day: "Day 2", label: "反轉快剪：海遊館（10:30）", detail: "6個鏡頭各1〜2秒（招牌、大水槽、鯨鯊、鬼蝠魟、反應表情、紀念品店）；禁止閃光燈、腳架、自拍棒" },
+        { id: "shoot-hand-a", itemRef: { day: "day3", time: "07:30〜07:50", spot: "八坂之塔" }, day: "Day 3", label: "手遮鏡頭 片段A：八坂之塔（07:30，日常服）", detail: "記下位置標記，手遮滿鏡頭後停止錄影" },
+        { id: "shoot-hand-b", itemRef: { day: "day3", time: "10:15〜11:10", spot: "八坂之塔，日東堂旁" }, day: "Day 3", label: "手遮鏡頭 片段B：同一位置（10:15，和服）", detail: "對準標記、同高度同構圖，手從遮住鏡頭開始移開" }
       ]
     }
   ],
