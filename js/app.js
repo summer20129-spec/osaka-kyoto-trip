@@ -755,12 +755,13 @@
   var COUPON_LINK_PATTERN = /^https:\/\/japanportal\.donki-global\.com\/coupon\/[A-Za-z0-9_\-\.]+\.html$/;
 
   /** Ordered "步驟 | 做法" table from [{ label, text }]. */
-  function renderStepsTable(steps) {
+  function renderStepsTable(steps, headers) {
     var table = el("table", "note-steps");
     var head = el("thead");
     var headRow = el("tr");
-    headRow.appendChild(el("th", "", "步驟"));
-    headRow.appendChild(el("th", "", "做法"));
+    var h = (headers && headers.length === 2) ? headers : ["步驟", "做法"];
+    headRow.appendChild(el("th", "", h[0]));
+    headRow.appendChild(el("th", "", h[1]));
     head.appendChild(headRow);
     table.appendChild(head);
     var tbody = el("tbody");
@@ -991,6 +992,10 @@
       var fieldEl = renderGuideField(field, stop);
       if (fieldEl) body.appendChild(fieldEl);
     });
+    // Optional per-shop sections (e.g. Japanese menu and ordering phrases).
+    (stop.sections || []).forEach(function (section) {
+      if (sectionHasContent(section)) body.appendChild(renderSectionBlock(section));
+    });
     card.appendChild(body);
 
     toggle.addEventListener("click", function () {
@@ -1040,6 +1045,22 @@
     return link;
   }
 
+  /** One labelled guide section: text, steps table, tip list, image. */
+  function renderSectionBlock(section) {
+    var wrap = el("div", "guide-panel__field");
+    wrap.appendChild(el("p", "guide-panel__label", section.label || ""));
+    if (section.text) wrap.appendChild(el("p", "guide-panel__value", section.text));
+    if (section.steps && section.steps.length) wrap.appendChild(renderStepsTable(section.steps, section.stepsHeaders));
+    if (section.tips && section.tips.length) wrap.appendChild(renderTipList(section.tips));
+    var imageEl = renderGuideImage(section.image);
+    if (imageEl) wrap.appendChild(imageEl);
+    return wrap;
+  }
+
+  function sectionHasContent(section) {
+    return !!(section && (section.text || (section.steps && section.steps.length) || (section.tips && section.tips.length)));
+  }
+
   function renderGuidePanel(item, panelId) {
     var panel = el("div", "guide-panel");
     panel.id = panelId;
@@ -1047,47 +1068,14 @@
 
     var guideSections = item.guide.sections || [];
     var placedSections = [];
-    function renderSection(section) {
-      var wrap = el("div", "guide-panel__field");
-      wrap.appendChild(el("p", "guide-panel__label", section.label || ""));
-      if (section.text) wrap.appendChild(el("p", "guide-panel__value", section.text));
-      if (section.steps && section.steps.length) wrap.appendChild(renderStepsTable(section.steps));
-      if (section.tips && section.tips.length) wrap.appendChild(renderTipList(section.tips));
-      var imageEl = renderGuideImage(section.image);
-      if (imageEl) wrap.appendChild(imageEl);
-      return wrap;
-    }
-    function hasSectionContent(section) {
-      return !!(section && (section.text || (section.steps && section.steps.length) || (section.tips && section.tips.length)));
-    }
+    var renderSection = renderSectionBlock;
+    var hasSectionContent = sectionHasContent;
 
-    var fields = GUIDE_FIELD_CONFIG[item.guide.type] || [];
-    fields.forEach(function (field) {
-      var fieldEl = renderGuideField(field, item.guide);
-      if (fieldEl) panel.appendChild(fieldEl);
-      if (field.key === "photoTips" && item.guide.photoExample) {
-        var photoEl = renderPhotoExample(item.guide.photoExample);
-        if (photoEl) panel.appendChild(photoEl);
-      }
-      // A section with after: "<field key>" is shown right below that field.
-      guideSections.forEach(function (section) {
-        if (hasSectionContent(section) && section.after === field.key) {
-          panel.appendChild(renderSection(section));
-          placedSections.push(section);
-        }
-      });
-    });
-
-    // Optional extra labelled paragraphs: sections: [{ label, text }].
-    guideSections.forEach(function (section) {
-      if (!hasSectionContent(section) || placedSections.indexOf(section) !== -1) return;
-      panel.appendChild(renderSection(section));
-    });
-
-    // Optional collapsible groups of sections: groups: [{ title, brief,
-    // sections: [{ label, text }] }]. Collapsed by default.
-    (item.guide.groups || []).forEach(function (group) {
-      if (!group || !group.sections || !group.sections.length) return;
+    // Optional collapsible groups of sections: groups: [{ title, brief, after?,
+    // sections: [{ label, text|steps|tips }] }]. Collapsed by default; a group
+    // with after: "<field key>" is shown right below that field, others at the end.
+    var placedGroups = [];
+    function buildGroupCard(group) {
       stopIdCounter += 1;
       var bodyId = "guide-group-" + stopIdCounter;
       var card = el("div", "guide-stop");
@@ -1112,7 +1100,44 @@
         toggle.setAttribute("aria-expanded", String(!isOpen));
         body.hidden = isOpen;
       });
-      panel.appendChild(card);
+      return card;
+    }
+    function validGroup(group) {
+      return !!(group && group.sections && group.sections.length);
+    }
+
+    var fields = GUIDE_FIELD_CONFIG[item.guide.type] || [];
+    fields.forEach(function (field) {
+      var fieldEl = renderGuideField(field, item.guide);
+      if (fieldEl) panel.appendChild(fieldEl);
+      if (field.key === "photoTips" && item.guide.photoExample) {
+        var photoEl = renderPhotoExample(item.guide.photoExample);
+        if (photoEl) panel.appendChild(photoEl);
+      }
+      // A section with after: "<field key>" is shown right below that field.
+      guideSections.forEach(function (section) {
+        if (hasSectionContent(section) && section.after === field.key) {
+          panel.appendChild(renderSection(section));
+          placedSections.push(section);
+        }
+      });
+      (item.guide.groups || []).forEach(function (group) {
+        if (validGroup(group) && group.after === field.key) {
+          panel.appendChild(buildGroupCard(group));
+          placedGroups.push(group);
+        }
+      });
+    });
+
+    // Optional extra labelled paragraphs: sections: [{ label, text }].
+    guideSections.forEach(function (section) {
+      if (!hasSectionContent(section) || placedSections.indexOf(section) !== -1) return;
+      panel.appendChild(renderSection(section));
+    });
+
+    (item.guide.groups || []).forEach(function (group) {
+      if (!validGroup(group) || placedGroups.indexOf(group) !== -1) return;
+      panel.appendChild(buildGroupCard(group));
     });
 
     // Optional shops list for any guide type (each with its own MAP).
