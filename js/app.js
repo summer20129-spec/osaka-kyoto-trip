@@ -1071,7 +1071,7 @@
       }
       // A section with after: "<field key>" is shown right below that field.
       guideSections.forEach(function (section) {
-        if (section && section.text && section.after === field.key) {
+        if (hasSectionContent(section) && section.after === field.key) {
           panel.appendChild(renderSection(section));
           placedSections.push(section);
         }
@@ -1080,7 +1080,7 @@
 
     // Optional extra labelled paragraphs: sections: [{ label, text }].
     guideSections.forEach(function (section) {
-      if (!section || !section.text || placedSections.indexOf(section) !== -1) return;
+      if (!hasSectionContent(section) || placedSections.indexOf(section) !== -1) return;
       panel.appendChild(renderSection(section));
     });
 
