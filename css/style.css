@@ -1376,6 +1376,39 @@ ul { padding: 0; list-style: none; }
   letter-spacing: 0.04em;
 }
 
+/* -------------------- Back to top -------------------- */
+.back-to-top {
+  position: fixed;
+  right: var(--space-4);
+  bottom: calc(var(--space-4) + 56px);
+  z-index: 59;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  font-family: inherit;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-accent);
+  background: var(--color-surface);
+  border: 1px solid var(--color-accent);
+  border-radius: 50%;
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+}
+
+.back-to-top[hidden] {
+  display: none;
+}
+
+.back-to-top:hover,
+.back-to-top:focus-visible {
+  color: var(--color-accent-contrast);
+  background: var(--color-accent);
+}
+
 /* -------------------- Travel Mode: jump-to-current action -------------------- */
 .travel-jump {
   position: fixed;

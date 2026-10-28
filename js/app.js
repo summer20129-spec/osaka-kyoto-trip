@@ -2058,6 +2058,24 @@
     setActive(daySections[0].id);
   }
 
+  /** Floating "back to top" button, shown after scrolling down a screen or so. */
+  function renderBackToTop() {
+    var btn = el("button", "back-to-top", "↑");
+    btn.type = "button";
+    btn.setAttribute("aria-label", "回到頁面最上方");
+    btn.hidden = true;
+    btn.addEventListener("click", function () {
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+    });
+    document.body.appendChild(btn);
+    function update() {
+      btn.hidden = (window.pageYOffset || document.documentElement.scrollTop || 0) < 600;
+    }
+    window.addEventListener("scroll", update, { passive: true });
+    update();
+  }
+
   function init() {
     if (typeof ITINERARY_DATA === "undefined") {
       console.error("ITINERARY_DATA not found. Check that data/itinerary.js loaded before js/app.js.");
@@ -2074,6 +2092,7 @@
     renderDays(ITINERARY_DATA, travelState);
     renderFilterBar(ITINERARY_DATA);
     renderTravelJump(travelState);
+    renderBackToTop();
     setupActiveDayHighlight(ITINERARY_DATA);
   }
 
