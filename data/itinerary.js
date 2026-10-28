@@ -1130,6 +1130,14 @@ var ITINERARY_DATA = {
                     ]
                   },
                   {
+                    label: "穿搭重點：日常極簡（你提供）",
+                    tips: [
+                      "關鍵：上衣不要有太多複雜圖案或裝飾，讓褶皺和褲子的立體線條成為視覺主角",
+                      "日常極簡：白色素T（白のTシャツ）＋黑色褶皺長褲（黒のプリーツパンツ）＋簡潔白鞋（白いスニーカー）；自然、乾淨，適合平常出門"
+                    ],
+                    image: { src: "images/guides/miyake-basics-outfit.jpg", alt: "白色素T加黑色褶皺長褲的穿搭照（你提供的照片）" }
+                  },
+                  {
                     label: "官方商品頁（點下方按鈕查看品名、顏色、尺寸表、素材、洗滌）",
                     link: { label: "開啟官方商品頁（HP55JF550）", url: "https://www.isseymiyake.com/products/hp55jf550" }
                   }
