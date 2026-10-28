@@ -1608,6 +1608,286 @@
     }
   }
 
+  var REFUND_STORAGE_KEY = "osaka-kyoto-trip:refund-checks";
+  var REFUND_LINK_HOSTS = ["www.japan.travel", "www.customs.go.jp", "www.mlit.go.jp", "www.threads.com"];
+
+  function loadRefundChecks() {
+    try {
+      var parsed = JSON.parse(window.localStorage.getItem(REFUND_STORAGE_KEY) || "[]");
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveRefundChecks(ids) {
+    try {
+      window.localStorage.setItem(REFUND_STORAGE_KEY, JSON.stringify(ids));
+    } catch (e) {
+      /* storage unavailable: checks still work for this visit */
+    }
+  }
+
+  function isAllowedRefundLink(url) {
+    try {
+      var u = new URL(url);
+      return u.protocol === "https:" && REFUND_LINK_HOSTS.indexOf(u.hostname) !== -1;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  var REFUND_TAB_KEY = "osaka-kyoto-trip:refund-tab";
+
+  function chip(kind) {
+    return kind === "official"
+      ? el("span", "refund__chip refund__chip--official", "官方")
+      : el("span", "refund__chip refund__chip--community", "網友整理・未經官方確認");
+  }
+
+  /**
+   * Tax Refund Center: 30-second summary card, then five tabs
+   * (流程 / 規則 / 關西機場 / 日文 / 核對) so only one short panel is
+   * visible at a time. Source chips mark official vs community info.
+   */
+  function renderTaxRefund(data) {
+    var t = data.taxRefund;
+    var body = document.getElementById("refund-body");
+    var progress = document.getElementById("refund-progress");
+    if (!t || !body) return;
+
+    function rowsToSteps(rows) {
+      return rows.map(function (r) { return { label: r[0], text: r[1] }; });
+    }
+    function section(parent, title, kind) {
+      var wrap = el("div", "refund__block");
+      var head = el("div", "refund__block-head");
+      head.appendChild(el("h3", "checklist__group-title", title));
+      if (kind) head.appendChild(chip(kind));
+      wrap.appendChild(head);
+      parent.appendChild(wrap);
+      return wrap;
+    }
+    function fold(parent, title, kind, openByDefault) {
+      var d = document.createElement("details");
+      d.className = "refund__fold";
+      if (openByDefault) d.open = true;
+      var sm = el("summary", "refund__fold-summary");
+      sm.appendChild(el("span", "refund__fold-title", title));
+      if (kind) sm.appendChild(chip(kind));
+      d.appendChild(sm);
+      var inner = el("div", "refund__fold-body");
+      d.appendChild(inner);
+      parent.appendChild(d);
+      return inner;
+    }
+
+    // ---- 30-second summary ----
+    var sum = el("div", "refund__summary");
+    sum.appendChild(el("p", "refund__headline", t.headline));
+    var stepsRow = el("div", "refund__flow");
+    t.summary.steps.forEach(function (st, i) {
+      var card = el("div", "refund__step");
+      card.appendChild(el("span", "refund__step-icon", st[0]));
+      var txt = el("div", "refund__step-main");
+      txt.appendChild(el("p", "refund__step-title", (i + 1) + ". " + st[1]));
+      txt.appendChild(el("p", "refund__step-text", st[2]));
+      card.appendChild(txt);
+      stepsRow.appendChild(card);
+    });
+    sum.appendChild(stepsRow);
+    sum.appendChild(el("p", "refund__alert-title", "⚠ 這些情況會拿不到退款"));
+    var alerts = el("ul", "refund__alerts");
+    t.summary.alerts.forEach(function (a) { alerts.appendChild(el("li", "", a)); });
+    sum.appendChild(alerts);
+    body.appendChild(sum);
+
+    // ---- Tabs ----
+    var tabDefs = [
+      { id: "flow", label: "流程" },
+      { id: "rules", label: "規則" },
+      { id: "kix", label: "關西機場" },
+      { id: "jp", label: "日文" },
+      { id: "check", label: "核對" }
+    ];
+    var tabBar = el("div", "refund__tabs");
+    tabBar.setAttribute("role", "tablist");
+    body.appendChild(tabBar);
+    var panels = {};
+    var buttons = {};
+
+    function selectTab(id, focus) {
+      tabDefs.forEach(function (d) {
+        var on = d.id === id;
+        buttons[d.id].setAttribute("aria-selected", String(on));
+        buttons[d.id].tabIndex = on ? 0 : -1;
+        panels[d.id].hidden = !on;
+        if (on && focus) buttons[d.id].focus();
+      });
+      try { window.localStorage.setItem(REFUND_TAB_KEY, id); } catch (e) { /* ignore */ }
+    }
+    tabDefs.forEach(function (d, i) {
+      var btn = el("button", "refund__tab", d.label);
+      btn.type = "button";
+      btn.id = "refund-tab-" + d.id;
+      btn.setAttribute("role", "tab");
+      btn.setAttribute("aria-controls", "refund-panel-" + d.id);
+      btn.addEventListener("click", function () { selectTab(d.id, false); });
+      btn.addEventListener("keydown", function (ev) {
+        var step = ev.key === "ArrowRight" ? 1 : ev.key === "ArrowLeft" ? -1 : 0;
+        if (!step) return;
+        ev.preventDefault();
+        selectTab(tabDefs[(i + step + tabDefs.length) % tabDefs.length].id, true);
+      });
+      tabBar.appendChild(btn);
+      buttons[d.id] = btn;
+      var panel = el("div", "refund__panel");
+      panel.id = "refund-panel-" + d.id;
+      panel.setAttribute("role", "tabpanel");
+      panel.setAttribute("aria-labelledby", btn.id);
+      body.appendChild(panel);
+      panels[d.id] = panel;
+    });
+
+    // ---- Panel: 流程 ----
+    var pf = panels.flow;
+    var s1 = section(pf, "舊制 → 新制，差在哪", "official");
+    var cmp = el("div", "refund__cmp");
+    t.compare.rows.forEach(function (r) {
+      var card = el("div", "refund__cmp-card");
+      card.appendChild(el("p", "refund__cmp-title", r[0]));
+      var oldLine = el("p", "refund__cmp-old");
+      oldLine.appendChild(el("span", "refund__tag", "舊"));
+      oldLine.appendChild(document.createTextNode(r[1]));
+      var newLine = el("p", "refund__cmp-new");
+      newLine.appendChild(el("span", "refund__tag refund__tag--new", "新"));
+      newLine.appendChild(document.createTextNode(r[2]));
+      card.appendChild(oldLine);
+      card.appendChild(newLine);
+      cmp.appendChild(card);
+    });
+    s1.appendChild(cmp);
+
+    var s2 = section(pf, "你這趟的時間軸", null);
+    var tl = el("ol", "refund__timeline");
+    t.mine.forEach(function (r) {
+      var li = el("li", "refund__tl-item");
+      li.appendChild(el("p", "refund__tl-when", r[0]));
+      li.appendChild(el("p", "refund__tl-what", r[1]));
+      var key = r[2] ? findItemKey(data, r[2]) : null;
+      if (key) {
+        var jump = el("a", "checklist__jump", "前往行程 ›");
+        jump.href = "#" + key;
+        jump.addEventListener("click", function (ev) {
+          ev.preventDefault();
+          var target = document.querySelector('[data-item-key="' + key + '"]');
+          if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+        li.appendChild(jump);
+      }
+      tl.appendChild(li);
+    });
+    s2.appendChild(tl);
+
+    // ---- Panel: 規則 ----
+    var pr = panels.rules;
+    var r1 = section(pr, "規則速查", "official");
+    r1.appendChild(renderStepsTable(rowsToSteps(t.rules), t.rulesHeaders));
+    var r2 = section(pr, "最常見的錯誤", null);
+    r2.appendChild(renderTipList(t.mistakes));
+    var r3 = fold(pr, t.community.title.replace(/^⑨ /, ""), "community", false);
+    r3.appendChild(renderStepsTable(rowsToSteps(t.community.rows), t.community.headers));
+    if (t.community.tips) r3.appendChild(renderTipList(t.community.tips));
+
+    // ---- Panel: 關西機場 ----
+    var pk = panels.kix;
+    var k1 = section(pk, t.vjw.title.replace(/^④ /, ""), "community");
+    k1.appendChild(renderStepsTable(rowsToSteps(t.vjw.rows), t.vjw.headers));
+    if (t.vjw.tips) k1.appendChild(renderTipList(t.vjw.tips));
+
+    // ---- Panel: 日文 ----
+    var pj = panels.jp;
+    var j1 = section(pj, "購物時對店員說（日文）", null);
+    j1.appendChild(renderStepsTable(rowsToSteps(t.phrases), t.phrasesHeaders));
+
+    // ---- Panel: 核對（airport mode） ----
+    var pc = panels.check;
+    var c1 = section(pc, "出境前核對（會記在你的瀏覽器）", null);
+    var bar = el("div", "refund__bar");
+    var barFill = el("div", "refund__bar-fill");
+    bar.appendChild(barFill);
+    c1.appendChild(bar);
+    var saved = loadRefundChecks();
+    var list = el("ul", "checklist__list refund__checks");
+    function sync() {
+      var ids = [];
+      list.querySelectorAll("input[type=checkbox]:checked").forEach(function (box) {
+        ids.push(box.getAttribute("data-id"));
+      });
+      if (progress) progress.textContent = ids.length + " / " + t.checks.length;
+      barFill.style.width = Math.round(ids.length / t.checks.length * 100) + "%";
+      bar.setAttribute("aria-label", "已完成 " + ids.length + " / " + t.checks.length);
+      return ids;
+    }
+    t.checks.forEach(function (c) {
+      var li = el("li", "checklist__li");
+      var label = el("label", "checklist__item refund__check");
+      var box = document.createElement("input");
+      box.type = "checkbox";
+      box.className = "checklist__box";
+      box.setAttribute("data-id", c[0]);
+      box.checked = saved.indexOf(c[0]) !== -1;
+      box.addEventListener("change", function () { saveRefundChecks(sync()); });
+      label.appendChild(box);
+      var text = el("span", "checklist__text");
+      text.appendChild(el("span", "checklist__label", c[1]));
+      label.appendChild(text);
+      li.appendChild(label);
+      list.appendChild(li);
+    });
+    c1.appendChild(list);
+    var reset = el("button", "refund__reset", "全部取消勾選");
+    reset.type = "button";
+    reset.addEventListener("click", function () {
+      list.querySelectorAll("input[type=checkbox]").forEach(function (box) { box.checked = false; });
+      saveRefundChecks(sync());
+    });
+    c1.appendChild(reset);
+    sync();
+
+    var c2 = fold(pc, "官方說明與提醒", "official", false);
+    var links = el("ul", "refund__links");
+    t.links.forEach(function (l) {
+      if (!isAllowedRefundLink(l[1])) return;
+      var li = el("li");
+      var a = el("a", "map-link", l[0] + " ↗");
+      a.href = l[1];
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      li.appendChild(a);
+      links.appendChild(li);
+    });
+    c2.appendChild(links);
+    c2.appendChild(renderTipList(t.notes));
+    c2.appendChild(el("p", "refund__updated", "查證日：" + t.updated));
+
+    // Summary shortcut + restore last tab
+    var jumpBtn = el("button", "refund__jump", "到機場前，直接看核對清單 ›");
+    jumpBtn.type = "button";
+    jumpBtn.addEventListener("click", function () {
+      selectTab("check", false);
+      tabBar.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    sum.appendChild(jumpBtn);
+
+    var initial = "flow";
+    try {
+      var savedTab = window.localStorage.getItem(REFUND_TAB_KEY);
+      if (savedTab && panels[savedTab]) initial = savedTab;
+    } catch (e) { /* ignore */ }
+    selectTab(initial, false);
+  }
+
   /** data-item-key ("<dayId>-<index>") for { day, time }, or null. */
   function findItemKey(data, ref) {
     if (!ref || typeof ref.day !== "string" || typeof ref.time !== "string") return null;
@@ -1789,6 +2069,7 @@
     renderHeroStats(ITINERARY_DATA);
     renderOverview(ITINERARY_DATA);
     renderChecklist(ITINERARY_DATA);
+    renderTaxRefund(ITINERARY_DATA);
     renderDayNav(ITINERARY_DATA, travelState);
     renderDays(ITINERARY_DATA, travelState);
     renderFilterBar(ITINERARY_DATA);

@@ -286,6 +286,339 @@ ul { padding: 0; list-style: none; }
   border-radius: var(--radius-md);
 }
 
+/* Tax Refund Center */
+.refund__body {
+  gap: var(--space-4);
+}
+
+.refund__summary {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.refund__headline {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-accent-soft);
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.refund__flow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--space-2);
+}
+
+.refund__step {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+}
+
+.refund__step-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.refund__step-title {
+  margin: 0 0 2px;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.refund__step-text {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.refund__alert-title {
+  margin: 0;
+  font-weight: 700;
+  color: #9B3A2E;
+}
+
+.refund__alerts {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-3);
+  display: grid;
+  gap: 6px;
+  background: #FBEDEA;
+  border: 1px solid #EBC5BE;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.refund__alerts li::before {
+  content: "✕ ";
+  color: #9B3A2E;
+  font-weight: 700;
+}
+
+.refund__jump {
+  font: inherit;
+  font-weight: 700;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-4);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--color-accent);
+  color: #fff;
+  cursor: pointer;
+}
+
+.refund__tabs {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  padding: 4px 0;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.refund__tab {
+  flex: 1 0 auto;
+  font: inherit;
+  font-weight: 600;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.refund__tab[aria-selected="true"] {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+.refund__panel {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.refund__panel[hidden] {
+  display: none;
+}
+
+.refund__block {
+  min-width: 0;
+}
+
+.refund__block-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.refund__block-head .checklist__group-title {
+  margin: 0;
+}
+
+.refund__block .note-steps {
+  font-size: 0.8125rem;
+}
+
+.refund__chip {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.refund__chip--official {
+  background: #E5EEDA;
+  color: #3F5F25;
+}
+
+.refund__chip--community {
+  background: #FBEFD6;
+  color: #785B12;
+}
+
+.refund__cmp {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.refund__cmp-card {
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.refund__cmp-title {
+  margin: 0 0 4px;
+  font-weight: 700;
+}
+
+.refund__cmp-old,
+.refund__cmp-new {
+  margin: 2px 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.refund__cmp-old {
+  color: var(--color-text-muted);
+}
+
+.refund__cmp-new {
+  font-weight: 600;
+}
+
+.refund__tag {
+  display: inline-block;
+  min-width: 1.6em;
+  margin-right: 6px;
+  padding: 0 5px;
+  border-radius: 4px;
+  background: var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.refund__tag--new {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.refund__timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 var(--space-4);
+  border-left: 2px solid var(--color-accent-soft);
+  display: grid;
+  gap: var(--space-3);
+}
+
+.refund__tl-item {
+  position: relative;
+}
+
+.refund__tl-item::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--space-4) - 6px);
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+.refund__tl-when {
+  margin: 0;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.refund__tl-what {
+  margin: 2px 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.refund__fold {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.refund__fold-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+}
+
+.refund__fold-title {
+  font-weight: 700;
+}
+
+.refund__fold-body {
+  padding: 0 var(--space-3) var(--space-3);
+}
+
+.refund__bar {
+  height: 10px;
+  margin-bottom: var(--space-3);
+  border-radius: 999px;
+  background: var(--color-border);
+  overflow: hidden;
+}
+
+.refund__bar-fill {
+  height: 100%;
+  width: 0;
+  background: var(--color-accent);
+  transition: width 0.2s ease;
+}
+
+.refund__checks .checklist__item {
+  padding: var(--space-3) 0;
+}
+
+.refund__checks .checklist__label {
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.refund__checks .checklist__box {
+  width: 28px;
+  height: 28px;
+}
+
+.refund__reset {
+  margin-top: var(--space-2);
+  font: inherit;
+  font-size: 0.85rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.refund__links {
+  list-style: none;
+  margin: 0 0 var(--space-2);
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.refund__updated {
+  margin: var(--space-2) 0 0;
+  font-size: 0.75rem;
+  color: var(--color-text-faint);
+}
+
 .checklist__progress {
   font-size: var(--fs-small);
   font-weight: 700;
