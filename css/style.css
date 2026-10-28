@@ -1538,6 +1538,16 @@ ul { padding: 0; list-style: none; }
   font-weight: 600;
 }
 
+.note-steps__swatch {
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  margin-right: 0.4em;
+  border: 1px solid #8A857A;
+  border-radius: 50%;
+  vertical-align: -1px;
+}
+
 .note-steps__label {
   width: 6em;
   font-weight: 600;
@@ -1550,6 +1560,22 @@ ul { padding: 0; list-style: none; }
   padding-left: 1.25em;
   font-size: 0.875rem;
   line-height: 1.6;
+}
+
+/* Highlighted button for official product pages */
+.official-link,
+.official-link:visited {
+  background: #2B2925;
+  border-color: #2B2925;
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+.official-link:hover,
+.official-link:focus-visible {
+  background: var(--color-accent, #A8582F);
+  border-color: var(--color-accent, #A8582F);
+  color: #FFFFFF;
 }
 
 .note-details-panel__link {

@@ -752,6 +752,8 @@
    */
   // Public Instagram reels may be linked (opens in a new tab, never embedded).
   var INSTAGRAM_REEL_PATTERN = /^https:\/\/www\.instagram\.com\/reel\/[A-Za-z0-9_\-]+\/$/;
+  // Official ISSEY MIYAKE product pages (no query string).
+  var ISSEY_PRODUCT_PATTERN = /^https:\/\/www\.isseymiyake\.com\/products\/[A-Za-z0-9_\-]+$/;
   var COUPON_LINK_PATTERN = /^https:\/\/japanportal\.donki-global\.com\/coupon\/[A-Za-z0-9_\-\.]+\.html$/;
 
   /** Ordered "步驟 | 做法" table from [{ label, text }]. */
@@ -768,7 +770,14 @@
     steps.forEach(function (step) {
       if (!step || !step.text) return;
       var row = el("tr");
-      row.appendChild(el("th", "note-steps__label", step.label || ""));
+      var labelCell = el("th", "note-steps__label", step.label || "");
+      // Optional colour marker: swatch: "#RRGGBB" shows a small dot before the label.
+      if (typeof step.swatch === "string" && /^#[0-9A-Fa-f]{6}$/.test(step.swatch)) {
+        var dot = el("span", "note-steps__swatch");
+        dot.style.backgroundColor = step.swatch;
+        labelCell.insertBefore(dot, labelCell.firstChild);
+      }
+      row.appendChild(labelCell);
       row.appendChild(el("td", "", step.text));
       tbody.appendChild(row);
     });
@@ -1054,11 +1063,18 @@
     if (section.tips && section.tips.length) wrap.appendChild(renderTipList(section.tips));
     var imageEl = renderGuideImage(section.image);
     if (imageEl) wrap.appendChild(imageEl);
+    if (section.link && typeof section.link.url === "string" && ISSEY_PRODUCT_PATTERN.test(section.link.url)) {
+      var linkEl = el("a", "map-link note-details-panel__link official-link", (section.link.label || "開啟官方頁面") + " ↗");
+      linkEl.href = section.link.url;
+      linkEl.target = "_blank";
+      linkEl.rel = "noopener noreferrer";
+      wrap.appendChild(linkEl);
+    }
     return wrap;
   }
 
   function sectionHasContent(section) {
-    return !!(section && (section.text || (section.steps && section.steps.length) || (section.tips && section.tips.length)));
+    return !!(section && (section.text || section.link || (section.steps && section.steps.length) || (section.tips && section.tips.length)));
   }
 
   function renderGuidePanel(item, panelId) {
@@ -1082,7 +1098,7 @@
       var head = el("div", "guide-stop__head");
       var toggle = el("button", "guide-stop__toggle");
       toggle.type = "button";
-      toggle.setAttribute("aria-expanded", "false");
+      toggle.setAttribute("aria-expanded", group.open ? "true" : "false");
       toggle.setAttribute("aria-controls", bodyId);
       toggle.appendChild(el("span", "guide-stop__name", group.title || ""));
       if (group.brief) toggle.appendChild(el("span", "guide-stop__brief", group.brief));
@@ -1090,7 +1106,7 @@
       card.appendChild(head);
       var body = el("div", "guide-stop__body");
       body.id = bodyId;
-      body.hidden = true;
+      body.hidden = !group.open;
       group.sections.forEach(function (section) {
         if (hasSectionContent(section)) body.appendChild(renderSection(section));
       });
@@ -1105,6 +1121,22 @@
     function validGroup(group) {
       return !!(group && group.sections && group.sections.length);
     }
+
+    // Sections with top: true are shown first, before the type's own fields.
+    guideSections.forEach(function (section) {
+      if (hasSectionContent(section) && section.top) {
+        panel.appendChild(renderSection(section));
+        placedSections.push(section);
+      }
+    });
+
+    // Groups with top: true are shown first (open: true starts them expanded).
+    (item.guide.groups || []).forEach(function (group) {
+      if (validGroup(group) && group.top) {
+        panel.appendChild(buildGroupCard(group));
+        placedGroups.push(group);
+      }
+    });
 
     var fields = GUIDE_FIELD_CONFIG[item.guide.type] || [];
     fields.forEach(function (field) {
