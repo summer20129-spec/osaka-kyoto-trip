@@ -812,7 +812,7 @@
     if (typeof details.intro === "string") {
       panel.appendChild(el("p", "guide-panel__value", details.intro));
     }
-    if (hasSteps) panel.appendChild(renderStepsTable(details.steps));
+    if (hasSteps) panel.appendChild(renderStepsTable(details.steps, details.stepsHeaders));
     if (details.tips && details.tips.length) panel.appendChild(renderTipList(details.tips));
     if (typeof details.text === "string") {
       panel.appendChild(el("p", "guide-panel__value", details.text));
@@ -1457,6 +1457,13 @@
 
     if (day.highActivity && day.warning) {
       section.appendChild(renderWarningCallout(day.warning));
+    }
+
+    // Optional day-level collapsible plan (e.g. rainy-day backup).
+    var rainPlan = day.rainPlan ? renderNoteDetails(day.rainPlan) : null;
+    if (rainPlan) {
+      rainPlan.classList.add("day__rain-plan");
+      section.appendChild(rainPlan);
     }
 
     var openOverview = !!(travelState && travelState.todayDay && travelState.todayDay.id === day.id);
