@@ -778,7 +778,18 @@
         labelCell.insertBefore(dot, labelCell.firstChild);
       }
       row.appendChild(labelCell);
-      row.appendChild(el("td", "", step.text));
+      var textCell = el("td", "", step.text);
+      // Optional place link: mapQuery is only ever passed to buildMapUrl().
+      if (typeof step.mapQuery === "string" && step.mapQuery) {
+        var mapLink = el("a", "map-link note-steps__map", "MAP");
+        mapLink.href = buildMapUrl(step.mapQuery);
+        mapLink.target = "_blank";
+        mapLink.rel = "noopener noreferrer";
+        mapLink.setAttribute("aria-label", "在 Google Maps 開啟：" + step.text.slice(0, 20));
+        textCell.appendChild(document.createTextNode(" "));
+        textCell.appendChild(mapLink);
+      }
+      row.appendChild(textCell);
       tbody.appendChild(row);
     });
     table.appendChild(tbody);
@@ -813,7 +824,55 @@
       panel.appendChild(el("p", "guide-panel__value", details.intro));
     }
     if (hasSteps) panel.appendChild(renderStepsTable(details.steps, details.stepsHeaders));
-    if (details.tips && details.tips.length) panel.appendChild(renderTipList(details.tips));
+    // Optional labelled sub-blocks (same shape as guide sections), e.g. rain-plan
+    // versions. With collapsible: true each becomes a collapsed card (one open at
+    // a time) so a long plan stays short until a version is picked.
+    var cards = [];
+    function addCard(title, brief, bodyNodes) {
+      stopIdCounter += 1;
+      var bodyId = "note-card-" + stopIdCounter;
+      var card = el("div", "guide-stop");
+      var head = el("div", "guide-stop__head");
+      var toggle = el("button", "guide-stop__toggle");
+      toggle.type = "button";
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.setAttribute("aria-controls", bodyId);
+      toggle.appendChild(el("span", "guide-stop__name", title));
+      if (brief) toggle.appendChild(el("span", "guide-stop__brief", brief));
+      head.appendChild(toggle);
+      card.appendChild(head);
+      var body = el("div", "guide-stop__body");
+      body.id = bodyId;
+      body.hidden = true;
+      bodyNodes.forEach(function (n) { body.appendChild(n); });
+      card.appendChild(body);
+      toggle.addEventListener("click", function () {
+        var isOpen = toggle.getAttribute("aria-expanded") === "true";
+        cards.forEach(function (c) {
+          c.toggle.setAttribute("aria-expanded", "false");
+          c.body.hidden = true;
+        });
+        toggle.setAttribute("aria-expanded", String(!isOpen));
+        body.hidden = isOpen;
+      });
+      cards.push({ toggle: toggle, body: body });
+      panel.appendChild(card);
+    }
+    if (details.sections && details.sections.length) {
+      details.sections.forEach(function (section) {
+        if (!sectionHasContent(section)) return;
+        if (details.collapsible) {
+          addCard(section.label || "", section.brief,
+            [renderSectionBlock({ text: section.text, steps: section.steps, stepsHeaders: section.stepsHeaders, tips: section.tips })]);
+        } else {
+          panel.appendChild(renderSectionBlock(section));
+        }
+      });
+    }
+    if (details.tips && details.tips.length) {
+      if (details.collapsible) addCard(details.tipsLabel || "共通提醒", details.tipsBrief, [renderTipList(details.tips)]);
+      else panel.appendChild(renderTipList(details.tips));
+    }
     if (typeof details.text === "string") {
       panel.appendChild(el("p", "guide-panel__value", details.text));
     }

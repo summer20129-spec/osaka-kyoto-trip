@@ -1914,6 +1914,60 @@ ul { padding: 0; list-style: none; }
   vertical-align: -1px;
 }
 
+/* Day-level rain plan: sits flush-left like 今日一覽 (no note indent) and
+   uses the accent colour so it reads as a distinct "if it rains" action. */
+.guide-panel__label:empty {
+  display: none;
+}
+
+.day__rain-plan .note-details-panel {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.day__rain-plan .note-details-panel[hidden] {
+  display: none;
+}
+
+.day__rain-plan {
+  padding-left: 0;
+  margin-bottom: var(--space-3);
+}
+
+.day__rain-plan .guide-toggle {
+  font-size: 0.82rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  background: var(--color-surface);
+}
+
+.day__rain-plan .guide-toggle:hover,
+.day__rain-plan .guide-toggle:focus-visible,
+.day__rain-plan .guide-toggle[aria-expanded="true"] {
+  background: var(--color-accent-soft);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.note-steps__map {
+  min-height: 32px;
+  margin-left: var(--space-1, 4px);
+  padding: 2px 0.7em;
+  font-size: 0.75rem;
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  background: var(--color-surface);
+  vertical-align: middle;
+}
+
+.note-steps__map:hover,
+.note-steps__map:focus-visible {
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+}
+
 .note-steps__label {
   width: 6em;
   font-weight: 600;
