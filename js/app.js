@@ -1024,6 +1024,35 @@
    * buildMapUrl() like every other external link) stays visible. The
    * brief is data (stop.brief) — never derived from URLs or HTML.
    */
+  /** Collapsible card of sections: { title, brief?, open?, sections }. */
+  function renderGuideGroup(group) {
+    stopIdCounter += 1;
+    var bodyId = "guide-group-" + stopIdCounter;
+    var card = el("div", "guide-stop");
+    var head = el("div", "guide-stop__head");
+    var toggle = el("button", "guide-stop__toggle");
+    toggle.type = "button";
+    toggle.setAttribute("aria-expanded", group.open ? "true" : "false");
+    toggle.setAttribute("aria-controls", bodyId);
+    toggle.appendChild(el("span", "guide-stop__name", group.title || ""));
+    if (group.brief) toggle.appendChild(el("span", "guide-stop__brief", group.brief));
+    head.appendChild(toggle);
+    card.appendChild(head);
+    var body = el("div", "guide-stop__body");
+    body.id = bodyId;
+    body.hidden = !group.open;
+    group.sections.forEach(function (section) {
+      if (sectionHasContent(section)) body.appendChild(renderSectionBlock(section));
+    });
+    card.appendChild(body);
+    toggle.addEventListener("click", function () {
+      var isOpen = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!isOpen));
+      body.hidden = isOpen;
+    });
+    return card;
+  }
+
   function renderGuideStop(stop) {
     stopIdCounter += 1;
     var bodyId = "guide-stop-" + stopIdCounter;
@@ -1033,7 +1062,7 @@
 
     var toggle = el("button", "guide-stop__toggle");
     toggle.type = "button";
-    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-expanded", stop.open ? "true" : "false");
     toggle.setAttribute("aria-controls", bodyId);
     toggle.appendChild(el("span", "guide-stop__name", stop.name || ""));
     if (stop.brief) {
@@ -1053,7 +1082,7 @@
 
     var body = el("div", "guide-stop__body");
     body.id = bodyId;
-    body.hidden = true;
+    body.hidden = !stop.open;
     var stopImage = renderGuideImage(stop.image);
     if (stopImage) body.appendChild(stopImage);
     STOP_FIELD_CONFIG.forEach(function (field) {
@@ -1063,6 +1092,10 @@
     // Optional per-shop sections (e.g. Japanese menu and ordering phrases).
     (stop.sections || []).forEach(function (section) {
       if (sectionHasContent(section)) body.appendChild(renderSectionBlock(section));
+    });
+    // Optional nested collapsible cards: groups: [{ title, brief, open, sections }].
+    (stop.groups || []).forEach(function (group) {
+      if (group && group.sections && group.sections.length) body.appendChild(renderGuideGroup(group));
     });
     card.appendChild(body);
 
@@ -1150,33 +1183,7 @@
     // sections: [{ label, text|steps|tips }] }]. Collapsed by default; a group
     // with after: "<field key>" is shown right below that field, others at the end.
     var placedGroups = [];
-    function buildGroupCard(group) {
-      stopIdCounter += 1;
-      var bodyId = "guide-group-" + stopIdCounter;
-      var card = el("div", "guide-stop");
-      var head = el("div", "guide-stop__head");
-      var toggle = el("button", "guide-stop__toggle");
-      toggle.type = "button";
-      toggle.setAttribute("aria-expanded", group.open ? "true" : "false");
-      toggle.setAttribute("aria-controls", bodyId);
-      toggle.appendChild(el("span", "guide-stop__name", group.title || ""));
-      if (group.brief) toggle.appendChild(el("span", "guide-stop__brief", group.brief));
-      head.appendChild(toggle);
-      card.appendChild(head);
-      var body = el("div", "guide-stop__body");
-      body.id = bodyId;
-      body.hidden = !group.open;
-      group.sections.forEach(function (section) {
-        if (hasSectionContent(section)) body.appendChild(renderSection(section));
-      });
-      card.appendChild(body);
-      toggle.addEventListener("click", function () {
-        var isOpen = toggle.getAttribute("aria-expanded") === "true";
-        toggle.setAttribute("aria-expanded", String(!isOpen));
-        body.hidden = isOpen;
-      });
-      return card;
-    }
+    var buildGroupCard = renderGuideGroup;
     function validGroup(group) {
       return !!(group && group.sections && group.sections.length);
     }
