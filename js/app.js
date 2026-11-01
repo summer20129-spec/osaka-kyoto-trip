@@ -2142,6 +2142,150 @@
     update();
   }
 
+  // ---------- Shopping list ----------
+  // Items live only in this browser's localStorage (never sent anywhere).
+  // Anything read back from storage is re-validated.
+  var SHOP_STORAGE_KEY = "osaka-kyoto-trip:shopping-v2";
+  var SHOP_MAX_ITEMS = 200;
+
+  function newShopId() {
+    return "s" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  }
+
+  function sanitizeShopList(list, categories) {
+    var out = [];
+    if (!Array.isArray(list)) return out;
+    for (var i = 0; i < list.length && out.length < SHOP_MAX_ITEMS; i++) {
+      var raw = list[i];
+      if (!raw || typeof raw !== "object") continue;
+      var name = String(raw.name == null ? "" : raw.name).trim().slice(0, 60);
+      if (!name) continue;
+      out.push({
+        id: typeof raw.id === "string" && /^[\w-]{1,40}$/.test(raw.id) ? raw.id : newShopId(),
+        name: name,
+        category: categories.indexOf(raw.category) !== -1 ? raw.category : categories[categories.length - 1],
+        done: raw.done === true
+      });
+    }
+    return out;
+  }
+
+  function renderShopping(data) {
+    var cfg = data.shoppingList;
+    var body = document.getElementById("shop-body");
+    var progress = document.getElementById("shop-progress");
+    if (!cfg || !body || !progress || !Array.isArray(cfg.categories) || !cfg.categories.length) return;
+
+    var categories = cfg.categories;
+    var items;
+    try {
+      var raw = window.localStorage.getItem(SHOP_STORAGE_KEY);
+      items = sanitizeShopList(raw === null ? cfg.seed : JSON.parse(raw), categories);
+    } catch (e) {
+      items = sanitizeShopList(cfg.seed, categories);
+    }
+    function persist() {
+      try {
+        window.localStorage.setItem(SHOP_STORAGE_KEY, JSON.stringify(items));
+      } catch (e) {
+        /* storage unavailable: list still works for this visit */
+      }
+    }
+
+    var form = el("form", "shop__form");
+    form.setAttribute("aria-label", "新增購物項目");
+    var nameIn = document.createElement("input");
+    nameIn.type = "text"; nameIn.required = true; nameIn.maxLength = 60;
+    nameIn.placeholder = "想買什麼？";
+    nameIn.setAttribute("aria-label", "品名");
+    nameIn.className = "shop__input";
+    var catSel = document.createElement("select");
+    catSel.className = "shop__input shop__select";
+    catSel.setAttribute("aria-label", "分類");
+    categories.forEach(function (c) {
+      var o = document.createElement("option");
+      o.value = c; o.textContent = c;
+      catSel.appendChild(o);
+    });
+    var addBtn = el("button", "shop__btn", "加入");
+    addBtn.type = "submit";
+    form.appendChild(nameIn);
+    form.appendChild(catSel);
+    form.appendChild(addBtn);
+    body.appendChild(form);
+
+    var listBox = el("div", "shop__list");
+    body.appendChild(listBox);
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      var name = nameIn.value.trim();
+      if (!name || items.length >= SHOP_MAX_ITEMS) { nameIn.focus(); return; }
+      items.push({ id: newShopId(), name: name.slice(0, 60), category: catSel.value, done: false });
+      persist();
+      nameIn.value = "";
+      draw();
+      nameIn.focus();
+    });
+
+    function draw() {
+      var doneCount = items.filter(function (it) { return it.done; }).length;
+      progress.textContent = doneCount + " / " + items.length;
+      listBox.textContent = "";
+      if (!items.length) {
+        listBox.appendChild(el("p", "shop__empty", "還沒有項目，從上方加入想買的東西。"));
+        return;
+      }
+      categories.forEach(function (cat) {
+        var list = items.filter(function (it) { return it.category === cat; });
+        if (!list.length) return;
+        list.sort(function (a, b) { return (a.done ? 1 : 0) - (b.done ? 1 : 0); });
+        var group = el("div", "shop__group");
+        group.appendChild(el("h3", "checklist__group-title", cat));
+        var ul = el("ul", "shop__items");
+        list.forEach(function (item) {
+          var li = el("li", "shop__item" + (item.done ? " is-done" : ""));
+          var label = el("label", "shop__item-main");
+          var box = document.createElement("input");
+          box.type = "checkbox"; box.className = "checklist__box"; box.checked = item.done;
+          box.addEventListener("change", function () {
+            item.done = box.checked;
+            persist();
+            draw();
+          });
+          label.appendChild(box);
+          label.appendChild(el("span", "shop__item-name", item.name));
+          li.appendChild(label);
+
+          var del = el("button", "shop__del", "✕");
+          del.type = "button";
+          del.setAttribute("aria-label", "刪除 " + item.name);
+          var timer = null;
+          del.addEventListener("click", function () {
+            if (timer === null) {
+              del.textContent = "確定？";
+              del.classList.add("is-armed");
+              timer = setTimeout(function () {
+                timer = null; del.textContent = "✕"; del.classList.remove("is-armed");
+              }, 3000);
+              return;
+            }
+            clearTimeout(timer);
+            items = items.filter(function (it) { return it.id !== item.id; });
+            persist();
+            draw();
+          });
+          li.appendChild(del);
+          ul.appendChild(li);
+        });
+        group.appendChild(ul);
+        listBox.appendChild(group);
+      });
+    }
+
+    draw();
+  }
+
   function init() {
     if (typeof ITINERARY_DATA === "undefined") {
       console.error("ITINERARY_DATA not found. Check that data/itinerary.js loaded before js/app.js.");
@@ -2154,6 +2298,7 @@
     renderOverview(ITINERARY_DATA);
     renderChecklist(ITINERARY_DATA);
     renderTaxRefund(ITINERARY_DATA);
+    renderShopping(ITINERARY_DATA);
     renderDayNav(ITINERARY_DATA, travelState);
     renderDays(ITINERARY_DATA, travelState);
     renderFilterBar(ITINERARY_DATA);
