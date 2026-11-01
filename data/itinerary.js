@@ -3400,10 +3400,14 @@ var ITINERARY_DATA = {
   shoppingList: {
     categories: ["服飾", "生活雜貨", "美妝香水", "食品伴手禮", "其他"],
     seed: [
-      { id: "seed-haruta", name: "Haruta 樂福鞋", category: "服飾" },
-      { id: "seed-cardigan", name: "UNITED TOKYO Dry Air 開襟外套（黑／深灰）", category: "服飾" },
-      { id: "seed-slacks", name: "UNITED TOKYO Dry Air 西裝褲（黑／深灰）", category: "服飾" },
-      { id: "seed-lelabo", name: "LE LABO 京都限定 OSMANTHUS 19", category: "美妝香水" }
+      { id: "seed-miyake", name: "三宅一生 BASICS 黑色直筒褶皺長褲（プリーツ ストレートパンツ）", category: "服飾" },
+      { id: "seed-united-tokyo", name: "UNITED TOKYO 西裝褲", category: "服飾" },
+      { id: "seed-uniqlo-heattech", name: "UNIQLO 發熱衣", category: "服飾" },
+      { id: "seed-uniqlo-shirt", name: "UNIQLO 襯衫", category: "服飾" },
+      { id: "seed-asics", name: "ASICS Gel K-1011", category: "服飾" },
+      { id: "seed-lelabo", name: "LE LABO 京都限定香水 OSMANTHUS 19", category: "美妝香水" },
+      { id: "seed-shiro", name: "SHIRO 沐浴乳", category: "美妝香水" },
+      { id: "seed-apfr", name: "APFR 線香", category: "生活雜貨" }
     ]
   },
 

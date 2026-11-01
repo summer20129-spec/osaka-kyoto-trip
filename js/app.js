@@ -2152,7 +2152,7 @@
   // ---------- Shopping list ----------
   // Items live only in this browser's localStorage (never sent anywhere).
   // Anything read back from storage is re-validated.
-  var SHOP_STORAGE_KEY = "osaka-kyoto-trip:shopping-v2";
+  var SHOP_STORAGE_KEY = "osaka-kyoto-trip:shopping-v3";
   var SHOP_MAX_ITEMS = 200;
 
   function newShopId() {
