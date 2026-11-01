@@ -3430,6 +3430,7 @@ var ITINERARY_DATA = {
 
   // Weather card: static climate text + optional JMA forecast per city.
   weather: {
+    snapshotAt: "11/1 17:00",
     dayTemp: "約19〜23°C",
     nightTemp: "約11〜16°C",
     climate: "早晚溫差大，建議洋蔥式穿搭。氣象廳 11/1 17:00 發布的降雨機率：11/3 大阪 10%、京都南部30%／北部40%；11/4 大阪 30%、京都 30%；11/5 大阪 60%（可信度 C，變動大）、京都南部 60%／北部 50%（見 Day 3 雨天備案）；11/6 大阪 20%、京都南部 30%／北部 40%（見 Day 4 雨天備案）；11/7 大阪 20%、京都 30〜40%；每天都建議帶輕便雨具，以上方氣象廳即時預報為準。",

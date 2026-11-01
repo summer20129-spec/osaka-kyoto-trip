@@ -582,7 +582,16 @@
 
     var card = el("div", "overview__card overview__card--wide weather-card");
     card.appendChild(el("p", "overview__card-label", "天氣"));
-    card.appendChild(el("p", "overview__card-value", "11月上旬一般氣候"));
+    var head = el("div", "weather-card__head");
+    head.appendChild(el("p", "overview__card-value", "11月上旬一般氣候"));
+    // Forecast stamp: the latest JMA report time once loaded; until then
+    // (or if the request fails) the snapshot time written in the data file.
+    var stamp = el("span", "weather-card__stamp");
+    stamp.setAttribute("title", "氣象廳預報的發布日期與時間（日本時間）");
+    if (cfg.snapshotAt) stamp.textContent = "預報快照 " + cfg.snapshotAt;
+    else stamp.hidden = true;
+    head.appendChild(stamp);
+    card.appendChild(head);
 
     var tiles = el("div", "weather-tiles");
     [
@@ -632,7 +641,14 @@
       return;
     }
 
+    var reportTimes = [];
     function finish() {
+      var latest = reportTimes.length ? reportTimes.sort().pop() : "";
+      var stampMatch = /^\d{4}-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(latest);
+      if (stampMatch) {
+        stamp.textContent = "氣象廳 " + Number(stampMatch[1]) + "/" + Number(stampMatch[2]) + " " + stampMatch[3] + ":" + stampMatch[4] + " 發布";
+        stamp.hidden = false;
+      }
       Object.keys(results).forEach(function (key) {
         weatherByCity[key] = results[key];
       });
@@ -672,6 +688,9 @@
       loadForecast(office.code)
         .then(function (json) {
           results[key] = buildForecastByDate(json, office.tempArea || office.label);
+          if (Array.isArray(json) && json[0] && typeof json[0].reportDatetime === "string") {
+            reportTimes.push(json[0].reportDatetime);
+          }
         })
         .catch(function () {
           results[key] = null;
