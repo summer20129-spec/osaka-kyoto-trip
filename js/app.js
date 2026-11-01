@@ -2203,6 +2203,11 @@
     if (!cfg || !body || !progress || !Array.isArray(cfg.categories) || !cfg.categories.length) return;
 
     var categories = cfg.categories;
+    // Jump targets come from the data file (by item id), never from storage.
+    var refById = {};
+    (cfg.seed || []).forEach(function (seedItem) {
+      if (seedItem && seedItem.id && seedItem.itemRef) refById[seedItem.id] = seedItem.itemRef;
+    });
     var items;
     try {
       var raw = window.localStorage.getItem(SHOP_STORAGE_KEY);
@@ -2280,7 +2285,21 @@
             draw();
           });
           label.appendChild(box);
-          label.appendChild(el("span", "shop__item-name", item.name));
+          var text = el("span", "shop__item-text");
+          text.appendChild(el("span", "shop__item-name", item.name));
+          var ref = refById[item.id];
+          var jumpKey = ref ? findItemKey(data, ref) : null;
+          if (jumpKey) {
+            var jump = el("a", "checklist__jump", "前往行程 ›" + (ref.spot ? "（" + ref.spot + "）" : ""));
+            jump.href = "#" + jumpKey;
+            jump.addEventListener("click", function (event) {
+              event.preventDefault();
+              var target = document.querySelector('[data-item-key="' + jumpKey + '"]');
+              if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+            });
+            text.appendChild(jump);
+          }
+          label.appendChild(text);
           li.appendChild(label);
 
           var del = el("button", "shop__del", "✕");

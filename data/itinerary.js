@@ -3399,15 +3399,16 @@ var ITINERARY_DATA = {
   // localStorage, never in this file. The last category is the fallback.
   shoppingList: {
     categories: ["服飾", "生活雜貨", "美妝香水", "食品伴手禮", "其他"],
+    // itemRef links an item to its itinerary stop ({ day id, time }); shown as a jump link.
     seed: [
-      { id: "seed-miyake", name: "三宅一生 BASICS 黑色直筒褶皺長褲（プリーツ ストレートパンツ）", category: "服飾" },
-      { id: "seed-united-tokyo", name: "UNITED TOKYO 西裝褲", category: "服飾" },
-      { id: "seed-uniqlo-heattech", name: "UNIQLO 發熱衣", category: "服飾" },
-      { id: "seed-uniqlo-shirt", name: "UNIQLO 襯衫", category: "服飾" },
-      { id: "seed-asics", name: "ASICS Gel K-1011", category: "服飾" },
-      { id: "seed-lelabo", name: "LE LABO 京都限定香水 OSMANTHUS 19", category: "美妝香水" },
-      { id: "seed-shiro", name: "SHIRO 沐浴乳", category: "美妝香水" },
-      { id: "seed-apfr", name: "APFR 線香", category: "生活雜貨" }
+      { id: "seed-miyake", name: "三宅一生 BASICS 黑色直筒褶皺長褲（プリーツ ストレートパンツ）", category: "服飾", itemRef: { day: "day2", time: "18:45〜19:55", spot: "三宅一生（心斎橋PARCO 2樓）" } },
+      { id: "seed-united-tokyo", name: "UNITED TOKYO 西裝褲", category: "服飾", itemRef: { day: "day2", time: "18:45〜19:55", spot: "UNITED TOKYO（心斎橋PARCO 4樓）" } },
+      { id: "seed-uniqlo-heattech", name: "UNIQLO 發熱衣", category: "服飾", itemRef: { day: "day2", time: "17:30〜18:45", spot: "心斎橋UNIQLO" } },
+      { id: "seed-uniqlo-shirt", name: "UNIQLO 襯衫", category: "服飾", itemRef: { day: "day2", time: "17:30〜18:45", spot: "心斎橋UNIQLO" } },
+      { id: "seed-asics", name: "ASICS Gel K-1011", category: "服飾", itemRef: { day: "day2", time: "17:30〜18:45", spot: "アシックス 大阪心斎橋" } },
+      { id: "seed-lelabo", name: "LE LABO 京都限定香水 OSMANTHUS 19", category: "美妝香水", itemRef: { day: "day3", time: "14:00〜14:40", spot: "LE LABO 町家店" } },
+      { id: "seed-shiro", name: "SHIRO 沐浴乳", category: "美妝香水", itemRef: { day: "day1", time: "16:25〜17:05", spot: "阪急うめだ本店" } },
+      { id: "seed-apfr", name: "APFR 線香", category: "生活雜貨", itemRef: { day: "day1", time: "17:10〜18:10", spot: "HEP FIVE BEAMS（未確認有貨）" } }
     ]
   },
 

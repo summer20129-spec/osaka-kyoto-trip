@@ -754,6 +754,7 @@ ul { padding: 0; list-style: none; }
 .shop__items { list-style: none; margin: 0; padding: 0; }
 .shop__item { display: flex; align-items: center; gap: var(--space-2); border-top: 1px solid var(--color-border); }
 .shop__item-main { flex: 1; display: flex; align-items: center; gap: var(--space-3); min-height: 48px; min-width: 0; cursor: pointer; }
+.shop__item-text { display: grid; gap: 2px; min-width: 0; padding: var(--space-2) 0; }
 .shop__item-name { font-size: 0.95rem; font-weight: 600; overflow-wrap: anywhere; }
 .shop__item.is-done .shop__item-name { color: var(--color-text-faint); text-decoration: line-through; }
 
