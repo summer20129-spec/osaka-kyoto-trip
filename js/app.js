@@ -311,7 +311,21 @@
     if (acc.address) {
       actions.appendChild(renderGuideButton(panelId, "詳細地址"));
     }
+    var stayPanelId = "stay-guide-panel";
+    if (acc.guide && acc.guide.sections && acc.guide.sections.length) {
+      actions.appendChild(renderGuideButton(stayPanelId, acc.guide.label || "入住指南"));
+    }
     card.appendChild(actions);
+
+    if (acc.guide && acc.guide.sections && acc.guide.sections.length) {
+      var stayPanel = el("div", "guide-panel overview__address");
+      stayPanel.id = stayPanelId;
+      stayPanel.hidden = true;
+      acc.guide.sections.forEach(function (section) {
+        if (sectionHasContent(section)) stayPanel.appendChild(renderSectionBlock(section));
+      });
+      card.appendChild(stayPanel);
+    }
 
     if (acc.address) {
       var panel = el("div", "guide-panel overview__address");
@@ -1701,7 +1715,7 @@
   }
 
   var REFUND_STORAGE_KEY = "osaka-kyoto-trip:refund-checks";
-  var REFUND_LINK_HOSTS = ["www.japan.travel", "www.customs.go.jp", "www.mlit.go.jp", "www.threads.com"];
+  var REFUND_LINK_HOSTS = ["www.japan.travel", "www.customs.go.jp", "www.mlit.go.jp", "www.threads.com", "www.kansai-airports.co.jp", "www.aviationwire.jp"];
 
   function loadRefundChecks() {
     try {
@@ -1893,6 +1907,14 @@
 
     // ---- Panel: 關西機場 ----
     var pk = panels.kix;
+    if (t.kix) {
+      var kl = section(pk, t.kix.locationTitle, "community");
+      kl.appendChild(renderStepsTable(rowsToSteps(t.kix.locationRows), t.kix.locationHeaders));
+      if (t.kix.locationTips) kl.appendChild(renderTipList(t.kix.locationTips));
+      var kf = section(pk, t.kix.feeTitle, "community");
+      kf.appendChild(renderStepsTable(rowsToSteps(t.kix.feeRows), t.kix.feeHeaders));
+      if (t.kix.feeTips) kf.appendChild(renderTipList(t.kix.feeTips));
+    }
     var k1 = section(pk, t.vjw.title.replace(/^④ /, ""), "community");
     k1.appendChild(renderStepsTable(rowsToSteps(t.vjw.rows), t.vjw.headers));
     if (t.vjw.tips) k1.appendChild(renderTipList(t.vjw.tips));
@@ -2171,7 +2193,7 @@
   // ---------- Shopping list ----------
   // Items live only in this browser's localStorage (never sent anywhere).
   // Anything read back from storage is re-validated.
-  var SHOP_STORAGE_KEY = "osaka-kyoto-trip:shopping-v3";
+  var SHOP_STORAGE_KEY = "osaka-kyoto-trip:shopping-v4";
   var SHOP_MAX_ITEMS = 200;
 
   function newShopId() {

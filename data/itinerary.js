@@ -140,8 +140,30 @@ var ITINERARY_DATA = {
       name: "日本橋近鐵站附近套房",
       detail: "4晚・3人",
       station: "近鐵日本橋站步行約5分鐘，鄰近黑門市場／難波／道頓堀",
-      address: "2-chōme-6-17 Kōzu, Chuo Ward, Osaka, Osaka 542-0072（〒542-0072 大阪市中央區高津2丁目6-17）",
-      locationQuery: "2-chōme-6-17 Kōzu, Chuo Ward, Osaka, Osaka 542-0072"
+      address: "〒542-0072 大阪府大阪市中央区高津2丁目6番17号（2-chōme-6-17 Kōzu, Chuo Ward, Osaka, Osaka 542-0072）",
+      locationQuery: "2-chōme-6-17 Kōzu, Chuo Ward, Osaka, Osaka 542-0072",
+      guide: {
+        label: "入住指南",
+        sections: [
+          { label: "入住／退房", steps: [
+            { label: "入住", text: "11/3 16:00 後，自助入住（無櫃台）" },
+            { label: "退房", text: "11/7 10:00 前；延遲每小時 ¥2,500，需提前聯絡" }
+          ], stepsHeaders: ["項目", "內容"] },
+          { label: "進門步驟（密碼在管家訊息，不放網站）", steps: [
+            { label: "① 大門", text: "按一次「呼出」，再快速依序按大門密碼；門會自動開，螢幕不會顯示數字。打不開就先按幾次「消」再重來" },
+            { label: "② 房門", text: "電子鎖：面板在門把上的黑色方塊，先碰一下讓它亮起，輸入房門密碼加 #；聽到機械轉動聲再壓下把手" },
+            { label: "③ 進房", text: "先脫鞋；室內與陽台全面禁火禁菸" }
+          ], stepsHeaders: ["步驟", "做法"] },
+          { label: "垃圾", text: "不用分類，裝袋後丟 1 樓垃圾室（出大門後右側的房間），或打包留在房內，退房後清潔人員收走。" },
+          { label: "注意事項", tips: [
+            "11/3 抵達時間早於 16:00，行李寄放要先問管家（見行程第 1 天）",
+            "只能依訂單人數入住，多人會加收費用或被拒絕",
+            "禁止大聲喧嘩、敲牆、辦派對",
+            "房內提供毛巾、牙膏、牙刷；住 3 晚以上每 3 天簡易清潔一次（11:00〜14:00），不需要就聯絡客服或門外掛免打掃牌",
+            "電話、WiFi、門禁密碼請從手機訊息查看，網站不放"
+          ] }
+        ]
+      }
     }
   },
 
@@ -2178,7 +2200,7 @@ var ITINERARY_DATA = {
           }
         ],
         tips: [
-          "決定時機：11/5 晚上看氣象廳與 tenki.jp，11/6 出門前（約 06:30）再看一次雨雲；氣象廳 11/1 17:00 預報京都南部 30%（可信度 A）、北部 40%（可信度 B）",
+          "決定時機：11/5 晚上看氣象廳與 tenki.jp，11/6 出門前（約 06:30）再看一次雨雲；氣象廳 11/2 17:00 預報京都南部 30%（可信度 A）、北部 50%（可信度 C）",
           "最先調整的是下午的竹林與野宮；中午篩月在室內，祐斎亭主要在室內，都不用動",
           "雨具：輕便雨衣或折傘、防滑鞋，手機和相機準備防水袋"
         ]
@@ -3058,7 +3080,7 @@ var ITINERARY_DATA = {
   ],
 
   taxRefund: {
-    "updated": "2026-10-28",
+    "updated": "2026-11-01",
     "headline": "11/1 起：先付「含稅價」，離開日本時經海關確認帶出境後，才退稅。你這趟 11/3〜11/7 全部適用新制。",
     "compare": {
       "headers": [
@@ -3156,7 +3178,7 @@ var ITINERARY_DATA = {
       ],
       [
         "手續費",
-        "我沒查到官方說明，各退款業者規定不同，購買前問店員（網友說唐吉軻德、Bic Camera 不收，其他店常見1〜3%，見下方「網友補充」）"
+        "我沒查到官方說明，各退款業者規定不同，購買前問店員（網友說唐吉軻德、Bic Camera 不收，其他店常見1〜3%，見下方「網友補充」；關西機場 Cash Japan 現金領取的手續費見「關西機場」分頁）"
       ]
     ],
     "mineHeaders": [
@@ -3186,7 +3208,7 @@ var ITINERARY_DATA = {
       ],
       [
         "11/7 11:15 到關西機場T1",
-        "先找國際線出發大廳的免稅手續終端機（或 Visit Japan Web 專用 Wi-Fi 區域）辦海關確認，再去華航報到託運；網友說刷一次護照就能一次確認所有店家的收據；CI153 14:30起飛，11:15到有約3小時，網友也建議提早3小時到機場",
+        "先到 T1 4 樓國際線出發大廳（報到區）的海關確認終端（約24台，報導資料）辦海關確認，或用 Visit Japan Web 專用 Wi-Fi 區域；再去華航報到託運；若登記領現金，過出境審查後到 3 樓現金退稅機；網友說刷一次護照就能一次確認所有店家的收據；CI153 14:30起飛，11:15到有約3小時，網友也建議提早3小時到機場",
         {
           "day": "day5",
           "time": "11:15〜14:30"
@@ -3250,7 +3272,7 @@ var ITINERARY_DATA = {
       ],
       [
         "rf-5",
-        "已在國際線出發大廳完成海關確認（綠燈＝完成；紅燈＝帶商品去檢查）"
+        "已在國際線出發大廳（T1 為 4 樓報到區）完成海關確認（綠燈＝完成；紅燈＝帶商品去檢查）"
       ],
       [
         "rf-6",
@@ -3285,6 +3307,14 @@ var ITINERARY_DATA = {
         "https://www.threads.com/share/KbO4bU4Ym/"
       ],
       [
+        "關西機場：Cash Japan 免稅退款服務公告（KIX、神戶）",
+        "https://www.kansai-airports.co.jp/en/news/j-261019-pressrelease-cashjapan/"
+      ],
+      [
+        "Aviation Wire：Cash Japan 6 座機場新服務（含 T1、T2 樓層與台數）",
+        "https://www.aviationwire.jp/archives/352751"
+      ],
+      [
         "日本觀光局：新免稅制度說明",
         "https://www.japan.travel/en/us/blog/everything-you-need-to-know-japans-new-tax-free-shopping-system/"
       ],
@@ -3297,6 +3327,32 @@ var ITINERARY_DATA = {
         "https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00021.html"
       ]
     ],
+    "kix": {
+      "locationTitle": "機台位置與樓層（報導整理＋網友地圖截圖）",
+      "locationHeaders": ["位置", "做什麼"],
+      "locationRows": [
+        ["T1 4樓：國際線出發大廳（報到區）", "海關確認終端約24台：託運行李前先在這裡刷護照；Cash Japan 的退稅點（人工櫃檯）網友地圖釘選也在這一層，寫在報到櫃檯 B、G 旁"],
+        ["T1 3樓：出境審查後", "現金退稅機約16台和現金櫃檯：登記「機場領現金」的人，過出境審查後來這裡領；網友的平面圖把機台標在「國際線出發大廳 3F」附近、出境海關線旁"],
+        ["T2 1樓", "海關確認終端約4台、現金退稅機約5台；網友平面圖寫「過海關後往右走」"],
+        ["你這趟（T1 出發）", "先到 4 樓刷護照做海關確認 → 再去華航報到託運 → 過出境審查 → 3 樓現金退稅機領現金（若你登記的是現金）。你的去回程都用 T1，T2 這趟用不到"]
+      ],
+      "locationTips": [
+        "樓層與台數來自 Aviation Wire 報導和網友截圖；關西機場官方公告我沒能開啟原文，請以機場現場指標為準",
+        "出境審查後的免稅店買的東西，不需要這個退稅手續"
+      ],
+      "feeTitle": "手續費與營業時間（網友截圖，未對照官方）",
+      "feeHeaders": ["項目", "網友截圖資料"],
+      "feeRows": [
+        ["關西機場 Cash Japan：領現金", "手續費為退款金額的 10%，最低¥100、最高¥500"],
+        ["關西機場 Cash Japan：退回信用卡", "手續費寫 0"],
+        ["關西機場 Cash Japan：營業時間", "人工櫃檯 7:00〜24:00；機器 24 小時（0:00〜24:00）"],
+        ["梅田：友都八喜 Global Blue 機台", "Yodobashi Camera 2樓（Ofuka-cho 1-1），藍色「Global Blue」招牌；9:30〜22:00；現金與信用卡退款手續費都是 5%，最低¥150、最高¥500；畫面寫接受的表格類型為 Domestic forms"]
+      ],
+      "feeTips": [
+        "手續費與營業時間來自網友截圖，我沒有對照官方，請在機台畫面或櫃檯確認",
+        "梅田的 Global Blue 機台標示的是 Domestic forms；新制（出境後退稅）下，這台能不能在出境前領現金，我查不到，請先不要當成出境前可領現金的方式"
+      ]
+    },
     "vjw": {
       "title": "④ 關西機場可用：Visit Japan Web 線上辦理（網友整理）",
       "headers": [
@@ -3408,7 +3464,8 @@ var ITINERARY_DATA = {
       { id: "seed-asics", name: "ASICS Gel K-1011", category: "服飾", itemRef: { day: "day2", time: "17:30〜18:45", spot: "アシックス 大阪心斎橋" } },
       { id: "seed-lelabo", name: "LE LABO 京都限定香水 OSMANTHUS 19", category: "美妝香水", itemRef: { day: "day3", time: "14:00〜14:40", spot: "LE LABO 町家店" } },
       { id: "seed-shiro", name: "SHIRO 沐浴乳", category: "美妝香水", itemRef: { day: "day1", time: "16:25〜17:05", spot: "阪急うめだ本店" } },
-      { id: "seed-apfr", name: "APFR 線香", category: "生活雜貨", itemRef: { day: "day1", time: "17:10〜18:10", spot: "HEP FIVE BEAMS（未確認有貨）" } }
+      { id: "seed-apfr", name: "APFR 線香", category: "生活雜貨", itemRef: { day: "day1", time: "17:10〜18:10", spot: "HEP FIVE BEAMS（未確認有貨）" } },
+      { id: "seed-backpack", name: "後背包（通勤＋休閒兩用，肩帶有 D 型環／掛帶可掛小物）", category: "生活雜貨" }
     ]
   },
 
@@ -3431,9 +3488,9 @@ var ITINERARY_DATA = {
 
   // Weather card: static climate text + optional JMA forecast per city.
   weather: {
-    snapshotAt: "11/1 17:00",
-    dayTemp: "約19〜23°C",
-    nightTemp: "約11〜16°C",
+    snapshotAt: "11/2 17:00",
+    dayTemp: "約16〜23°C",
+    nightTemp: "約10〜15°C",
     offices: {
       OSAKA: { code: "270000", label: "大阪", tempArea: "大阪" },
       KYOTO: { code: "260000", label: "京都", tempArea: "京都" }
